@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header-layout">
+        <nav>
+          <button type="button" class="navBtn" title="open menu">
+            <svg class="icon">
+              <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
+            </svg>
+          </button>
+        </nav>
+        <button type="button" class="navBtn" title="toggle color theme">
+          <svg class="icon">
+            <use xlink:href="./src/svgSprite.svg#main-moon"></use>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="backdrop">
+      <div class="modal-menu">
+        <ul class="main-modal-links-list">
+          <li class="main-modal-links-list_item">
+            <a href="#">
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-home"></use>
+              </svg>
+              Home
+            </a>
+          </li>
+
+          <li class="main-modal-links-list_item">
+            <a href="#">
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-films"></use>
+              </svg>
+              Movies
+            </a>
+          </li>
+
+          <li class="main-modal-links-list_item">
+            <a href="#">
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-saved"></use>
+              </svg>
+              Genres
+            </a>
+          </li>
+
+          <li class="main-modal-links-list_item">
+            <a href="#">
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-heart"></use>
+              </svg>
+              Watchlist
+            </a>
+          </li>
+
+          <li class="main-modal-links-list_item">
+            <a href="#">
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-history"></use>
+              </svg>
+              History
+            </a>
+          </li>
+        </ul>
+
+        <h2>Your Library</h2>
+        <ul class="library-modal-links-list">
+          <li class="library-modal-links-list_item">
+            <a href="#">
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-heart"></use>
+              </svg>
+              Favorites
+            </a>
+          </li>
+
+          <li class="library-modal-links-list_item">
+            <a href="#">
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-queue"></use>
+              </svg>
+              In Queque
+            </a>
+          </li>
+        </ul>
+
+        <ul class="settings-modal-links-list">
+          <li class="settings-modal-links-list_item">
+            <a href="#">
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-settings"></use>
+              </svg>
+              Settings
+            </a>
+          </li>
+
+          <li class="settings-modal-links-list_item">
+            <a href="#">
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-logout"></use>
+              </svg>
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <script src="./src/script.js"></script>
+  </body>
+</html>

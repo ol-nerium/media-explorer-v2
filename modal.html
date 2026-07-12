@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <div class="modal">
+      <div class="modal-nav">
+        <a href="#" title="back">
+          <svg class="icon">
+            <use xlink:href="./src/svgSprite.svg#main-left-arrow"></use>
+          </svg>
+        </a>
+        <ul class="modal-nav-list">
+          <li class="modal-nav-list_item">
+            <a href="#">Home</a>
+          </li>
+          <li class="modal-nav-list_item">
+            <a href="#">Movies</a>
+          </li>
+          <li class="modal-nav-list_item">
+            <a href="#">Movie name</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="modal-img-wrap">
+        <img src="./src/blank-picture.png" alt="poster image" />
+      </div>
+
+      <div class="modal-film-desc">
+        <h2 class="title">Movie name</h2>
+        <div class="raiting">
+          <svg class="icon star-icon">
+            <use xlink:href="./src/svgSprite.svg#main-star"></use>
+          </svg>
+          <span class="raiting-value">8.6</span>
+          <div class="imdbIcon">
+            <svg class="icon">
+              <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
+            </svg>
+          </div>
+        </div>
+
+        <p class="short-desc"><span>year</span><span>length</span></p>
+        <ul class="genres-list">
+          <li class="genres-list-item"><a href="#">Biography</a></li>
+          <li class="genres-list-item"><a href="#">Drama</a></li>
+          <li class="genres-list-item"><a href="#">History</a></li>
+        </ul>
+        <p class="modal-film-desc-text">
+          film description Lorem ipsum dolor sit amet consectetur adipisicing
+          elit. Tempore amet assumenda voluptatum quam laborum vitae impedit
+          explicabo. Et quaerat animi eos aut facilis nam sapiente placeat. Ex
+          laboriosam qui quos. Ratione ea accusantium impedit quisquam cumque
+          perferendis autem totam, expedita nulla, a officiis vel. Nemo ab
+          officiis fugiat iusto. Blanditiis laborum, dolores natus recusandae
+          tempora quisquam. Corrupti doloremque expedita dolorem.
+        </p>
+      </div>
+      <!--  -->
+      <div class="modalControls">
+        <button type="button" class="modalControls_trailerBtn">
+          Watch trailer
+        </button>
+        <button type="button" class="modalControls_AddToWatchlist">
+          Add to Watchlist
+        </button>
+      </div>
+    </div>
+
+    <script src="./src/script.js"></script>
+  </body>
+</html>
