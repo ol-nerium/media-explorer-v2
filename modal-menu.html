@@ -14,14 +14,15 @@
   </head>
   <body>
     <header class="header">
-      <div class="container header-layout">
+      <div class="container mobile-header-layout">
         <nav>
           <button type="button" class="navBtn" title="open menu">
             <svg class="icon">
-              <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
+              <use xlink:href="./src/svgSprite.svg#main-burger"></use>
             </svg>
           </button>
         </nav>
+        <h1 class="poppins-semibold headerTitle">Home</h1>
         <button type="button" class="navBtn" title="toggle color theme">
           <svg class="icon">
             <use xlink:href="./src/svgSprite.svg#main-moon"></use>
@@ -31,9 +32,9 @@
     </header>
 
     <div class="backdrop">
-      <div class="modal-menu">
-        <ul class="main-modal-links-list">
-          <li class="main-modal-links-list_item">
+      <div class="mobile-modal-menu">
+        <ul class="main-links-list">
+          <li class="main-links-list_item">
             <a href="#">
               <svg class="icon">
                 <use xlink:href="./src/svgSprite.svg#main-home"></use>
@@ -42,7 +43,7 @@
             </a>
           </li>
 
-          <li class="main-modal-links-list_item">
+          <li class="main-links-list_item">
             <a href="#">
               <svg class="icon">
                 <use xlink:href="./src/svgSprite.svg#main-films"></use>
@@ -51,7 +52,7 @@
             </a>
           </li>
 
-          <li class="main-modal-links-list_item">
+          <li class="main-links-list_item">
             <a href="#">
               <svg class="icon">
                 <use xlink:href="./src/svgSprite.svg#main-saved"></use>
@@ -60,7 +61,7 @@
             </a>
           </li>
 
-          <li class="main-modal-links-list_item">
+          <li class="main-links-list_item">
             <a href="#">
               <svg class="icon">
                 <use xlink:href="./src/svgSprite.svg#main-heart"></use>
@@ -69,7 +70,7 @@
             </a>
           </li>
 
-          <li class="main-modal-links-list_item">
+          <li class="main-links-list_item">
             <a href="#">
               <svg class="icon">
                 <use xlink:href="./src/svgSprite.svg#main-history"></use>
@@ -79,9 +80,9 @@
           </li>
         </ul>
 
-        <h2>Your Library</h2>
-        <ul class="library-modal-links-list">
-          <li class="library-modal-links-list_item">
+        <h2 class="mobile-modal-menu-title">Your Library</h2>
+        <ul class="library-links-list">
+          <li class="library-links-list_item">
             <a href="#">
               <svg class="icon">
                 <use xlink:href="./src/svgSprite.svg#main-heart"></use>
@@ -90,7 +91,7 @@
             </a>
           </li>
 
-          <li class="library-modal-links-list_item">
+          <li class="library-links-list_item">
             <a href="#">
               <svg class="icon">
                 <use xlink:href="./src/svgSprite.svg#main-queue"></use>
@@ -100,8 +101,8 @@
           </li>
         </ul>
 
-        <ul class="settings-modal-links-list">
-          <li class="settings-modal-links-list_item">
+        <ul class="settings-links-list">
+          <li class="settings-links-list_item">
             <a href="#">
               <svg class="icon">
                 <use xlink:href="./src/svgSprite.svg#main-settings"></use>
@@ -110,7 +111,7 @@
             </a>
           </li>
 
-          <li class="settings-modal-links-list_item">
+          <li class="settings-links-list_item">
             <a href="#">
               <svg class="icon">
                 <use xlink:href="./src/svgSprite.svg#main-logout"></use>
