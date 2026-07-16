@@ -15,13 +15,11 @@
   <body>
     <header class="header">
       <div class="container mobile-header-layout">
-        <nav>
-          <button type="button" class="navBtn" title="open menu">
-            <svg class="icon">
-              <use xlink:href="./src/svgSprite.svg#main-burger"></use>
-            </svg>
-          </button>
-        </nav>
+        <button type="button" class="navBtn" title="open menu">
+          <svg class="icon">
+            <use xlink:href="./src/svgSprite.svg#main-burger"></use>
+          </svg>
+        </button>
         <h1 class="poppins-semibold headerTitle">Home</h1>
         <button type="button" class="navBtn" title="toggle color theme">
           <svg class="icon">
@@ -127,47 +125,100 @@
     </header>
 
     <main>
-      <section class="main-heading">
-        <div class="container">
-          <div class="main-heading-layout">
-            <div class="searchbar">
-              <form action="" class="searchbar-form">
-                <label for="search-field" class="search-field">
-                  <svg class="icon">
-                    <use
-                      xlink:href="./src/svgSprite.svg#main-magnify-glass-1"
-                    ></use>
-                  </svg>
-                  <input id="search-field" placeholder="Search for movies..." />
-                </label>
-                <button
-                  type="submit"
-                  class="searchbar-button"
-                  title="search by query"
-                >
-                  <svg class="icon">
-                    <use
-                      xlink:href="./src/svgSprite.svg#main-magnify-glass-2"
-                    ></use>
-                  </svg>
-                </button>
-              </form>
-            </div>
-
-            <div class="main-heading-buttons">
-              <button type="button" title="themeBtn">
-                <svg class="icon">
-                  <use xlink:href="./src/svgSprite.svg#main-moon"></use>
-                </svg>
-              </button>
-            </div>
-          </div>
-          <h2 class="main-heading-title">Home</h2>
-        </div>
-      </section>
-
       <section class="sorting">
         <div class="container">
+          <ul class="genres-chips-list">
+            <li class="genres-chips-list_item">
+              <button class="genres-chips-list_item-btn active">
+                <span>Genre name</span>
+              </button>
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+              </svg>
+            </li>
+
+            <li class="genres-chips-list_item">
+              <button class="genres-chips-list_item-btn">
+                <span>Genre name</span>
+              </button>
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+              </svg>
+            </li>
+
+            <li class="genres-chips-list_item">
+              <button class="genres-chips-list_item-btn">
+                <span>Genre name</span>
+              </button>
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+              </svg>
+            </li>
+
+            <li class="genres-chips-list_item">
+              <button class="genres-chips-list_item-btn">
+                <span>Genre name</span>
+              </button>
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+              </svg>
+            </li>
+
+            <li class="genres-chips-list_item">
+              <button class="genres-chips-list_item-btn">
+                <span>Genre name</span>
+              </button>
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+              </svg>
+            </li>
+
+            <li class="genres-chips-list_item">
+              <button class="genres-chips-list_item-btn">
+                <span>Genre name</span>
+              </button>
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+              </svg>
+            </li>
+
+            <li class="genres-chips-list_item">
+              <button class="genres-chips-list_item-btn">
+                <span>Genre name</span>
+              </button>
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+              </svg>
+            </li>
+
+            <li class="genres-chips-list_item">
+              <button class="genres-chips-list_item-btn">
+                <span>Genre name</span>
+              </button>
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+              </svg>
+            </li>
+
+            <li class="genres-chips-list_item">
+              <button class="genres-chips-list_item-btn">
+                <span>Genre name</span>
+              </button>
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+              </svg>
+            </li>
+
+            <li class="genres-chips-list_item">
+              <button class="genres-chips-list_item-btn">
+                <span>Genre name</span>
+              </button>
+              <svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+              </svg>
+            </li>
+          </ul>
+
           <label for="sortingDropdown" class="dropdown"
             >Sort by:
             <select name="sortingDropdown" id="sortingDropdown">
@@ -191,26 +242,6 @@
               </option>
             </select>
           </label>
-
-          <!-- <ul class="genres-chips-list">
-            <li class="genres-chips-list_item">
-              <button class="genres-chips-list_item-btn active">
-                <span>Genre name</span>
-              </button>
-              <svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
-              </svg>
-            </li>
-
-            <li class="genres-chips-list_item">
-              <button class="genres-chips-list_item-btn">
-                <span>Genre name</span>
-              </button>
-              <svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
-              </svg>
-            </li>
-          </ul> -->
         </div>
       </section>
 
@@ -252,20 +283,26 @@
                 ><input type="radio" id="hero_option-4" name="hero-radiobutton"
               /></label>
             </div>
+
+            <div class="hero-desktop-controls">
+              <span class="hero-desktop-controls-value" data-value="1">01</span>
+
+              <span class="hero-desktop-controls-value" data-value="5">05</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="genres">
+      <section class="mobile-genres">
         <div class="container">
           <div class="section-heading">
             <h2 class="section-title">Genres</h2>
             <a href="#" class="section-expand-link">View all...</a>
           </div>
-          <ul class="genres-list snaps-inline">
-            <li class="genres-list_item">
-              <a href="#" class="genre-link">
-                <div class="genre-icon-wrap">
+          <ul class="mobile-genres-list snaps-inline">
+            <li class="mobile-genres-list_item">
+              <a href="#" class="mobile-genres-link">
+                <div class="mobile-genres-icon-wrap">
                   <svg class="icon">
                     <use xlink:href="./src/svgSprite.svg#genres-action"></use>
                   </svg>
@@ -273,10 +310,9 @@
                 <p>genreName</p>
               </a>
             </li>
-
-            <li class="genres-list_item">
-              <a href="#" class="genre-link">
-                <div class="genre-icon-wrap">
+            <li class="mobile-genres-list_item">
+              <a href="#" class="mobile-genres-link">
+                <div class="mobile-genres-icon-wrap">
                   <svg class="icon">
                     <use xlink:href="./src/svgSprite.svg#genres-action"></use>
                   </svg>
@@ -284,10 +320,9 @@
                 <p>genreName</p>
               </a>
             </li>
-
-            <li class="genres-list_item">
-              <a href="#" class="genre-link">
-                <div class="genre-icon-wrap">
+            <li class="mobile-genres-list_item">
+              <a href="#" class="mobile-genres-link">
+                <div class="mobile-genres-icon-wrap">
                   <svg class="icon">
                     <use xlink:href="./src/svgSprite.svg#genres-action"></use>
                   </svg>
@@ -295,10 +330,39 @@
                 <p>genreName</p>
               </a>
             </li>
-
-            <li class="genres-list_item">
-              <a href="#" class="genre-link">
-                <div class="genre-icon-wrap">
+            <li class="mobile-genres-list_item">
+              <a href="#" class="mobile-genres-link">
+                <div class="mobile-genres-icon-wrap">
+                  <svg class="icon">
+                    <use xlink:href="./src/svgSprite.svg#genres-action"></use>
+                  </svg>
+                </div>
+                <p>genreName</p>
+              </a>
+            </li>
+            <li class="mobile-genres-list_item">
+              <a href="#" class="mobile-genres-link">
+                <div class="mobile-genres-icon-wrap">
+                  <svg class="icon">
+                    <use xlink:href="./src/svgSprite.svg#genres-action"></use>
+                  </svg>
+                </div>
+                <p>genreName</p>
+              </a>
+            </li>
+            <li class="mobile-genres-list_item">
+              <a href="#" class="mobile-genres-link">
+                <div class="mobile-genres-icon-wrap">
+                  <svg class="icon">
+                    <use xlink:href="./src/svgSprite.svg#genres-action"></use>
+                  </svg>
+                </div>
+                <p>genreName</p>
+              </a>
+            </li>
+            <li class="mobile-genres-list_item">
+              <a href="#" class="mobile-genres-link">
+                <div class="mobile-genres-icon-wrap">
                   <svg class="icon">
                     <use xlink:href="./src/svgSprite.svg#genres-action"></use>
                   </svg>
@@ -323,196 +387,18 @@
                 <img src="./src/blank-picture.png" alt="film picture" />
               </div>
 
-              <div class="gallery-raiting">
-                <div class="gallery-raiting-value">
+              <div class="raiting">
+                <div class="raiting-value">
                   <svg class="icon star-icon">
                     <use xlink:href="./src/svgSprite.svg#main-star"></use>
                   </svg>
                   <span class="raiting-value">8.6</span>
                 </div>
-                <svg class="imdb-icon icon">
-                  <use xlink:href="./src/svgSprite.svg#imdb"></use>
-                </svg>
-              </div>
-
-              <div class="gallery-list_item-desc">
-                <h3 class="gallery-list_item-title">Film title</h3>
-                <p class="gallery-list_item-year">year</p>
-                <p class="gallery-list_item-genres">genres</p>
-              </div>
-            </li>
-
-            <li class="gallery-list_item">
-              <div class="gallery-list_item-img-wrap">
-                <img src="./src/blank-picture.png" alt="film picture" />
-              </div>
-
-              <div class="gallery-raiting">
-                <div class="gallery-raiting-value">
-                  <svg class="icon star-icon">
-                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
+                <div class="imdbIcon">
+                  <svg class="icon">
+                    <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
                   </svg>
-                  <span class="raiting-value">8.6</span>
                 </div>
-                <svg class="imdb-icon icon">
-                  <use xlink:href="./src/svgSprite.svg#imdb"></use>
-                </svg>
-              </div>
-
-              <div class="gallery-list_item-desc">
-                <h3 class="gallery-list_item-title">Film title</h3>
-                <p class="gallery-list_item-year">year</p>
-                <p class="gallery-list_item-genres">genres</p>
-              </div>
-            </li>
-
-            <li class="gallery-list_item">
-              <div class="gallery-list_item-img-wrap">
-                <img src="./src/blank-picture.png" alt="film picture" />
-              </div>
-
-              <div class="gallery-raiting">
-                <div class="gallery-raiting-value">
-                  <svg class="icon star-icon">
-                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
-                  </svg>
-                  <span class="raiting-value">8.6</span>
-                </div>
-
-                <svg class="imdb-icon icon">
-                  <use xlink:href="./src/svgSprite.svg#imdb"></use>
-                </svg>
-              </div>
-
-              <div class="gallery-list_item-desc">
-                <h3 class="gallery-list_item-title">Film title</h3>
-                <p class="gallery-list_item-year">year</p>
-                <p class="gallery-list_item-genres">genres</p>
-              </div>
-            </li>
-
-            <li class="gallery-list_item">
-              <div class="gallery-list_item-img-wrap">
-                <img src="./src/blank-picture.png" alt="film picture" />
-              </div>
-
-              <div class="gallery-raiting">
-                <div class="gallery-raiting-value">
-                  <svg class="icon star-icon">
-                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
-                  </svg>
-                  <span class="raiting-value">8.6</span>
-                </div>
-                <svg class="imdb-icon icon">
-                  <use xlink:href="./src/svgSprite.svg#imdb"></use>
-                </svg>
-              </div>
-
-              <div class="gallery-list_item-desc">
-                <h3 class="gallery-list_item-title">Film title</h3>
-                <p class="gallery-list_item-year">year</p>
-                <p class="gallery-list_item-genres">genres</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="popular">
-        <div class="container">
-          <div class="section-heading">
-            <h2 class="section-title">Popular</h2>
-            <a href="#" class="section-expand-link">View all...</a>
-          </div>
-
-          <ul class="gallery-list-slider snaps-inline">
-            <li class="gallery-list_item">
-              <div class="gallery-list_item-img-wrap">
-                <img src="./src/blank-picture.png" alt="film picture" />
-              </div>
-
-              <div class="gallery-raiting">
-                <div class="gallery-raiting-value">
-                  <svg class="icon star-icon">
-                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
-                  </svg>
-                  <span class="raiting-value">8.6</span>
-                </div>
-                <svg class="imdb-icon icon">
-                  <use xlink:href="./src/svgSprite.svg#imdb"></use>
-                </svg>
-              </div>
-
-              <div class="gallery-list_item-desc">
-                <h3 class="gallery-list_item-title">Film title</h3>
-                <p class="gallery-list_item-year">year</p>
-                <p class="gallery-list_item-genres">genres</p>
-              </div>
-            </li>
-
-            <li class="gallery-list_item">
-              <div class="gallery-list_item-img-wrap">
-                <img src="./src/blank-picture.png" alt="film picture" />
-              </div>
-
-              <div class="gallery-raiting">
-                <div class="gallery-raiting-value">
-                  <svg class="icon star-icon">
-                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
-                  </svg>
-                  <span class="raiting-value">8.6</span>
-                </div>
-                <svg class="imdb-icon icon">
-                  <use xlink:href="./src/svgSprite.svg#imdb"></use>
-                </svg>
-              </div>
-
-              <div class="gallery-list_item-desc">
-                <h3 class="gallery-list_item-title">Film title</h3>
-                <p class="gallery-list_item-year">year</p>
-                <p class="gallery-list_item-genres">genres</p>
-              </div>
-            </li>
-
-            <li class="gallery-list_item">
-              <div class="gallery-list_item-img-wrap">
-                <img src="./src/blank-picture.png" alt="film picture" />
-              </div>
-
-              <div class="gallery-raiting">
-                <div class="gallery-raiting-value">
-                  <svg class="icon star-icon">
-                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
-                  </svg>
-                  <span class="raiting-value">8.6</span>
-                </div>
-                <svg class="imdb-icon icon">
-                  <use xlink:href="./src/svgSprite.svg#imdb"></use>
-                </svg>
-              </div>
-
-              <div class="gallery-list_item-desc">
-                <h3 class="gallery-list_item-title">Film title</h3>
-                <p class="gallery-list_item-year">year</p>
-                <p class="gallery-list_item-genres">genres</p>
-              </div>
-            </li>
-
-            <li class="gallery-list_item">
-              <div class="gallery-list_item-img-wrap">
-                <img src="./src/blank-picture.png" alt="film picture" />
-              </div>
-
-              <div class="gallery-raiting">
-                <div class="gallery-raiting-value">
-                  <svg class="icon star-icon">
-                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
-                  </svg>
-                  <span class="raiting-value">8.6</span>
-                </div>
-                <svg class="imdb-icon icon">
-                  <use xlink:href="./src/svgSprite.svg#imdb"></use>
-                </svg>
               </div>
 
               <div class="gallery-list_item-desc">
@@ -533,16 +419,18 @@
                 <img src="./src/blank-picture.png" alt="film picture" />
               </div>
 
-              <div class="gallery-raiting">
-                <div class="gallery-raiting-value">
+              <div class="raiting">
+                <div class="raiting-value">
                   <svg class="icon star-icon">
                     <use xlink:href="./src/svgSprite.svg#main-star"></use>
                   </svg>
                   <span class="raiting-value">8.6</span>
                 </div>
-                <svg class="imdb-icon icon">
-                  <use xlink:href="./src/svgSprite.svg#imdb"></use>
-                </svg>
+                <div class="imdbIcon">
+                  <svg class="icon">
+                    <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
+                  </svg>
+                </div>
               </div>
 
               <div class="gallery-list_item-desc">
@@ -557,16 +445,18 @@
                 <img src="./src/blank-picture.png" alt="film picture" />
               </div>
 
-              <div class="gallery-raiting">
-                <div class="gallery-raiting-value">
+              <div class="raiting">
+                <div class="raiting-value">
                   <svg class="icon star-icon">
                     <use xlink:href="./src/svgSprite.svg#main-star"></use>
                   </svg>
                   <span class="raiting-value">8.6</span>
                 </div>
-                <svg class="imdb-icon icon">
-                  <use xlink:href="./src/svgSprite.svg#imdb"></use>
-                </svg>
+                <div class="imdbIcon">
+                  <svg class="icon">
+                    <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
+                  </svg>
+                </div>
               </div>
 
               <div class="gallery-list_item-desc">
@@ -581,16 +471,18 @@
                 <img src="./src/blank-picture.png" alt="film picture" />
               </div>
 
-              <div class="gallery-raiting">
-                <div class="gallery-raiting-value">
+              <div class="raiting">
+                <div class="raiting-value">
                   <svg class="icon star-icon">
                     <use xlink:href="./src/svgSprite.svg#main-star"></use>
                   </svg>
                   <span class="raiting-value">8.6</span>
                 </div>
-                <svg class="imdb-icon icon">
-                  <use xlink:href="./src/svgSprite.svg#imdb"></use>
-                </svg>
+                <div class="imdbIcon">
+                  <svg class="icon">
+                    <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
+                  </svg>
+                </div>
               </div>
 
               <div class="gallery-list_item-desc">
@@ -811,25 +703,215 @@
           <h2 class="saved-gallery_title">Watchlist</h2>
           <ul class="saved-gallery-list">
             <li class="saved-gallery-list_item">
-              <svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
-              </svg>
+              <button class="closeBtn" type="button" title="removeElement">
+                <svg class="icon cross-icon">
+                  <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
+                </svg>
+              </button>
+
               <div class="img-wrap">
                 <img src="./src/blank-picture.png" alt="pic" />
               </div>
-              <!-- !!!! -->
               <div class="raiting">
-                <div class="gallery-raiting-value">
+                <div class="raiting-value">
                   <svg class="icon star-icon">
                     <use xlink:href="./src/svgSprite.svg#main-star"></use>
                   </svg>
                   <span class="raiting-value">8.6</span>
+                </div>
+                <div class="imdbIcon">
+                  <svg class="icon">
+                    <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
+                  </svg>
                 </div>
               </div>
               <div class="saved-gallery-list_item-desc">
                 <h3 class="title">Film name</h3>
                 <p class="year">year</p>
                 <ul class="genres-list">
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genregenre</li>
+                  <li class="genres-list_item">genre genre genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="saved-gallery-list_item">
+              <button class="closeBtn" type="button" title="removeElement">
+                <svg class="icon cross-icon">
+                  <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
+                </svg>
+              </button>
+
+              <div class="img-wrap">
+                <img src="./src/blank-picture.png" alt="pic" />
+              </div>
+              <div class="raiting">
+                <div class="raiting-value">
+                  <svg class="icon star-icon">
+                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
+                  </svg>
+                  <span class="raiting-value">8.6</span>
+                </div>
+                <div class="imdbIcon">
+                  <svg class="icon">
+                    <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
+                  </svg>
+                </div>
+              </div>
+              <div class="saved-gallery-list_item-desc">
+                <h3 class="title">Film name</h3>
+                <p class="year">year</p>
+                <ul class="genres-list">
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genregenre</li>
+                  <li class="genres-list_item">genre genre genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="saved-gallery-list_item">
+              <button class="closeBtn" type="button" title="removeElement">
+                <svg class="icon cross-icon">
+                  <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
+                </svg>
+              </button>
+
+              <div class="img-wrap">
+                <img src="./src/blank-picture.png" alt="pic" />
+              </div>
+              <div class="raiting">
+                <div class="raiting-value">
+                  <svg class="icon star-icon">
+                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
+                  </svg>
+                  <span class="raiting-value">8.6</span>
+                </div>
+                <div class="imdbIcon">
+                  <svg class="icon">
+                    <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
+                  </svg>
+                </div>
+              </div>
+              <div class="saved-gallery-list_item-desc">
+                <h3 class="title">Film name</h3>
+                <p class="year">year</p>
+                <ul class="genres-list">
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genregenre</li>
+                  <li class="genres-list_item">genre genre genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="saved-gallery-list_item">
+              <button class="closeBtn" type="button" title="removeElement">
+                <svg class="icon cross-icon">
+                  <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
+                </svg>
+              </button>
+
+              <div class="img-wrap">
+                <img src="./src/blank-picture.png" alt="pic" />
+              </div>
+              <div class="raiting">
+                <div class="raiting-value">
+                  <svg class="icon star-icon">
+                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
+                  </svg>
+                  <span class="raiting-value">8.6</span>
+                </div>
+                <div class="imdbIcon">
+                  <svg class="icon">
+                    <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
+                  </svg>
+                </div>
+              </div>
+              <div class="saved-gallery-list_item-desc">
+                <h3 class="title">Film name</h3>
+                <p class="year">year</p>
+                <ul class="genres-list">
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genregenre</li>
+                  <li class="genres-list_item">genre genre genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="saved-gallery-list_item">
+              <button class="closeBtn" type="button" title="removeElement">
+                <svg class="icon cross-icon">
+                  <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
+                </svg>
+              </button>
+
+              <div class="img-wrap">
+                <img src="./src/blank-picture.png" alt="pic" />
+              </div>
+              <div class="raiting">
+                <div class="raiting-value">
+                  <svg class="icon star-icon">
+                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
+                  </svg>
+                  <span class="raiting-value">8.6</span>
+                </div>
+                <div class="imdbIcon">
+                  <svg class="icon">
+                    <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
+                  </svg>
+                </div>
+              </div>
+              <div class="saved-gallery-list_item-desc">
+                <h3 class="title">Film name</h3>
+                <p class="year">year</p>
+                <ul class="genres-list">
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genregenre</li>
+                  <li class="genres-list_item">genre genre genre</li>
+                  <li class="genres-list_item">genre</li>
+                  <li class="genres-list_item">genre</li>
                   <li class="genres-list_item">genre</li>
                 </ul>
               </div>

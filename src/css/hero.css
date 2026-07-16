@@ -1,0 +1,133 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 42px;
+
+  position: relative;
+
+  @media screen and (min-width: 744px) {
+    display: none;
+  }
+
+  @media screen and (min-width: 1280px) {
+    display: flex;
+  }
+}
+
+.hero::after {
+  display: block;
+  position: absolute;
+  inset: 0;
+  content: "";
+  z-index: 1;
+
+  background-image: url("../blank-picture.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--grey-color);
+
+  opacity: 0.8;
+}
+
+.hero-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 345px;
+  gap: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  z-index: 2;
+
+  @media screen and (min-width: 1280px) {
+    min-height: 650px;
+    align-items: flex-start;
+    width: 100%;
+
+    padding-bottom: 82px;
+  }
+}
+
+.hero-title {
+  font-size: var(--font-size-lg);
+  @media screen and (min-width: 1280px) {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.hero-description {
+  font-size: var(--font-size-sm);
+}
+
+.hero-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media screen and (min-width: 1280px) {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.hero-controls-btns {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  @media screen and (max-width: 270px) {
+    flex-direction: column;
+  }
+}
+
+.hero-controls-showMore,
+.hero-controls-addToQueque {
+  font-size: 24px;
+  border-radius: 10px;
+  padding: 6px 12px;
+  color: var(--white-color);
+}
+
+.hero-controls-showMore {
+  background-color: var(--purple-color);
+}
+
+.hero-radiobuttons {
+  display: inline-flex;
+  margin: 0 auto;
+
+  @media screen and (min-width: 1280px) {
+    margin: 0 0 0 auto;
+    display: none;
+  }
+}
+
+.hero-desktop-controls {
+  display: none;
+
+  @media screen and (min-width: 1280px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+}
+.hero-desktop-controls-value {
+  font-size: var(--font-size-md);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-desktop-controls-value:first-of-type:after {
+  content: "";
+  height: 6px;
+  width: 126px;
+  background-color: var(--white-color);
+}
+
+.sr-only {
+  display: none;
+}

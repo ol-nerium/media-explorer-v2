@@ -1,0 +1,241 @@
+.backdrop {
+  position: fixed;
+  /* inset: 0; */
+  width: 100vw;
+  top: 0;
+  left: 0;
+  height: 100%;
+
+  overflow-y: auto;
+}
+
+.modal {
+  /* overflow: auto; */
+  padding: 22px;
+
+  background-color: var(--obsidian-color);
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+}
+.modal-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: fixed;
+  z-index: 3;
+  background-color: var(--carbon-color);
+  top: 0;
+  left: 0;
+  padding: 6px 15px 0 15px;
+  width: 100%;
+}
+
+.modal-nav-list {
+  display: inline-flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.modal-nav-list_item {
+}
+.modal-nav-list_item:not(:last-of-type)::after {
+  content: " >";
+}
+
+.modal-img-wrap {
+  z-index: 1;
+  opacity: 0.7;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  height: 300px;
+
+  position: fixed;
+}
+
+.modal-img-wrap img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.modal-film-desc {
+  top: 200px;
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-film-desc .title {
+  font-size: var(--font-size-xxl);
+}
+
+.modalControls {
+  /* position: fixed;
+  top: 100%;
+  left: 0;
+  translate: 0 -100%; */
+
+  /* height: 100px; */
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 6px;
+  padding-top: 220px;
+
+  position: relative;
+  z-index: 2;
+}
+
+.modalControls button {
+  width: 100%;
+
+  padding: 12px 6px;
+  font-size: var(--font-size-sm);
+  border-radius: 10px;
+}
+
+.modalControls_trailerBtn {
+  background-color: var(--purple-color);
+}
+
+.modal-film-desc .raiting {
+  display: flex;
+  width: 50%;
+  min-width: 35px;
+
+  height: 58px;
+  padding: 12px;
+  gap: 1rem;
+
+  border: 2px solid var(--golden-color);
+  border-radius: 12px;
+
+  align-self: center;
+  justify-content: space-between;
+}
+.modal-film-desc .raiting .icon {
+  height: 100%;
+  width: 32px;
+
+  @media screen and (max-width: 230px) {
+    display: none;
+  }
+}
+
+.modal-film-desc .raiting .imdbIcon {
+  width: 80px;
+  height: 100%;
+  border-radius: 10px;
+  background-color: var(--golden-color);
+
+  @media screen and (max-width: 300px) {
+    display: none;
+  }
+}
+
+.imdbIcon .icon {
+  width: 100%;
+  height: 100%;
+}
+
+.modal-film-desc .raiting-value {
+  font-size: var(--font-size-sm);
+}
+
+/* Modal mobile menu */
+
+.mobile-modal-menu {
+  display: flex;
+  flex-direction: column;
+
+  width: max-content;
+  min-height: 100vh;
+  padding: 72px 0 12px 0;
+  margin: 0 auto;
+
+  font-size: var(--font-size-sm);
+}
+
+.mobile-modal-menu .icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 1rem;
+}
+
+.modal-menu-logo .icon {
+  width: 208px;
+  height: 85px;
+  margin-right: 0;
+}
+
+.mobile-modal-menu a {
+  text-decoration: none;
+  color: currentColor;
+
+  display: flex;
+  align-items: center;
+}
+
+/* .settings-links-list, */
+.mobile-modal-menu .main-links-list,
+.mobile-modal-menu .library-links-list,
+.mobile-modal-menu-title {
+  margin-bottom: 1rem;
+}
+
+.mobile-modal-menu .main-links-list_item:not(:last-of-type),
+.mobile-modal-menu .library-links-list_item:not(:last-of-type),
+.mobile-modal-menu .settings-links-list_item:not(:last-of-type) {
+  margin-bottom: 1rem;
+}
+
+.mobile-modal-menu .settings-links-list {
+  margin-top: auto;
+}
+
+.short-desc {
+  /* font-size: var(--font-size-sm); */
+  font-size: var(--font-size-xs);
+}
+
+.short-desc * {
+  position: relative;
+  padding-right: 2rem;
+}
+
+.short-desc *:after {
+  content: "⬩";
+
+  position: absolute;
+  top: 50%;
+  translate: 0.5rem -50%;
+}
+/* .short-desc *:not(:last-of-type) {
+  padding-right: 2rem;
+} */
+
+.modal-film-desc .genres-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: var(--font-size-sm);
+}
+
+.modal-film-desc .genres-list .genres-list-item {
+  position: relative;
+}
+
+.modal-film-desc .genres-list .genres-list-item:not(:last-of-type)::after {
+  content: ",";
+}
+
+.modal-film-desc-text {
+  font-size: var(--font-size-xs);
+}

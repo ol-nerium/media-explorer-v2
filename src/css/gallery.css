@@ -1,0 +1,26 @@
+.gallery-list_item {
+  border-radius: 1rem;
+  overflow: hidden;
+  min-width: 110px;
+}
+
+.gallery-list_item-desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: center;
+  background-color: var(--grey-color);
+  flex-grow: 1;
+
+  padding: 9px;
+}
+.gallery-list_item-title {
+  font-size: var(--font-size-sm);
+}
+.gallery-list_item-year {
+  font-size: var(--font-size-xxs);
+}
+.gallery-list_item-genres {
+  font-size: var(--font-size-xs);
+}

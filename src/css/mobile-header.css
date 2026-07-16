@@ -1,0 +1,31 @@
+.mobile-header-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+  padding-right: 35px; /* quickfix */
+
+  @media screen and (min-width: 744px) {
+    display: none;
+  }
+}
+
+.mobile-header-layout .navBtn {
+  background-color: transparent;
+  border-color: transparent;
+  height: 100%;
+}
+
+.mobile-header-layout .icon {
+  width: 46px;
+  height: 100%;
+}
+
+.mobile-header-layout .headerTitle {
+  font-size: var(--font-size-xl);
+
+  @media screen and (max-width: 270px) {
+    display: none;
+  }
+}

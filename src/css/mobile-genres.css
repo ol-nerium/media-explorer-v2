@@ -1,0 +1,48 @@
+.mobile-genres {
+  margin-top: 42px;
+
+  @media screen and (min-width: 744px) {
+    display: none;
+  }
+}
+
+.mobile-genres-list {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+
+  gap: 1.5rem;
+}
+.mobile-genres-list_item {
+  /* width: calc((100% - 30px) / 4); */
+  width: 33%;
+}
+
+.mobile-genres-link {
+  text-align: center;
+  text-decoration: none;
+  color: currentColor;
+}
+
+.mobile-genres-link p {
+  font-size: var(--font-size-xxs);
+}
+
+.mobile-genres-icon-wrap {
+  border-radius: 50% 50%;
+  background-color: var(--grey-color);
+  aspect-ratio: 1/1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mobile-genres .icon {
+  color: var(--purple-color);
+  width: 100%;
+  height: 100%;
+  padding: 20%;
+}

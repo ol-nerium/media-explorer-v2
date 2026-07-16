@@ -1,0 +1,55 @@
+/* pagination */
+.pagination {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+
+  /* position: fixed;
+  top: 100%;
+  right: 0;
+  translate: 0 -100%;
+  z-index: 3; */
+
+  height: 94px;
+  padding: 20px;
+}
+
+.pagination button {
+  width: 54px;
+  color: var(--white-color);
+  background-color: var(--grey-color);
+}
+
+.pageEllipsis {
+  fill: currentColor;
+}
+.pagBtn {
+  height: 100%;
+  font-size: 1.3rem;
+  background-color: var(--accentColor);
+  color: var(--grey-color);
+}
+
+.pagination svg {
+  width: 40px;
+  height: 40px;
+}
+
+.pagBtn.active {
+  background-color: var(--purple-color);
+
+  color: var(--white-color);
+}
+
+.leftArrow,
+.rightArrow {
+  background-color: var(--purple-color);
+  height: 100%;
+}
+
+.inactive {
+  background-color: rgb(110, 110, 110);
+  /* remove possibility of click event here */
+  pointer-events: none;
+}

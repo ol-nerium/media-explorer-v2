@@ -1,0 +1,52 @@
+/* raiting block start */
+/* .saved-gallery-list_item  */
+.raiting {
+  position: absolute;
+  top: var(--img-wrap-height);
+  left: 50%;
+  translate: -50% -100%;
+
+  height: 54px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .saved-gallery-list_item  */
+.imdbIcon {
+  height: 100%;
+  padding: 4px 6px;
+}
+
+/* .saved-gallery-list_item  */
+.imdbIcon .icon {
+  width: 80px;
+  background-color: var(--golden-color);
+  border-radius: 10px;
+  color: var(--carbon-color);
+}
+
+/* .saved-gallery-list_item  */
+.raiting-value {
+  font-size: var(--font-size-sm);
+}
+
+/* raiting block end */
+
+.imdb-icon {
+  box-sizing: border-box;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--golden-color);
+  border-radius: 10px;
+  width: 48px;
+  height: 28px;
+}
+
+.star-icon {
+  color: var(--golden-color);
+  width: 16px;
+  height: 16px;
+}

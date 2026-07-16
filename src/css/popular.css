@@ -1,0 +1,6 @@
+.popular {
+  margin-top: 42px;
+  @media screen and (min-width: 744px) {
+    display: none;
+  }
+}

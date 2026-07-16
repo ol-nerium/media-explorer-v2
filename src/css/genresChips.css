@@ -1,0 +1,59 @@
+.genres-chips {
+}
+.genres-chips-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.genres-chips-list_item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  position: relative;
+}
+
+.genres-chips-list_item-btn {
+  display: flex;
+  height: 36px;
+
+  border-radius: 10px;
+  background-color: var(--grey-color);
+  color: var(--white-color);
+  font-size: var(--font-size-xs);
+  border-color: transparent;
+  padding: 0.4rem;
+  height: fit-content;
+}
+
+.genres-chips-list_item-btn.active {
+  /* padding-right: 2rem; */
+  background-color: var(--purple-color);
+  padding-right: 2rem;
+}
+
+.genres-chips-list_item-btn span {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.genres-chips-list_item-btn + .icon {
+  display: none;
+
+  width: 22px;
+  height: 24px;
+
+  position: absolute;
+  top: 50%;
+  right: calc((2rem - 22px) / 2);
+  transform: translate(0, -50%);
+  z-index: 111;
+  color: var(--obsidian-color);
+}
+
+.genres-chips-list_item-btn.active + .icon {
+  display: block;
+}
