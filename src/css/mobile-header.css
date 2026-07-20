@@ -3,12 +3,19 @@
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  width: 100%;
-  padding-right: 35px; /* quickfix */
+  width: 100dvw;
+  padding-right: var(--scrollbar-width);
+  /* padding-right: 15px; */
+
+  z-index: 5;
 
   @media screen and (min-width: 744px) {
     display: none;
   }
+}
+
+.main-heading {
+  z-index: 4;
 }
 
 .mobile-header-layout .navBtn {

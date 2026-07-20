@@ -15,12 +15,17 @@
   column-gap: 25px;
 
   @media screen and (min-width: 500px) {
-    justify-content: flex-start;
-    column-gap: calc((100% - var(--item-width) * 2));
+    justify-content: space-between;
+    /* justify-content: space-around; */
+    /* column-gap: calc((100% - var(--item-width) * 2)); */
   }
 
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 720px) {
+    justify-content: flex-start;
+
+    /* column-gap: calc((100% - var(--item-width) * 3) / 2); */
     column-gap: calc((100% - var(--item-width) * 3) / 2);
+    /* justify-content: space-around; */
   }
 
   @media screen and (min-width: 744px) {

@@ -1,11 +1,61 @@
 .genres-chips {
+  position: relative;
+  margin-top: 0.5rem;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 .genres-chips-list {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 0.5rem;
+
+  @media screen and (min-width: 1280px) {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    flex-wrap: nowrap;
+
+    padding-bottom: 0.5rem;
+    /* padding-right: 1rem;
+    padding-left: 1rem; */
+  }
 }
+
+.genres-chips-btn-left,
+.genres-chips-btn-right {
+  display: none;
+
+  @media screen and (min-width: 1280px) {
+    display: flex;
+    align-items: flex-start;
+    /* position: absolute; */
+    font-size: var(--font-size-xl);
+
+    background-color: transparent;
+    border: none;
+  }
+}
+
+.genres-chips-btn-right {
+  margin-left: auto;
+}
+
+.genres-chips .left-arrow,
+.genres-chips .right-arrow {
+  height: 45px;
+  width: 45px;
+}
+
+/* .genres-chips-btn-left {
+  top: 0;
+  left: -1rem;
+}
+
+.genres-chips-btn-right {
+  top: 0;
+  right: 1rem;
+} */
 
 .genres-chips-list_item {
   display: flex;
@@ -13,6 +63,10 @@
   gap: 0.3rem;
 
   position: relative;
+
+  @media screen and (min-width: 744px) {
+    flex-shrink: 0;
+  }
 }
 
 .genres-chips-list_item-btn {
@@ -26,12 +80,17 @@
   border-color: transparent;
   padding: 0.4rem;
   height: fit-content;
+
+  @media screen and (min-width: 1280px) {
+    font-size: var(--font-size-md);
+  }
 }
 
 .genres-chips-list_item-btn.active {
   /* padding-right: 2rem; */
   background-color: var(--purple-color);
-  padding-right: 2rem;
+  /* padding-right: 2rem; */
+  padding-right: calc(22px + 1.5rem);
 }
 
 .genres-chips-list_item-btn span {
@@ -40,20 +99,33 @@
   text-align: center;
 }
 
-.genres-chips-list_item-btn + .icon {
+.genres-chips-list_item-btn + .closeBtn {
   display: none;
-
-  width: 22px;
-  height: 24px;
 
   position: absolute;
   top: 50%;
   right: calc((2rem - 22px) / 2);
   transform: translate(0, -50%);
-  z-index: 111;
+  z-index: 2;
+
+  background-color: transparent;
+  border: none;
+
+  width: calc(22px + 1rem);
+  height: calc(100% - 0.8rem);
+
+  padding: 0 0.5rem;
+}
+
+.genres-chips-list_item .icon {
+  /* width: 22px;
+  height: 24px; */
+
+  height: 100%;
+  width: 100%;
   color: var(--obsidian-color);
 }
 
-.genres-chips-list_item-btn.active + .icon {
+.genres-chips-list_item-btn.active + .closeBtn {
   display: block;
 }

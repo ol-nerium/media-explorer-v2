@@ -3,4 +3,28 @@
   @media screen and (min-width: 744px) {
     display: none;
   }
+
+  @media screen and (min-width: 1280px) {
+    display: block;
+  }
+}
+
+.tranding .gallery-list_item {
+  flex-basis: 54%;
+
+  @media screen and (min-width: 1280px) {
+    /* flex-basis: calc((100% - 4 * 1rem) / 4); */
+    flex-basis: 27%;
+  }
+}
+
+.gallery-list_item-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.gallery-list_item-genres_item {
+}
+.gallery-list_item-genres_item:not(:last-of-type):after {
+  content: ",";
 }

@@ -1,4 +1,5 @@
 .main-gallery {
+  margin-top: 42px;
 }
 
 .main-gallery .gallery-list {
@@ -75,4 +76,13 @@
 .main-gallery .gallery-list_item-year {
 }
 .main-gallery .gallery-list_item-genres {
+}
+
+.genres-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.genres-list_item:not(:last-of-type):after {
+  content: ",";
 }
