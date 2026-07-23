@@ -49,6 +49,7 @@ main {
 }
 .library-links_title {
   font-size: var(--font-size-sm);
+  overflow: visible;
 }
 .main-heading-layout {
   display: flex;
@@ -75,7 +76,7 @@ main {
 }
 
 .header-menu-layout .logo {
-  margin-bottom: 0.5rem;
+  margin-bottom: 3rem;
 }
 .header-menu-layout .logo .icon {
   width: 200px;

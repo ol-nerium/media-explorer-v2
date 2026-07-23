@@ -1,27 +1,62 @@
 .pagination {
+  display: none;
+  padding: 20px 0;
+}
+
+@media screen and (min-width: 744px) {
+  .pagination {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .pagination-layout {
+    background-color: var(--grey-color);
+    border-radius: 15px;
+    gap: 60px;
+    justify-content: center;
+    width: fit-content;
+  }
+}
+
+.pagination-layout {
   display: flex;
-  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+}
+
+.leftArrow,
+.rightArrow {
+  background-color: transparent;
+  width: 54px;
+  height: 54px;
+
+  display: flex;
   justify-content: center;
   align-items: center;
 
-  height: 94px;
-  padding: 20px;
+  border: none;
 }
 
-.pagination button {
-  width: 54px;
-  color: var(--white-color);
-  background-color: var(--grey-color);
-}
-
-.pageEllipsis {
-  fill: currentColor;
-}
 .pagBtn {
+  width: 54px;
+  height: 54px;
   height: 100%;
   font-size: 1.3rem;
   background-color: var(--accentColor);
-  color: var(--grey-color);
+  color: var(--white-color);
+  background-color: var(--obsidian-color);
+
+  border: none;
+
+  font-size: var(--font-size-lg);
+}
+
+.pageEllipsis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pagination svg {
@@ -33,12 +68,6 @@
   background-color: var(--purple-color);
 
   color: var(--white-color);
-}
-
-.leftArrow,
-.rightArrow {
-  background-color: var(--purple-color);
-  height: 100%;
 }
 
 .inactive {

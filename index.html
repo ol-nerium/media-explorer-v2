@@ -743,25 +743,34 @@
       </section>
 
       <section class="pagination">
-        <h2 class="sr-only">Pagination</h2>
-        <button class="leftArrow" data-control="left" title="left-arrow">
-          <svg class="icon left-arrow">
-            <use xlink:href="./src/svgSprite.svg#main-left-arrow"></use>
-          </svg>
-        </button>
-        <div class="pageEllipsis">...</div>
-        <button class="pagBtn" data-page="${i}">${i}</button>
-        <button class="pagBtn active" data-page="${i}">${i}</button>
-        <button class="pagBtn" data-page="${i}">${i}</button>
-        <button class="pagBtn" data-page="${i}">${i}</button>
-        <button class="pagBtn" data-page="${i}">${i}</button>
-        <button class="pagBtn" data-page="${i}">${i}</button>
-        <div class="pageEllipsis">...</div>
-        <button class="rightArrow" data-control="right" title="right-arrow">
-          <svg class="icon right-arrow">
-            <use xlink:href="./src/svgSprite.svg#main-right-arrow"></use>
-          </svg>
-        </button>
+        <div class="container pagination-layout">
+          <h2 class="sr-only">Pagination</h2>
+          <button class="leftArrow" data-control="left" title="left-arrow">
+            <svg class="icon left-arrow">
+              <use xlink:href="./src/svgSprite.svg#main-left-arrow"></use>
+            </svg>
+          </button>
+          <!-- <div class="pageEllipsis">
+            <svg class="icon left-arrow">
+              <use xlink:href="./src/svgSprite.svg#main-dots"></use>
+            </svg>
+          </div> -->
+          <button class="pagBtn" data-page="1">1</button>
+          <button class="pagBtn active" data-page="2">2</button>
+          <button class="pagBtn" data-page="3">3</button>
+          <div class="pageEllipsis">
+            <svg class="icon left-arrow">
+              <use xlink:href="./src/svgSprite.svg#main-dots"></use>
+            </svg>
+          </div>
+          <button class="pagBtn" data-page="100">100</button>
+
+          <button class="rightArrow" data-control="right" title="right-arrow">
+            <svg class="icon right-arrow">
+              <use xlink:href="./src/svgSprite.svg#main-right-arrow"></use>
+            </svg>
+          </button>
+        </div>
       </section>
     </main>
 
