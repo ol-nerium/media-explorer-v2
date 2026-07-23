@@ -1,5 +1,3 @@
-/* raiting block start */
-/* .saved-gallery-list_item  */
 .raiting {
   position: absolute;
   top: var(--img-wrap-height);
@@ -13,30 +11,25 @@
   justify-content: space-between;
 }
 
-/* .saved-gallery-list_item  */
 .imdbIcon {
   height: 100%;
   padding: 4px 6px;
 }
 
-/* .saved-gallery-list_item  */
 .imdbIcon .icon {
   width: 80px;
-  height: 100%;
+  /* height: 100%; */
   background-color: var(--golden-color);
   border-radius: 10px;
   color: var(--carbon-color);
 }
 
-/* .saved-gallery-list_item  */
 .raiting-value {
   font-size: var(--font-size-sm);
   display: flex;
   align-items: center;
   gap: 1rem;
 }
-
-/* raiting block end */
 
 .imdb-icon {
   box-sizing: border-box;

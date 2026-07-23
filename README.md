@@ -33,6 +33,7 @@ main-history
 main-home
 main-imdb
 main-left-arrow
+main-right-arrow
 main-Logo
 main-logout
 main-magnify-glass-1
@@ -41,7 +42,6 @@ main-moon
 main-notification
 main-polygon
 main-queue
-main-right-arrow
 main-saved
 main-settings
 main-star
@@ -140,4 +140,18 @@ font-style: italic;
 font-family: "Poppins", sans-serif;
 font-weight: 900;
 font-style: italic;
+}
+
+function stars(num){
+return `<li class="star-division_item" data-starCount="${num}"> 
+    <div class="stars">${function svgIcons(num){
+    let res=' ';
+    for (let i=1; i<=num; i++){
+        res+=`<svg class="icon star-icon">
+<use xlink:href="./src/svgSprite.svg#main-star"></use>
+</svg>`
+    }
+    return res;
+}(num)} </div> 
+    <p class="percent">72%</p> </li>`
 }

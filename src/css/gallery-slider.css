@@ -10,13 +10,10 @@
 .gallery-list-slider .gallery-list_item {
   display: flex;
   flex-direction: column;
-  /* flex-basis: 54%; */
   flex-shrink: 0;
 
   position: relative;
-
   min-width: 152px;
-  /* height: 340px; */
 
   --img-wrap-height: 62%;
 }

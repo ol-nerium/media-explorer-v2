@@ -6,35 +6,35 @@
   align-items: center;
   gap: 0.5rem;
 }
+
 .genres-chips-list {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-
-  @media screen and (min-width: 1280px) {
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    flex-wrap: nowrap;
-
-    padding-bottom: 0.5rem;
-    /* padding-right: 1rem;
-    padding-left: 1rem; */
-  }
 }
-
 .genres-chips-btn-left,
 .genres-chips-btn-right {
   display: none;
+}
+.genres-chips-list_item-btn {
+  display: flex;
+  height: 36px;
 
-  @media screen and (min-width: 1280px) {
-    display: flex;
-    align-items: flex-start;
-    /* position: absolute; */
-    font-size: var(--font-size-xl);
+  border-radius: 10px;
+  background-color: var(--grey-color);
+  color: var(--white-color);
+  font-size: var(--font-size-xs);
+  border-color: transparent;
+  padding: 0.4rem;
+  height: fit-content;
+}
 
-    background-color: transparent;
-    border: none;
-  }
+.genres-chips-list_item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  position: relative;
 }
 
 .genres-chips-btn-right {
@@ -47,49 +47,8 @@
   width: 45px;
 }
 
-/* .genres-chips-btn-left {
-  top: 0;
-  left: -1rem;
-}
-
-.genres-chips-btn-right {
-  top: 0;
-  right: 1rem;
-} */
-
-.genres-chips-list_item {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-
-  position: relative;
-
-  @media screen and (min-width: 744px) {
-    flex-shrink: 0;
-  }
-}
-
-.genres-chips-list_item-btn {
-  display: flex;
-  height: 36px;
-
-  border-radius: 10px;
-  background-color: var(--grey-color);
-  color: var(--white-color);
-  font-size: var(--font-size-xs);
-  border-color: transparent;
-  padding: 0.4rem;
-  height: fit-content;
-
-  @media screen and (min-width: 1280px) {
-    font-size: var(--font-size-md);
-  }
-}
-
 .genres-chips-list_item-btn.active {
-  /* padding-right: 2rem; */
   background-color: var(--purple-color);
-  /* padding-right: 2rem; */
   padding-right: calc(22px + 1.5rem);
 }
 
@@ -101,6 +60,10 @@
 
 .genres-chips-list_item-btn + .closeBtn {
   display: none;
+}
+
+.genres-chips-list_item-btn.active + .closeBtn {
+  display: block;
 
   position: absolute;
   top: 50%;
@@ -118,14 +81,35 @@
 }
 
 .genres-chips-list_item .icon {
-  /* width: 22px;
-  height: 24px; */
-
-  height: 100%;
-  width: 100%;
+  /* height: 100%;
+  width: 100%; */
   color: var(--obsidian-color);
 }
 
-.genres-chips-list_item-btn.active + .closeBtn {
-  display: block;
+@media screen and (min-width: 744px) {
+  .genres-chips-list_item {
+    flex-shrink: 0;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .genres-chips-list {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    flex-wrap: nowrap;
+
+    padding-bottom: 0.5rem;
+  }
+  .genres-chips-btn-left,
+  .genres-chips-btn-right {
+    display: flex;
+    align-items: flex-start;
+    font-size: var(--font-size-xl);
+
+    background-color: transparent;
+    border: none;
+  }
+  .genres-chips-list_item-btn {
+    font-size: var(--font-size-md);
+  }
 }

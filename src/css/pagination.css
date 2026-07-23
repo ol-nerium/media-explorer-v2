@@ -1,15 +1,8 @@
-/* pagination */
 .pagination {
   display: flex;
   gap: 0.5rem;
   justify-content: center;
   align-items: center;
-
-  /* position: fixed;
-  top: 100%;
-  right: 0;
-  translate: 0 -100%;
-  z-index: 3; */
 
   height: 94px;
   padding: 20px;

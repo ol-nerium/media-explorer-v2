@@ -3,7 +3,8 @@
 
 @import "./css/header.css";
 @import "./css/mobile-header.css";
-@import "./css/main-heading.css";
+
+@import "./css/main-page-info.css";
 
 @import "./css/genresChips.css";
 @import "./css/sortingSection.css";
@@ -20,5 +21,5 @@
 @import "./css/gallery-slider.css";
 @import "./css/gallery-saved.css";
 
-@import "./css/modal.css";
+@import "./css/full-card.css";
 @import "./css/mobile-menu.css";

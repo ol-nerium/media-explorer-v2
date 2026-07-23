@@ -1,3 +1,8 @@
+.sorting {
+  padding-top: 2rem;
+  margin-bottom: 30px;
+}
+
 .sorting-layout {
   display: flex;
   flex-direction: column;
@@ -19,11 +24,15 @@
   margin-top: 0.5rem;
 
   font-size: var(--font-size-xs);
+}
 
-  @media screen and (min-width: 744px) {
+@media screen and (min-width: 744px) {
+  .dropdown {
     font-size: var(--font-size-sm);
   }
-  @media screen and (min-width: 1280px) {
+}
+@media screen and (min-width: 1280px) {
+  .dropdown {
     font-size: var(--font-size-md);
   }
 }
@@ -32,7 +41,7 @@
   min-inline-size: 14ch;
   justify-content: space-between;
 
-  width: 300px;
+  /* width: 300px; */
   color: var(--white-color);
   padding: 0 4px 0 3px;
   background-color: var(--carbon-color);
