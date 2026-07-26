@@ -23,3 +23,7 @@
 
 @import "./css/full-card.css";
 @import "./css/mobile-menu.css";
+
+#app {
+  position: relative;
+}
