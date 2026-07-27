@@ -18,7 +18,7 @@ main {
   display: flex;
   flex-wrap: wrap;
   background-color: var(--obsidian-color);
-  z-index: 5;
+  z-index: 7;
 }
 
 .header-menu-layout {
@@ -72,16 +72,18 @@ main {
 .header-menu-layout .library-links_title,
 .header-menu-layout .library-links-list,
 .header-menu-layout li:not(:last-of-type) {
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.5rem;
 }
 
 .header-menu-layout .logo {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 .header-menu-layout .logo .icon {
   width: 200px;
   height: 85px;
   padding: 0;
+  border: 2px solid var(--golden-color);
+  border-radius: 12px;
 }
 .header-menu-layout .icon {
   width: 48px;
@@ -213,7 +215,7 @@ main {
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   main {
     padding-left: 295px;
   }

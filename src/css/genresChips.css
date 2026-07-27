@@ -92,7 +92,7 @@
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .genres-chips-list {
     overflow-x: auto;
     overscroll-behavior-inline: contain;
@@ -111,5 +111,9 @@
   }
   .genres-chips-list_item-btn {
     font-size: var(--font-size-md);
+  }
+
+  .genres-chips-list_item:has(.genres-chips-list_item-btn.active) {
+    order: -1;
   }
 }

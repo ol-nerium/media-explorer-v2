@@ -21,6 +21,7 @@
 
 .main-page-info-title {
   font-size: var(--font-size-xl);
+  text-transform: capitalize;
 }
 
 @media screen and (min-width: 744px) {
@@ -29,7 +30,7 @@
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .main-page-info {
     padding-top: 42px;
   }

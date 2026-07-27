@@ -402,7 +402,7 @@
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .film-content {
     display: flex;
     justify-content: space-between;

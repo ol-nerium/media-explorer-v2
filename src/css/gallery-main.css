@@ -24,7 +24,7 @@
     flex-direction: row;
   }
 }
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .main-gallery .gallery-list {
     --item-width: calc((100% - 2 * var(--item-gap)) / 3);
   }

@@ -27,7 +27,8 @@
 }
 
 .leftArrow,
-.rightArrow {
+.rightArrow,
+.dots-icon {
   background-color: transparent;
   width: 54px;
   height: 54px;

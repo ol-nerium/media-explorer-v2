@@ -7,14 +7,15 @@
   min-width: 130px;
 }
 
-.hero::after {
+/* .hero::after { */
+.hero-img-wrap {
   display: block;
   position: absolute;
   inset: 0;
   content: "";
   z-index: 1;
 
-  background-image: url("../blank-picture.png");
+  /* background-image: url(); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -33,11 +34,41 @@
   padding-bottom: 16px;
   z-index: 2;
   width: 100%;
+
+  position: relative;
 }
 
 .hero-title {
   font-size: var(--font-size-lg);
   white-space: normal;
+}
+
+.hero-short-desc {
+  display: flex;
+  gap: 2rem;
+}
+.hero-short-desc-year {
+  position: relative;
+  overflow: visible;
+}
+.hero-short-desc-year::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(1rem, -50%);
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50% 50%;
+  background-color: var(--white-color);
+}
+.hero-genreList {
+  display: flex;
+  gap: 0.5rem;
+}
+.hero-genreList_item:not(:last-of-type):after {
+  content: ",";
 }
 
 .hero-description {
@@ -100,10 +131,6 @@
   background-color: var(--white-color);
 }
 
-.hero-layout {
-  position: relative;
-}
-
 .hero-controls .icon {
   /* height: 100%;
   width: 100%; */
@@ -164,7 +191,7 @@
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .hero {
     display: flex;
   }
@@ -174,7 +201,7 @@
     align-items: flex-start;
     width: 100%;
 
-    padding: 32px;
+    /* padding: 32px; */
   }
 
   .hero-title {
@@ -196,7 +223,7 @@
   .hero-controls-addToQueque {
     /* width: 175px; */
     padding: 20px 24px;
-    font-size: var(--font-size-lg);
+    /* font-size: var(--font-size-lg); */
   }
 
   .hero-radiobuttons {
