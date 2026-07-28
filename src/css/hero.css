@@ -123,6 +123,9 @@
   align-items: center;
   gap: 10px;
 }
+.hero-desktop-controls-value:first-of-type {
+  color: var(--purple-color);
+}
 
 .hero-desktop-controls-value:first-of-type:after {
   content: "";
@@ -134,12 +137,13 @@
 .hero-controls .icon {
   /* height: 100%;
   width: 100%; */
-  color: var(--obsidian-color);
+  /* color: var(--obsidian-color); */
 }
 
 .hero-controls-arrows_left,
 .hero-controls-arrows_right {
   display: none;
+  color: var(--purple-color);
 }
 
 .hero-controls-arrows_left {

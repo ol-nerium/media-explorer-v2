@@ -1,31 +1,23 @@
-import {
-  headerMarkup,
-  mainPageInfoSectionMarkup,
-  sortingSectionMarkup,
-  heroSectionMarkup,
-  mobileGenresSectionMarkup,
-  sliderGallerySectionMarkup,
-  mainGallerySectionMarkup,
-  genresSectionMarkup,
-  savedGalleryMarkup,
-  paginationSectionMarkup,
-  tabletHomeSectionMarkup,
-} from "./sectionCreate";
-import {
-  getNowPlayingMoviesList,
-  getPopularMoviesList,
-  getTopRatedMoviesList,
-  getUpcomingMoviesList,
-} from "./services/apiService";
+import { mainPageInfoSectionMarkup } from "./components/mainPageInfo";
+import { sortingSectionMarkup } from "./components/sortingSection";
+import { heroSectionMarkup } from "./components/hero";
+import { mobileGenresSectionMarkup } from "./components/mobileGenresSection";
+import { sliderGallerySectionMarkup } from "./components/sliderGallery";
+import { mainGallerySectionMarkup } from "./components/mainGallerySection";
+import { genresSectionMarkup } from "./components/genresSection";
+import { savedGalleryMarkup } from "./components/savedGallery";
+import { paginationSectionMarkup } from "./components/pagination";
+import { tabletHomeSectionMarkup } from "./components/tabletHomeSection";
 
-const nowPlayingObj = await getNowPlayingMoviesList();
-const popularObj = await getPopularMoviesList(20);
-const topRatedObj = await getTopRatedMoviesList();
-const upcomingObj = await getUpcomingMoviesList();
+import { heroSliderData, nowPlayingObj, popularObj } from "../main";
+import { changeTitleText } from "./utils";
+import { listenersReload, appRootRef, mainRef } from "./services/refs";
+
+const root = appRootRef();
 
 const homePage = () => {
   return (
-    heroSectionMarkup(nowPlayingObj.results) +
+    heroSectionMarkup(heroSliderData) +
     mobileGenresSectionMarkup() +
     sliderGallerySectionMarkup("popular", popularObj.results) +
     tabletHomeSectionMarkup()
@@ -60,6 +52,68 @@ const queuePage = () => {
 };
 const settingsPage = () => {};
 const logoutPage = () => {};
+
+//
+
+export const pathObject = {
+  home: { path: "/", func: homePage },
+  movies: { path: "/movies", func: moviesPage },
+  genres: { path: "/genres", func: genresPage },
+  watchlist: { path: "/watchlist", func: watchlistPage },
+  history: { path: "/history", func: historyPage },
+  favorites: { path: "/favorites", func: favoritesPage },
+  queue: { path: "/queue", func: queuePage },
+  settings: {
+    path: "/settings",
+    func: () => {
+      console.log("here could be settings page");
+    },
+  },
+  logout: {
+    path: "/logout",
+    func: () => {
+      console.log("here could be logout");
+    },
+  },
+};
+
+export function clickOnNavLink(evt) {
+  evt.preventDefault();
+  const link = evt.target.closest("a");
+  if (!link) return;
+
+  drawMarkupFromPageName(link.href);
+}
+
+export function drawMarkupFromPageName(urlPath = document.URL) {
+  const actualPath = window.location.pathname;
+
+  const url = new URL(urlPath);
+  const passedPath = url.pathname;
+
+  const pathName = passedPath === "/" ? "home" : passedPath.slice(1);
+
+  if (!pathObject[pathName]) return;
+
+  let newURL =
+    window.location.protocol +
+    "//" +
+    window.location.host +
+    pathObject[pathName].path;
+
+  window.history.pushState({ path: newURL }, "", newURL);
+
+  if (!mainRef())
+    root.insertAdjacentElement("afterbegin", document.createElement("main"));
+  const main = mainRef();
+
+  if (!(actualPath === passedPath)) {
+    main.innerHTML = "";
+    main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
+    changeTitleText(pathName);
+  }
+  listenersReload();
+}
 
 export {
   homePage,

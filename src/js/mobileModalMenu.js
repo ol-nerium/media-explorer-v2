@@ -1,5 +1,5 @@
-import { clickOnNavLink } from "../main";
-import { mobileModalMenuMarkup } from "./sectionCreate";
+import { mobileModalMenuMarkup } from "./components/mobileModalMenu";
+import { clickOnNavLink } from "./routingMarkup";
 
 export function onMobHeaderBtnClick(evt) {
   const target = evt.target.closest("button");

@@ -1,5 +1,8 @@
 export function genreChipsInterface(evt) {
-  const targetedBtn = evt.target.closest("button");
+  let targetedBtn = evt.target.closest("button");
+  if (evt.target.nodeName === "button") targetedBtn = evt.target;
+  if (evt.target.nodeName === "span")
+    targetedBtn = evt.target.closest("button");
 
   if (!targetedBtn) return;
 

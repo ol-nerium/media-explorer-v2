@@ -13,7 +13,7 @@
   row-gap: 25px;
   column-gap: 25px;
 }
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 520px) {
   .genresSection-list {
     justify-content: space-between;
   }
@@ -34,7 +34,7 @@
     /* flex-wrap: nowrap; */
   }
 }
-@media screen and (min-width: 760px) {
+@media screen and (min-width: 780px) {
   .genresSection-list {
     flex-direction: row;
     flex-wrap: wrap;
@@ -49,7 +49,20 @@
     column-gap: calc((100% - var(--item-width) * 3) / 2);
   }
 }
-@media screen and (min-width: 1170px) {
+
+@media screen and (min-width: 1024px) {
+  .genresSection-list {
+    column-gap: calc((100% - var(--item-width) * 2));
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .genresSection-list {
+    column-gap: calc((100% - var(--item-width) * 3) / 2);
+  }
+}
+
+@media screen and (min-width: 1320px) {
   .genresSection-list {
     column-gap: calc((100% - var(--item-width) * 4) / 3);
   }
