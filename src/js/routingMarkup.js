@@ -1,5 +1,9 @@
 import { mainPageInfoSectionMarkup } from "./components/mainPageInfo";
-import { sortingSectionMarkup } from "./components/sortingSection";
+import {
+  createDropdownMarkup,
+  createGenreChipsListMarkup,
+  sortingSectionMarkup,
+} from "./components/sortingSection";
 import { heroSectionMarkup } from "./components/hero";
 import { mobileGenresSectionMarkup } from "./components/mobileGenresSection";
 import { sliderGallerySectionMarkup } from "./components/sliderGallery";
@@ -19,17 +23,29 @@ const homePage = () => {
   return (
     heroSectionMarkup(heroSliderData) +
     mobileGenresSectionMarkup() +
-    sliderGallerySectionMarkup("popular", popularObj.results) +
-    tabletHomeSectionMarkup()
+    sliderGallerySectionMarkup("popular", popularObj.results)
+    //+ tabletHomeSectionMarkup()
   );
 };
 
-const moviesPage = () => {
+const moviesPage = (title = "Popular", galleryData = popularObj) => {
   return (
     mainPageInfoSectionMarkup() +
-    sortingSectionMarkup() +
-    mainGallerySectionMarkup("popular", popularObj.results) +
-    paginationSectionMarkup(popularObj)
+    sortingSectionMarkup(createGenreChipsListMarkup(), createDropdownMarkup()) +
+    mainGallerySectionMarkup(title, galleryData.results) +
+    paginationSectionMarkup(galleryData)
+  );
+};
+
+export const searchedMoviesPage = (
+  searchQuery = "Default",
+  galleryData = [],
+) => {
+  return (
+    mainPageInfoSectionMarkup(searchQuery) +
+    sortingSectionMarkup(createGenreChipsListMarkup()) +
+    mainGallerySectionMarkup("search for " + searchQuery, galleryData.results) +
+    paginationSectionMarkup(galleryData)
   );
 };
 
@@ -55,6 +71,52 @@ const logoutPage = () => {};
 
 //
 
+// export function drawMarkupFromPageName(urlPath = document.URL) {
+//   const actualPath = window.location.pathname;
+
+//   const url = new URL(urlPath);
+
+//   const passedPath = url.pathname;
+
+//   const pathName = passedPath === "/" ? "home" : passedPath.slice(1);
+
+//   if (!pathObject[pathName]) return;
+
+//   let newURL =
+//     window.location.protocol +
+//     "//" +
+//     window.location.host +
+//     pathObject[pathName].path +
+//     url.search;
+
+//   window.history.pushState({ path: newURL }, "", newURL);
+
+//   if (!mainRef())
+//     root.insertAdjacentElement("afterbegin", document.createElement("main"));
+//   const main = mainRef();
+
+//   if (url.search !== "") {
+//     console.log("fetch page and draw");
+//     return;
+//   }
+//   if (actualPath !== passedPath) {
+//     main.innerHTML = "";
+//     main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
+//     changeTitleText(pathName);
+//   }
+//   listenersReload();
+// }
+
+export {
+  homePage,
+  moviesPage,
+  genresPage,
+  watchlistPage,
+  historyPage,
+  favoritesPage,
+  queuePage,
+};
+
 export const pathObject = {
   home: { path: "/", func: homePage },
   movies: { path: "/movies", func: moviesPage },
@@ -75,52 +137,4 @@ export const pathObject = {
       console.log("here could be logout");
     },
   },
-};
-
-export function clickOnNavLink(evt) {
-  evt.preventDefault();
-  const link = evt.target.closest("a");
-  if (!link) return;
-
-  drawMarkupFromPageName(link.href);
-}
-
-export function drawMarkupFromPageName(urlPath = document.URL) {
-  const actualPath = window.location.pathname;
-
-  const url = new URL(urlPath);
-  const passedPath = url.pathname;
-
-  const pathName = passedPath === "/" ? "home" : passedPath.slice(1);
-
-  if (!pathObject[pathName]) return;
-
-  let newURL =
-    window.location.protocol +
-    "//" +
-    window.location.host +
-    pathObject[pathName].path;
-
-  window.history.pushState({ path: newURL }, "", newURL);
-
-  if (!mainRef())
-    root.insertAdjacentElement("afterbegin", document.createElement("main"));
-  const main = mainRef();
-
-  if (!(actualPath === passedPath)) {
-    main.innerHTML = "";
-    main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
-    changeTitleText(pathName);
-  }
-  listenersReload();
-}
-
-export {
-  homePage,
-  moviesPage,
-  genresPage,
-  watchlistPage,
-  historyPage,
-  favoritesPage,
-  queuePage,
 };

@@ -200,6 +200,14 @@
     display: flex;
   }
 
+  .hero-img-wrap {
+    width: 70%;
+    height: 100%;
+    top: 0;
+    left: 100%;
+    translate: -100% 0;
+  }
+
   .hero-layout {
     min-height: 650px;
     align-items: flex-start;

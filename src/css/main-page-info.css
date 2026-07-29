@@ -14,6 +14,7 @@
 }
 .nav-list_item {
   font-size: var(--font-size-md);
+  text-transform: capitalize;
 }
 .nav-list_item:not(:last-of-type)::after {
   content: ">";

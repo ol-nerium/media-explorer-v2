@@ -10,7 +10,7 @@ const {
   profile_sizes,
   still_sizes,
 } = configuration.images;
-export const fallbackImg = "../blank-picture.png";
+export const fallbackImg = "./src/blank-picture.png";
 
 export const genresListData = await getGenresList();
 const genreIcons = {

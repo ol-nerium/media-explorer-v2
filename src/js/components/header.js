@@ -130,7 +130,7 @@ export const headerMarkup = () => {
                     xlink:href="./src/svgSprite.svg#main-magnify-glass-1"
                   ></use>
                 </svg>
-                <input id="search-field" placeholder="Search for movies..." />
+                <input id="search-field" name="search-field" placeholder="Search for movies..." />
               </label>
               <button
                 type="submit"

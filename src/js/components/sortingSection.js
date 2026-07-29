@@ -7,20 +7,18 @@ const sortingSectiongenres = () => {
                 <button class="genres-chips-list_item-btn" data-genreId=${genre.id}>
                   <span>${genre.name}</span>
                 </button>
-                <button title="closeBtn" class="closeBtn">
+                <div title="closeBtn" class="closeBtn">
                   <svg class="icon">
                     <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
                   </svg>
-                </button>
+                </div>
               </li>`,
     )
     .join("");
 };
-export const sortingSectionMarkup = () => {
-  return `<section class="sorting">
-        <h2 class="sr-only">Sorting section</h2>
-        <div class="container sorting-layout">
-          <div class="genres-chips">
+
+export const createGenreChipsListMarkup = () => {
+  return `<div class="genres-chips">
             <button class="genres-chips-btn-left" title="left-arrow" data-control="left">
               <svg class="icon left-arrow">
                 <use xlink:href="./src/svgSprite.svg#main-left-arrow"></use>
@@ -36,9 +34,10 @@ export const sortingSectionMarkup = () => {
                 <use xlink:href="./src/svgSprite.svg#main-right-arrow"></use>
               </svg>
             </button>
-          </div>
-
-          <label for="sortingDropdown" class="dropdown"
+          </div>`;
+};
+export const createDropdownMarkup = () => {
+  return `<label for="sortingDropdown" class="dropdown"
             >Sort by:
             <select name="sortingDropdown" id="sortingDropdown">
               <button>
@@ -63,7 +62,20 @@ export const sortingSectionMarkup = () => {
                 <span>Upcoming</span>
               </option>
             </select>
-          </label>
+          </label>`;
+};
+
+//
+export const sortingSectionMarkup = (
+  genresMarkup = "",
+  dropdownMarkup = "",
+) => {
+  if (!genresMarkup && !dropdownMarkup) return "";
+  return `<section class="sorting">
+        <h2 class="sr-only">Sorting section</h2>
+        <div class="container sorting-layout">
+          ${genresMarkup}
+          ${dropdownMarkup}          
         </div>
       </section>`;
 };

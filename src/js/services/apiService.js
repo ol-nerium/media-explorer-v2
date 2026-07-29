@@ -70,7 +70,7 @@ function getKeywordIdByTitle(query, page) {
     .then((res) => res.data);
 }
 
-function getMovieByTitle(page = 1, query) {
+function getMoviesByTitle(page = 1, query) {
   // query required
   // include_adult boolean
   // language  Defaults to en-US
@@ -114,7 +114,7 @@ export {
   // getKeyWordTitleById,
   getMovieById,
   getKeywordIdByTitle,
-  getMovieByTitle,
+  getMoviesByTitle,
   fetchResultsByIds,
   getExternalFilmVideosById,
   getMoviesByGenre,

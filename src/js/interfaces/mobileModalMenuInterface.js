@@ -1,12 +1,11 @@
 import { mobileModalMenuMarkup } from "../components/mobileModalMenu";
-import { clickOnNavLink } from "../routingMarkup";
+import { clickOnNavLink } from "../interfaces/headerInterface";
 
 export function onMobHeaderBtnClick(evt) {
   const target = evt.target.closest("button");
 
   if (!target) return;
   const btnControl = target.dataset?.control;
-  console.log(target.dataset?.control);
   if (btnControl === "openMobileMenu") openModal();
 }
 
@@ -36,12 +35,10 @@ function closeModal() {
 }
 
 function onBackdropClick(evt) {
-  console.log(evt.target);
   if (evt.target === evt.currentTarget) closeModal();
 }
 
 function onKeyClose(evt) {
-  console.log(evt.code);
   if (evt.code === "Escape") closeModal();
 }
 

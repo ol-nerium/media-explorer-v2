@@ -1,3 +1,4 @@
+import { refs } from "../services/refs";
 import { createPoster, genresListData } from "../utils";
 
 const heroSectionGenres = (genre_ids) => {
@@ -12,7 +13,6 @@ const heroSectionGenres = (genre_ids) => {
 };
 
 const radioButtons = (index, title, checked) => {
-  console.log(checked);
   return `<label for="hero_option-${index}" class="hero-radiobuttons_item"
                 ><input
                   type="radio"
@@ -54,8 +54,13 @@ export const heroSectionMarkup = (data, i = 0) => {
   } = data[index];
   const maxLengthArr = data.length;
 
-  return `<section class="hero" >
-      <div class="hero-img-wrap" style="background-image:url('${createPoster(poster_path)}')"></div>
+  const heroRoot = !!refs.hero.elem();
+  const heroWrapper = (markup) => {
+    if (!heroRoot) return `<section class="hero">${markup}</section>`;
+    return markup;
+  };
+
+  return heroWrapper(`<div class="hero-img-wrap" style="background-image:url('${createPoster(poster_path)}')"></div>
         <div class="container hero-layout">
           <h2 class="hero-title poppins-medium">${title}</h2>
           <div class="hero-short-desc">
@@ -103,5 +108,5 @@ export const heroSectionMarkup = (data, i = 0) => {
             </div>
           </div>
         </div>
-      </section>`;
+      `);
 };
