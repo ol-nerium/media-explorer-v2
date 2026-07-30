@@ -58,8 +58,6 @@ export const paginationSectionMarkup = (data) => {
   const resMarkup =
     arrowsMarkupObj.leftArrow + mainPagButtons + arrowsMarkupObj.rightArrow;
 
-  // console.log(resMarkup);
-
   return `<section class="pagination">
         <div class="container pagination-layout">
           <h2 class="sr-only">Pagination</h2>

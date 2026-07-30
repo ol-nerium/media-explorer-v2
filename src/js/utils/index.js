@@ -12,6 +12,8 @@ const {
 } = configuration.images;
 export const fallbackImg = "./src/blank-picture.png";
 
+// console.log(configuration);
+
 export const genresListData = await getGenresList();
 const genreIcons = {
   Action: "genres-action",
@@ -42,6 +44,18 @@ export const createPoster = (poster_path) => {
   return poster_path
     ? secure_base_url + poster_sizes[poster_sizes.length - 1] + poster_path
     : fallbackImg;
+};
+
+export const createAvatar = (avatar_path) => {
+  return avatar_path
+    ? secure_base_url + profile_sizes[profile_sizes.length - 1] + avatar_path
+    : fallbackImg;
+};
+
+export const createBackdropBackgound = (backdrop_path) => {
+  return (
+    secure_base_url + backdrop_sizes[backdrop_sizes.length - 1] + backdrop_path
+  );
 };
 
 export function changeTitleText(pathName) {

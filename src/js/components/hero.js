@@ -56,7 +56,8 @@ export const heroSectionMarkup = (data, i = 0) => {
 
   const heroRoot = !!refs.hero.elem();
   const heroWrapper = (markup) => {
-    if (!heroRoot) return `<section class="hero">${markup}</section>`;
+    if (!heroRoot)
+      return `<section class="hero" data-filmid=${id}>${markup}</section>`;
     return markup;
   };
 

@@ -11,7 +11,7 @@ const sliderGalleryItemGenres = (genreIds) => {
   });
   return genresMarkup;
 };
-const sliderGalleryItem = (data) => {
+export const sliderGalleryItem = (data) => {
   return `<li class="gallery-list_item" data-filmId=${data.id}>
               <div class="gallery-list_item-img-wrap">
                 <img src="${createPoster(data.poster_path)}" alt="${data.title}" />

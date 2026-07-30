@@ -1,4 +1,4 @@
-import { heroSliderData } from "../../main";
+import { heroSliderData, renderFilmCard } from "../../main";
 import { heroSectionMarkup } from "../components/hero";
 import { listenersReload, refs } from "../services/refs";
 
@@ -41,8 +41,12 @@ export const heroInterface = (evt) => {
     listenersReload();
   }
   if (btnData?.control === "showMore") {
-    alert("full card should open");
+    // alert("full card should open");
 
-    listenersReload();
+    const filmId = hero.dataset.filmid;
+
+    renderFilmCard(filmId);
+
+    // listenersReload();
   }
 };

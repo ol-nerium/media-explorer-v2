@@ -63,6 +63,35 @@ function getMovieById(movie_id) {
     });
 }
 
+export function getSimilarMoviesById(movie_id) {
+  // Get the similar movies based on genres and keywords.
+  // ?language=en-US&page=1
+  return axios
+    .get(`movie/${movie_id}/similar`)
+    .then((res) => res.data)
+    .catch((e) => {
+      throw e;
+    });
+}
+export function getReviewsByFilmId(movie_id) {
+  // Get the user reviews for a movie.
+  return axios
+    .get(`movie/${movie_id}/reviews`)
+    .then((res) => res.data)
+    .catch((e) => {
+      throw e;
+    });
+}
+export function getCreditsByFilmId(movie_id) {
+  // directing, art, acting etc.
+  return axios
+    .get(`movie/${movie_id}/credits`)
+    .then((res) => res.data)
+    .catch((e) => {
+      throw e;
+    });
+}
+
 function getKeywordIdByTitle(query, page) {
   // Search for keywords by their name.
   return axios

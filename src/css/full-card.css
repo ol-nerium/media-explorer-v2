@@ -91,7 +91,8 @@
 .full-card-heading .raiting {
   position: static;
   translate: 0 0;
-  width: 214px;
+  /* width: 214px; */
+  width: 240px;
   align-self: center;
 
   border: 2px solid var(--golden-color);
@@ -197,6 +198,9 @@
 }
 .additional-film-content-list_item-desc {
   font-size: var(--font-size-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .reviews {
@@ -259,7 +263,7 @@
   width: 32px;
   height: 32px;
 }
-.percent {
+.comment-raiting-value {
   font-size: var(--font-size-sm);
 }
 .comments {
@@ -275,6 +279,7 @@
   border-radius: 50% 50%;
 
   background-color: var(--golden-color);
+  overflow: hidden;
 }
 .avatar-wrap {
   padding: 10px;
@@ -301,8 +306,11 @@
 }
 
 .comments-item_content .star-division_item {
-  /* width: fit-content; */
-  gap: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  gap: 0.5rem;
 }
 .comments-item_content .star-division_item .star-icon {
   width: 18px;
@@ -406,7 +414,9 @@
   .film-content {
     display: flex;
     justify-content: space-between;
-    gap: 170px;
+    /* gap: 170px; */
+    gap: 2rem;
+    width: 100%;
   }
   .base-film-content {
     position: static;
@@ -430,9 +440,12 @@
     gap: 170px;
     align-items: center;
   }
-  .reviews-raiting,
-  .comments {
+  .reviews-raiting {
     flex-basis: 50%;
+  }
+  .comments {
+    width: 80%;
+    /* margin: 0 auto; */
   }
 
   .full-card-nav-list_item {
@@ -450,6 +463,10 @@
   .full-card-img-wrap {
     width: calc(100% + 30px + 50px);
     left: -30px;
+
+    /* width: 60%;
+    left: 0;
+    translate: -100% 0; */
   }
 
   .full-card-controls button {

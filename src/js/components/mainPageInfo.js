@@ -5,7 +5,6 @@ export const mainPageInfoSectionMarkup = (additionalTitle = null) => {
   const currentPathName = window.location.pathname;
   const pathName = currentPathName === "/" ? "home" : currentPathName.slice(1);
   if (pathName !== "home" && pathObject[pathName]) {
-    console.log({ pathName, link: pathObject[pathName].path });
     navLinksArr.push({ name: pathName, link: pathObject[pathName].path });
   }
   if (!!additionalTitle)
