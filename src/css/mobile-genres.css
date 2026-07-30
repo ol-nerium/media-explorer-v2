@@ -31,6 +31,14 @@
   width: 72px;
   border: none;
 }
+
+.mobile-genres-btn.active {
+  color: var(--purple-color);
+}
+.mobile-genres-btn.active .mobile-genres-icon-wrap {
+  background-color: var(--white-color);
+}
+
 .mobile-genres-icon-wrap {
   border-radius: 50% 50%;
   background-color: var(--grey-color);

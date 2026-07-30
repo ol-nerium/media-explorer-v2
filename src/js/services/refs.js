@@ -1,6 +1,9 @@
 import { heroInterface } from "../interfaces/heroInterface";
 import { onMobHeaderBtnClick } from "../interfaces/mobileModalMenuInterface";
-import { clickOnNavLink } from "../interfaces/headerInterface";
+import {
+  clickOnNavLink,
+  onSearchFormSubmit,
+} from "../interfaces/headerInterface";
 import {
   genreChipsInterface,
   onSelectChange,
@@ -75,6 +78,12 @@ export const refs = {
     func: heroInterface,
     eventType: "click",
   },
+  searchbarForm: {
+    elem: searchbarFormRef,
+    func: onSearchFormSubmit,
+    eventType: "submit",
+  },
+
   // you are here
   // searchbarForm: {
   //   elem: searchbarFormRef,

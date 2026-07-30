@@ -1,20 +1,7 @@
 import "./style.css";
 import { headerMarkup } from "./js/components/header";
 
-import {
-  homePage,
-  moviesPage,
-  genresPage,
-  watchlistPage,
-  historyPage,
-  favoritesPage,
-  queuePage,
-  // firstLoad,
-  // clickOnNavLink,
-  pathObject,
-  // drawMarkupFromPageName,
-  searchedMoviesPage,
-} from "./js/routingMarkup";
+import { pathObject, searchedMoviesPage } from "./js/routingMarkup";
 
 import {
   getCreditsByFilmId,
@@ -40,15 +27,7 @@ import {
   // reloadRefs,
   sortingDropdownRef,
 } from "./js/services/refs";
-import { heroSectionMarkup } from "./js/components/hero";
-import { mainPageInfoSectionMarkup } from "./js/components/mainPageInfo";
-import {
-  createDropdownMarkup,
-  createGenreChipsListMarkup,
-  sortingSectionMarkup,
-} from "./js/components/sortingSection";
-import { mainGallerySectionMarkup } from "./js/components/mainGallerySection";
-import { paginationSectionMarkup } from "./js/components/pagination";
+
 import { fullCardMarkup } from "./js/components/fullCard";
 
 export const nowPlayingObj = await getNowPlayingMoviesList();
@@ -64,32 +43,8 @@ if (!mainRef())
 root.insertAdjacentHTML("afterbegin", headerMarkup());
 
 const main = mainRef();
-// firstLoad();
+
 drawMarkupFromPageURL();
-
-// export function firstLoad() {
-//   const actualPath = window.location.pathname;
-//   let pathName = actualPath === "/" ? "home" : actualPath.slice(1);
-
-// if (!pathObject[pathName]) {
-//   let newURL = window.location.protocol + "//" + window.location.host + "/";
-//   window.history.pushState({ path: newURL }, "", newURL);
-//   pathName = "home";
-// }
-
-// const { searchQuery, page } = getUrlInfo();
-
-// if (!searchQuery) {
-//   main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
-//   changeTitleText(pathName);
-//   listenersReload();
-//   return;
-// }
-
-// if (searchQuery) {
-//   drawFetchedGalleryPage(page || 1, searchQuery);
-// }
-// }
 
 export function drawMarkupFromPageURL(targetURL = document.URL) {
   const actualPath = window.location.pathname;
@@ -167,27 +122,6 @@ export function setUrlInfo({ pathName, searchQuery = "", page = 1 }) {
   window.history.pushState({ path: newURL }, "", newURL);
 }
 
-const searchbarForm = document.querySelector(".searchbar-form");
-searchbarForm.addEventListener("submit", onSearchFormSubmit);
-
-function onSearchFormSubmit(evt) {
-  evt.preventDefault();
-
-  const formData = new FormData(evt.currentTarget);
-  const searchQuery = formData.get("search-field");
-
-  if (searchQuery.trim() === "") {
-    alert(
-      "here should be notification for not searching empty string or whatever",
-    );
-    return;
-  }
-
-  drawFetchedGalleryPage(1, searchQuery);
-
-  // delay/check/empty value?
-}
-
 export function drawFetchedGalleryPage(page = 1, searchQuery) {
   getMoviesByTitle(page, searchQuery)
     .catch(console.log)
@@ -226,9 +160,4 @@ export function renderFilmCard(filmId) {
     const filmCardMarkup = fullCardMarkup(filmData);
     root.innerHTML = filmCardMarkup;
   });
-
-  // getMovieById(filmId).then((filmData) => {
-
-  // console.log(filmCardMarkup);
-  // });
 }

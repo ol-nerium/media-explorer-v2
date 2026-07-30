@@ -69,44 +69,6 @@ const queuePage = () => {
 const settingsPage = () => {};
 const logoutPage = () => {};
 
-//
-
-// export function drawMarkupFromPageName(urlPath = document.URL) {
-//   const actualPath = window.location.pathname;
-
-//   const url = new URL(urlPath);
-
-//   const passedPath = url.pathname;
-
-//   const pathName = passedPath === "/" ? "home" : passedPath.slice(1);
-
-//   if (!pathObject[pathName]) return;
-
-//   let newURL =
-//     window.location.protocol +
-//     "//" +
-//     window.location.host +
-//     pathObject[pathName].path +
-//     url.search;
-
-//   window.history.pushState({ path: newURL }, "", newURL);
-
-//   if (!mainRef())
-//     root.insertAdjacentElement("afterbegin", document.createElement("main"));
-//   const main = mainRef();
-
-//   if (url.search !== "") {
-//     console.log("fetch page and draw");
-//     return;
-//   }
-//   if (actualPath !== passedPath) {
-//     main.innerHTML = "";
-//     main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
-//     changeTitleText(pathName);
-//   }
-//   listenersReload();
-// }
-
 export {
   homePage,
   moviesPage,
@@ -131,6 +93,12 @@ export const pathObject = {
       console.log("here could be settings page");
     },
   },
+  // filmCard: {
+  //   path: "/123123",
+  //   func: () => {
+  //     console.log("filmCard ?");
+  //   },
+  // },
   logout: {
     path: "/logout",
     func: () => {

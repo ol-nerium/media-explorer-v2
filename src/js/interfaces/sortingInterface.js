@@ -1,4 +1,5 @@
 export function genreChipsInterface(evt) {
+  // can be bug here
   let targetedBtn = evt.target.closest("button");
   if (evt.target.nodeName === "button") targetedBtn = evt.target;
   if (evt.target.nodeName === "span")
@@ -38,6 +39,7 @@ function onGenreChipClick(genreId) {
   const clickedElement = genresChipsRoot.querySelector(
     `[data-genreid="${genreId}"]`,
   );
+
   const genreIndex = activeGenres.indexOf(genreId);
 
   const startPosition = genresList.getBoundingClientRect().left;
