@@ -1,6 +1,13 @@
-import { heroSliderData, renderFilmCard } from "../../main";
+import { heroSliderData } from "../data";
 import { heroSectionMarkup } from "../components/hero";
 import { listenersReload, refs } from "../services/refs";
+import { openFilmCard } from "../../main";
+import {
+  getFromLS,
+  saveToLS,
+  toggleValueFromLSKey,
+} from "../utils/localStorage";
+import { changeQuequeBtnTextByFilmId } from "../utils";
 
 export const heroInterface = (evt) => {
   const hero = refs.hero.elem();
@@ -36,17 +43,18 @@ export const heroInterface = (evt) => {
     listenersReload();
   }
   if (btnData?.control === "addToQueque") {
-    alert("LS func should be here + maybe a toast");
+    // alert("LS func should be here + maybe a toast");
+    const value = btn.closest("section").dataset.filmid;
+    const filmId = Number(hero.dataset.filmid);
 
-    listenersReload();
-  }
-  if (btnData?.control === "showMore") {
-    // alert("full card should open");
-
-    const filmId = hero.dataset.filmid;
-
-    renderFilmCard(filmId);
+    toggleValueFromLSKey(value, "quequeFilmsList");
+    changeQuequeBtnTextByFilmId(filmId);
 
     // listenersReload();
+  }
+  if (btnData?.control === "showMore") {
+    const filmId = hero.dataset.filmid;
+
+    openFilmCard(filmId);
   }
 };

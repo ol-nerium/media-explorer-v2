@@ -52,8 +52,7 @@ const mainGallerySectionItem = (data) => {
               </div>
 
               <div class="gallery-list_item-desc">
-                <h3 class="gallery-list_item-title">${title}</h3>
-                <p class="gallery-list_item-year">${release_date.slice(0, 4)}</p>
+                <h3 class="gallery-list_item-title">${title} <span class="gallery-list_item-year">(${release_date.slice(0, 4)})</span></h3>
                 <ul class="genres-list">
                   ${genresList(genre_ids)}
                 </ul>

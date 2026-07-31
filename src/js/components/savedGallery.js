@@ -53,8 +53,7 @@ const savedGalleryItem = (data) => {
                 </div>
               </div>
               <div class="saved-gallery-list_item-desc">
-                <h3 class="title">${title}</h3>
-                <p class="year">${release_date.slice(0, 4)}</p>
+                <h3 class="title">${title} <span class="year">(${release_date.slice(0, 4)})</span></h3>
                 <ul class="gallery-list_item-genres">
                   ${savedGalleryItemGenres(genre_ids)}                  
                 </ul>

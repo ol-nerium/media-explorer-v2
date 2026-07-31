@@ -1,1 +1,1 @@
-export const sliderGalleryInterface = () => {};
+import { openFilmCard } from "../../main";

@@ -13,9 +13,9 @@ function getGenresList() {
   return axios.get("genre/movie/list").then((res) => res.data);
 }
 
-function getMoviesByGenre(page, genreId) {
+function getMoviesByGenre(page = 1, genreIdArr) {
   // with_genres
-  const with_genres = genreId.join(",");
+  const with_genres = genreIdArr.join(",");
   return axios
     .get(
       `discover/movie?&page=${page}&sort_by=popularity.desc&with_genres=${with_genres}`,

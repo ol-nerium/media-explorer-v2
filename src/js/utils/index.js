@@ -1,4 +1,5 @@
 import { getGenresList, getImageConfiguration } from "../services/apiService";
+import { getFromLS } from "./localStorage";
 
 const configuration = await getImageConfiguration();
 const {
@@ -64,4 +65,33 @@ export function changeTitleText(pathName) {
 
   if (headerTitleNarrowScreen) headerTitleNarrowScreen.textContent = pathName;
   if (headerTitleWideScreen) headerTitleWideScreen.textContent = pathName;
+}
+
+export function removeDubles(array) {
+  let resArr = [];
+
+  array.forEach((item) => {
+    if (!resArr.includes(item)) resArr.push(item);
+  });
+  return resArr;
+}
+
+export function changeQuequeBtnTextByFilmId(filmId) {
+  const isFilmInQueque = getFromLS("quequeFilmsList").includes(filmId);
+  const heroBtn = document.querySelector(".hero-controls-addToQueque");
+  const fullCardBtn = document.querySelector(
+    ".full-card-controls_AddToWatchlist",
+  );
+
+  if (heroBtn) {
+    heroBtn.textContent = isFilmInQueque
+      ? "Remove from queque"
+      : "Add to queque";
+  }
+
+  if (fullCardBtn) {
+    fullCardBtn.textContent = isFilmInQueque
+      ? "Remove from queque"
+      : "Add to queque";
+  }
 }

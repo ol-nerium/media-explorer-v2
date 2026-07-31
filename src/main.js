@@ -8,13 +8,16 @@ import {
   getGenresList,
   getImageConfiguration,
   getMovieById,
+  getMoviesByGenre,
   getMoviesByTitle,
   getNowPlayingMoviesList,
   getPopularMoviesList,
   getReviewsByFilmId,
   getSimilarMoviesById,
+  getTopRatedMoviesList,
+  getUpcomingMoviesList,
 } from "./js/services/apiService";
-import { changeTitleText } from "./js/utils";
+import { changeTitleText, genresListData } from "./js/utils";
 
 import {
   listenersReload,
@@ -29,13 +32,6 @@ import {
 } from "./js/services/refs";
 
 import { fullCardMarkup } from "./js/components/fullCard";
-
-export const nowPlayingObj = await getNowPlayingMoviesList();
-export const popularObj = await getPopularMoviesList(20);
-// export const topRatedObj = await getTopRatedMoviesList();
-// export const upcomingObj = await getUpcomingMoviesList();
-
-export const heroSliderData = nowPlayingObj.results.slice(0, 5);
 
 const root = appRootRef("app");
 if (!mainRef())
@@ -126,25 +122,17 @@ export function drawFetchedGalleryPage(page = 1, searchQuery) {
   getMoviesByTitle(page, searchQuery)
     .catch(console.log)
     .then((galleryData) => {
-      // let newURL =
-      //   window.location.protocol +
-      //   "//" +
-      //   window.location.host +
-      //   pathObject.movies.path +
-      //   `?${searchQuery}&page=${page}`;
-
-      // drawMarkupFromPageName(newURL);
       setUrlInfo({ pathName: "movies", searchQuery, page });
 
       const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
       document.querySelector("main").innerHTML = galleryMarkup;
       listenersReload();
 
-      // can be doubling code, need fix
+      // can be doubling code
     });
 }
 
-export function renderFilmCard(filmId) {
+export function openFilmCard(filmId) {
   if (!filmId) {
     console.log("no film id");
     return;
@@ -159,5 +147,24 @@ export function renderFilmCard(filmId) {
     const filmData = { mainData, credits, reviews, similar };
     const filmCardMarkup = fullCardMarkup(filmData);
     root.innerHTML = filmCardMarkup;
+    listenersReload();
+  });
+}
+
+export function openGalleryByGenres(page, genreIdArr) {
+  // console.log(page, genreIdArr);
+  getMoviesByGenre(page, genreIdArr).then((galleryData) => {
+    const genreIdArrString = genreIdArr.join(",");
+    setUrlInfo({ pathName: "movies", genreIdArrString, page });
+
+    console.log(genreIdArr);
+    let searchedGenreNames = "";
+    genresListData.genres.forEach((genre) => {
+      if (genreIdArr.includes(JSON.stringify(genre.id)))
+        searchedGenreNames += genre.name + " ";
+    });
+    const galleryMarkup = searchedMoviesPage(searchedGenreNames, galleryData);
+    document.querySelector("main").innerHTML = galleryMarkup;
+    listenersReload();
   });
 }

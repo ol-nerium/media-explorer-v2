@@ -11,19 +11,32 @@ import { mainGallerySectionMarkup } from "./components/mainGallerySection";
 import { genresSectionMarkup } from "./components/genresSection";
 import { savedGalleryMarkup } from "./components/savedGallery";
 import { paginationSectionMarkup } from "./components/pagination";
-import { tabletHomeSectionMarkup } from "./components/tabletHomeSection";
 
-import { heroSliderData, nowPlayingObj, popularObj } from "../main";
-import { changeTitleText } from "./utils";
-import { listenersReload, appRootRef, mainRef } from "./services/refs";
+import { heroSliderData, popularObj, topRatedObj, upcomingObj } from "./data";
 
-const root = appRootRef();
+const gallerySliderSectionsTitles = {
+  POPULAR: "popular",
+  TOPRATED: "top rated",
+  UPCOMING: "upcoming",
+};
 
 const homePage = () => {
   return (
     heroSectionMarkup(heroSliderData) +
     mobileGenresSectionMarkup() +
-    sliderGallerySectionMarkup("popular", popularObj.results)
+    sliderGallerySectionMarkup(
+      gallerySliderSectionsTitles.POPULAR,
+      popularObj.results,
+    ) +
+    sliderGallerySectionMarkup(
+      gallerySliderSectionsTitles.TOPRATED,
+      topRatedObj.results,
+    ) +
+    sliderGallerySectionMarkup(
+      gallerySliderSectionsTitles.UPCOMING,
+      upcomingObj.results,
+    )
+
     //+ tabletHomeSectionMarkup()
   );
 };
@@ -80,29 +93,30 @@ export {
 };
 
 export const pathObject = {
-  home: { path: "/", func: homePage },
-  movies: { path: "/movies", func: moviesPage },
-  genres: { path: "/genres", func: genresPage },
-  watchlist: { path: "/watchlist", func: watchlistPage },
-  history: { path: "/history", func: historyPage },
-  favorites: { path: "/favorites", func: favoritesPage },
-  queue: { path: "/queue", func: queuePage },
+  home: { path: "/", name: "home", func: homePage },
+  movies: { path: "/movies", name: "movies", func: moviesPage },
+
+  genres: { path: "/genres", name: "genres", func: genresPage },
+  popular: { path: "/popular", name: "popular", func: moviesPage },
+  toprated: { path: "/toprated", name: "top rated", func: moviesPage },
+  upcoming: { path: "/upcoming", name: "upcoming", func: moviesPage },
+
+  // watchlist: { path: "/watchlist", func: watchlistPage },
+  // history: { path: "/history", func: historyPage },
+  favorites: { path: "/favorites", name: "favorites", func: favoritesPage },
+  queue: { path: "/queue", name: "queue", func: queuePage },
+
   settings: {
-    path: "/settings",
-    func: () => {
-      console.log("here could be settings page");
-    },
+    // path: "/settings",
+    path: "/",
+    name: "settings",
+    func: settingsPage,
   },
-  // filmCard: {
-  //   path: "/123123",
-  //   func: () => {
-  //     console.log("filmCard ?");
-  //   },
-  // },
+
   logout: {
-    path: "/logout",
-    func: () => {
-      console.log("here could be logout");
-    },
+    // path: "/logout",
+    path: "/",
+    name: "logout",
+    func: logoutPage,
   },
 };

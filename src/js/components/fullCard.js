@@ -169,14 +169,21 @@ const comments = (data) => {
     const { name, username, avatar_path, rating } = author_details;
     const starsMarkup = (rating) => {
       if (!rating) return "";
-      const count = Math.ceil(rating);
-      console.log(count);
 
+      const count = Math.round(rating);
+      const missingStars = 10 - count;
       let resArrStr = "";
-      for (let i = 1; i < count; i += 1)
+      for (let i = 0; i < count; i += 1) {
         resArrStr += `<svg class="icon star-icon">
         <use xlink:href="./src/svgSprite.svg#main-star"></use>
       </svg>`;
+      }
+
+      for (let i = 0; i < missingStars; i += 1) {
+        resArrStr += `<svg class="icon star-icon inactive-star">
+        <use xlink:href="./src/svgSprite.svg#main-star"></use>
+      </svg>`;
+      }
       return `<div class="stars">${resArrStr} </div>`;
     };
     const commentDateStr = ({ created_at, updated_at }) => {
@@ -195,7 +202,7 @@ const comments = (data) => {
     };
 
     const raitingValue = rating
-      ? `<span class="comment-raiting-value">${rating}</span>`
+      ? `<span class="comment-raiting-value">(${rating})</span>`
       : "";
     // <button>
     //   <svg class="icon">
@@ -291,7 +298,7 @@ export const fullCardMarkup = (filmData) => {
     vote_count,
   } = filmData.mainData);
 
-  return `<div class="full-card">
+  return `<section class="full-card">
       <div class="container full-card-layout" data-filmid="${id}" >
         ${fullCardNav({ title, id })}
         <div class="film-content">
@@ -304,5 +311,5 @@ export const fullCardMarkup = (filmData) => {
           ${comments(filmData)}          
         </div>
       </div>
-    </div>`;
+    </section>`;
 };

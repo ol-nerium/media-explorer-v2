@@ -5,8 +5,8 @@ const sliderGalleryItemGenres = (genreIds) => {
   let genresMarkup = "";
   genresListData.genres.forEach((genre) => {
     if (genreIds.includes(genre.id))
-      genresMarkup += `<li class="gallery-list_item-genres_item">
-        <a href="#" data-genreid="${genre.id}">${genre.name}</a>
+      genresMarkup += `<li class="gallery-list_item-genres_item" data-genreid="${genre.id}">
+        <a href="#">${genre.name}</a>
       </li>`;
   });
   return genresMarkup;
@@ -33,8 +33,8 @@ export const sliderGalleryItem = (data) => {
               </div>
 
               <div class="gallery-list_item-desc">
-                <h3 class="gallery-list_item-title">${data.original_title}</h3>
-                <p class="gallery-list_item-year">${data.release_date.slice(0, 4)}</p>
+                <h3 class="gallery-list_item-title">${data.original_title} <span class="gallery-list_item-year">(${data.release_date.slice(0, 4)})</span></h3>
+                
                 <ul class="gallery-list_item-genres">
                   ${sliderGalleryItemGenres(data.genre_ids)}
                 </ul>
@@ -42,11 +42,11 @@ export const sliderGalleryItem = (data) => {
             </li>`;
 };
 export const sliderGallerySectionMarkup = (title, data) => {
-  return `<section class="slider-gallery">
+  return `<section class="slider-gallery ${title.split(" ").join("-")}" >
         <div class="container">
           <div class="section-heading">
             <h2 class="section-title">${title}</h2>
-            <a href="#" class="section-expand-link">View all...</a>
+            <a href="/${title}" class="section-expand-link">View all... (fix links here pls)</a>
           </div>
 
           <ul class="gallery-list-slider snaps-inline">

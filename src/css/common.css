@@ -175,6 +175,8 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+  width: 100%;
+  justify-content: center;
 }
 .gallery-list_item-genres_item {
 }

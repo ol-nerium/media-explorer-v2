@@ -1,5 +1,6 @@
 import { refs } from "../services/refs";
 import { createPoster, genresListData } from "../utils";
+import { getFromLS } from "../utils/localStorage";
 
 const heroSectionGenres = (genre_ids) => {
   const genresList = [];
@@ -54,12 +55,15 @@ export const heroSectionMarkup = (data, i = 0) => {
   } = data[index];
   const maxLengthArr = data.length;
 
-  const heroRoot = !!refs.hero.elem();
+  const heroRoot = refs.hero.elem();
+
   const heroWrapper = (markup) => {
     if (!heroRoot)
-      return `<section class="hero" data-filmid=${id}>${markup}</section>`;
+      return `<section class="hero" data-filmid="${id}">${markup}</section>`;
+    heroRoot.dataset.filmid = id;
     return markup;
   };
+  const isFilmInQueque = getFromLS("quequeFilmsList").includes(id);
 
   return heroWrapper(`<div class="hero-img-wrap" style="background-image:url('${createPoster(poster_path)}')"></div>
         <div class="container hero-layout">
@@ -89,7 +93,7 @@ export const heroSectionMarkup = (data, i = 0) => {
                 Show more
               </button>
               <button class="hero-controls-addToQueque poppins-medium" data-control="addToQueque">
-                Add to queque
+                ${isFilmInQueque ? "Remove from queque" : "Add to queque"}
               </button>
             </div>
 

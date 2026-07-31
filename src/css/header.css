@@ -75,6 +75,12 @@ main {
   margin-bottom: 0.5rem;
 }
 
+.main-links-list_item,
+.library-links-list_item,
+.settings-links-list_item {
+  text-transform: capitalize;
+}
+
 .header-menu-layout .logo {
   margin-bottom: 2rem;
 }

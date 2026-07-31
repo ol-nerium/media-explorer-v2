@@ -1,6 +1,6 @@
-export const headerMarkup = () => {
-  return `<header class="header">
-      <div class="container mobile-header-layout">
+import { pathObject } from "../routingMarkup";
+
+const mobileLayout = `<div class="container mobile-header-layout">
         <button
           type="button"
           class="navBtn"
@@ -22,102 +22,109 @@ export const headerMarkup = () => {
             <use xlink:href="./src/svgSprite.svg#main-moon"></use>
           </svg>
         </button>
-      </div>
+      </div>`;
 
-      <div class="header-menu-layout">
-        <a href="/" title="logo" class="logo">
-          <svg class="icon">
+export const navListIcons = {
+  logo: `<svg class="icon">
             <use xlink:href="./src/svgSprite.svg#Logo-icon"></use>
-          </svg>
-        </a>
-        <ul class="main-links-list">
-          <li class="main-links-list_item">
-            <a href="/">
-              <svg class="icon">
+          </svg>`,
+  home: `<svg class="icon">
                 <use xlink:href="./src/svgSprite.svg#main-home"></use>
-              </svg>
-              Home
-            </a>
-          </li>
-
-          <li class="main-links-list_item">
-            <a href="/movies">
-              <svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-films"></use>
-              </svg>
-              Movies
-            </a>
-          </li>
-
-          <li class="main-links-list_item">
-            <a href="/genres">
-              <svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-saved"></use>
-              </svg>
-              Genres
-            </a>
-          </li>
-
-          <li class="main-links-list_item">
-            <a href="/watchlist">
-              <svg class="icon">
+              </svg>`,
+  movies: `<svg class="icon">
                 <use xlink:href="./src/svgSprite.svg#main-heart"></use>
-              </svg>
-              Watchlist
-            </a>
-          </li>
+              </svg>`,
+  genres: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-saved"></use>
+              </svg>`,
+  popular: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-films"></use>
+              </svg>`,
+  "top rated": `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-films"></use>
+              </svg>`,
+  upcoming: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-films"></use>
+              </svg>`,
+  favorites: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-heart"></use>
+              </svg>`,
+  queue: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-queue"></use>
+              </svg>`,
+  settings: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-settings"></use>
+              </svg>`,
+  logout: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-logout"></use>
+              </svg>`,
+};
 
-          <li class="main-links-list_item">
-            <a href="/history">
-              <svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-history"></use>
-              </svg>
-              History
+const createHeaderMenu = (pathsObj) => {
+  const mainLinks = [
+    pathsObj.home,
+    pathsObj.movies,
+    pathsObj.genres,
+    pathsObj.popular,
+    pathsObj.toprated,
+    pathsObj.upcoming,
+  ];
+  const libraryLinks = [pathsObj.favorites, pathsObj.queue];
+  const settingsLinks = [pathsObj.settings, pathsObj.logout];
+  return `<div class="header-menu-layout">
+        <a href="/" title="logo" class="logo">
+          ${navListIcons.logo}
+        </a>
+
+        <ul class="main-links-list">
+          ${mainLinks
+            .map(
+              (item) => `<li class="main-links-list_item">
+            <a href="${item.path}">
+            ${navListIcons[item.name]}  
+              ${item.name}
             </a>
-          </li>
+          </li>`,
+            )
+            .join("")}         
         </ul>
 
         <h2 class="library-links_title">Your Library</h2>
         <ul class="library-links-list">
-          <li class="library-links-list_item">
-            <a href="/favorites">
-              <svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-heart"></use>
-              </svg>
-              Favorites
-            </a>
-          </li>
 
-          <li class="library-links-list_item">
-            <a href="/queue">
-              <svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-queue"></use>
-              </svg>
-              In Queque
+        ${libraryLinks
+          .map(
+            (item) => `<li class="library-links-list_item">
+            <a href="${item.path}">
+            ${navListIcons[item.name]}  
+              ${item.name}
             </a>
-          </li>
+          </li>`,
+          )
+          .join("")} 
         </ul>
 
         <ul class="settings-links-list">
-          <li class="settings-links-list_item">
-            <a href="/settings">
-              <svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-settings"></use>
-              </svg>
-              Settings
-            </a>
-          </li>
+          
 
-          <li class="settings-links-list_item">
-            <a href="/logout">
-              <svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-logout"></use>
-              </svg>
-              Logout
+          ${settingsLinks
+            .map(
+              (item) => `<li class="settings-links-list_item">
+            <a href="${item.path}">
+            ${navListIcons[item.name]}  
+            ${item.name}
             </a>
-          </li>
+          </li>`,
+            )
+            .join("")}
         </ul>
-      </div>
+      </div>`;
+};
+
+export const headerMarkup = () => {
+  return `<header class="header">
+      ${mobileLayout}
+      ${createHeaderMenu(pathObject)}
 
       <section class="main-heading">
         <h2 class="sr-only">Main page heading</h2>

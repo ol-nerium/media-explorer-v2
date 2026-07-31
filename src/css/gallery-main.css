@@ -47,14 +47,16 @@
 }
 
 .main-gallery .gallery-list_item-img-wrap {
-  height: 240px;
+  /* height: 240px; */
+  min-height: 340px;
   width: 100%;
 }
 
 .main-gallery .gallery-list_item-img-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* object-fit: cover; */
+  object-fit: contain;
 }
 
 .main-gallery .gallery-raiting {

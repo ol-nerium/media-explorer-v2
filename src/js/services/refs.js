@@ -8,18 +8,15 @@ import {
   genreChipsInterface,
   onSelectChange,
 } from "../interfaces/sortingInterface";
-import {
-  mainHeadingButtonsInterface,
-  mainHeadingInterface,
-} from "../interfaces/mainHeadingInterface";
+
 import { mobileGenresInterface } from "../interfaces/mobileGenresInterface";
-import { sliderGalleryInterface } from "../interfaces/sliderGalleryInterface";
+import { clickOnGalleryCardInterface } from "../interfaces/clickOnGalleryCardInterface";
 import { mainPageInfoInterface } from "../interfaces/mainPageInfoInterface";
 import { mainGalleryInterface } from "../interfaces/mainGalleryInterface";
 import { paginationInterface } from "../interfaces/paginationInterface";
 import { genresSectionInterface } from "../interfaces/genresSectionInterface";
 import { savedGalleryInterface } from "../interfaces/savedGalleryInterface";
-import { searchbarFormInterface } from "../interfaces/searchbarFormInterface";
+import { fullCardInterface } from "../interfaces/fullCardIterface";
 
 const appRootRef = () => document.getElementById("app");
 const mainRef = () => document.querySelector("main");
@@ -38,7 +35,16 @@ let mainHeadingRef = () => document.querySelector(".main-heading");
 let mainHeadingButtonsRef = () =>
   document.querySelector(".main-heading-buttons");
 let mobileGenresRef = () => document.querySelector(".mobile-genres");
-let sliderGalleryRef = () => document.querySelector(".slider-gallery");
+
+let sliderGallerySectionPopularRef = () =>
+  document.querySelector(".slider-gallery.popular");
+let sliderGallerySectionTopRatedRef = () =>
+  document.querySelector(".slider-gallery.top-rated");
+let sliderGallerySectionUpComingRef = () =>
+  document.querySelector(".slider-gallery.upcoming");
+let sliderGallerySectionFullCardRef = () =>
+  document.querySelector(".full-card-gallery");
+
 let mainPageInfoRef = () => document.querySelector(".main-page-info");
 let mainGalleryRef = () => document.querySelector(".main-gallery");
 let paginationRef = () => document.querySelector(".pagination");
@@ -46,14 +52,11 @@ let genresSectionRef = () => document.querySelector(".genresSection");
 let savedGalleryRef = () => document.querySelector(".saved-gallery");
 
 let searchbarFormRef = () => document.querySelector(".searchbar-form");
-
-// export function reloadRefs() {
-//   headerRootRef = () => document.querySelector(".header");
-//   mobileLayoutRef = () => document.querySelector(".mobile-header-layout");
-//   genresChipsRootRef = () => document.querySelector(".genres-chips");
-//   sortingDropdownRef = () => document.getElementById("sortingDropdown");
-//   heroRef = () => document.getElementById("sortingDropdown");
-// }
+let fullCardRef = () => document.querySelector(".full-card");
+let fullCardtrailerBtn = () =>
+  fullCardRef()?.querySelector('[data-control="showTrailer"]');
+let fullCardaddToQuequeBtn = () =>
+  fullCardRef()?.querySelector('[data-control="addToWatchlist"]');
 
 export const refs = {
   header: { elem: headerRootRef, func: null, eventType: "click" },
@@ -66,6 +69,11 @@ export const refs = {
   genresChips: {
     elem: genresChipsRootRef,
     func: genreChipsInterface,
+    eventType: "click",
+  },
+  mobileGenres: {
+    elem: mobileGenresRef,
+    func: mobileGenresInterface,
     eventType: "click",
   },
   sortingDropdown: {
@@ -84,12 +92,45 @@ export const refs = {
     eventType: "submit",
   },
 
-  // you are here
-  // searchbarForm: {
-  //   elem: searchbarFormRef,
-  //   func: searchbarFormInterface,
+  popular: {
+    elem: sliderGallerySectionPopularRef,
+    func: clickOnGalleryCardInterface,
+    eventType: "click",
+  },
+  topRated: {
+    elem: sliderGallerySectionTopRatedRef,
+    func: clickOnGalleryCardInterface,
+    eventType: "click",
+  },
+  upComing: {
+    elem: sliderGallerySectionUpComingRef,
+    func: clickOnGalleryCardInterface,
+    eventType: "click",
+  },
+  fullCardGallery: {
+    elem: sliderGallerySectionFullCardRef,
+    func: clickOnGalleryCardInterface,
+    eventType: "click",
+  },
+  //
+  // fullCard: {
+  //   elem: fullCardRef,
+  //   func: fullCardInterface,
   //   eventType: "click",
   // },
+  fullCardTrailerBtn: {
+    elem: fullCardtrailerBtn,
+    func: fullCardInterface,
+    eventType: "click",
+  },
+  fullCardAddToQuequeBtn: {
+    elem: fullCardaddToQuequeBtn,
+    func: fullCardInterface,
+    eventType: "click",
+  },
+
+  // you are here
+
   // mainHeading: {
   //   elem: mainHeadingRef,
   //   func: mainHeadingInterface,
@@ -100,16 +141,7 @@ export const refs = {
   //   func: mainHeadingButtonsInterface,
   //   eventType: "click",
   // },
-  mobileGenres: {
-    elem: mobileGenresRef,
-    func: mobileGenresInterface,
-    eventType: "click",
-  },
-  sliderGallery: {
-    elem: sliderGalleryRef,
-    func: sliderGalleryInterface,
-    eventType: "click",
-  },
+
   mainPageInfo: {
     elem: mainPageInfoRef,
     func: mainPageInfoInterface,
@@ -142,6 +174,7 @@ const refsKeys = Object.keys(refs);
 export const listenersReload = () => {
   for (let i = 0; i < refsKeys.length; i += 1) {
     const element = refs[refsKeys[i]].elem();
+
     const elemFunc = refs[refsKeys[i]].func;
     const eventType = refs[refsKeys[i]].eventType;
     if (!element) continue;
