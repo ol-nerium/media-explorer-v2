@@ -5,7 +5,6 @@ export const mobileGenresInterface = (evt) => {
   const target = evt.target;
   let genreBtn;
   if (target.nodeName === "button") {
-    console.log("button");
     genreBtn = target;
   }
   if (
@@ -18,11 +17,9 @@ export const mobileGenresInterface = (evt) => {
   const clickedGenreId = target.closest("button").dataset.genreid;
   if (genreListArr.includes(clickedGenreId)) {
     genreListArr = genreListArr.filter((i) => i !== clickedGenreId);
-    console.log(genreListArr);
   } else {
     genreListArr.push(clickedGenreId);
   }
-  console.log(genreListArr);
   mobileGenresClasswork();
   return genreListArr;
 };

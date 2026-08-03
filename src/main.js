@@ -1,23 +1,10 @@
 import "./style.css";
 import { headerMarkup } from "./js/components/header";
 
-import { pathObject, searchedMoviesPage } from "./js/routingMarkup";
+import { searchedMoviesPage } from "./js/routes/movies";
+import { getUrlInfo, pathObject, setUrlInfo } from "./js/services/routing";
 
-import {
-  getCreditsByFilmId,
-  getGenresList,
-  getImageConfiguration,
-  getMovieById,
-  getMoviesByGenre,
-  getMoviesByTitle,
-  getNowPlayingMoviesList,
-  getPopularMoviesList,
-  getReviewsByFilmId,
-  getSimilarMoviesById,
-  getTopRatedMoviesList,
-  getUpcomingMoviesList,
-} from "./js/services/apiService";
-import { changeTitleText, genresListData } from "./js/utils";
+import { fullCardMarkup } from "./js/components/fullCard";
 
 import {
   listenersReload,
@@ -27,20 +14,67 @@ import {
   mainRef,
   mobileLayoutRef,
   refs,
-  // reloadRefs,
   sortingDropdownRef,
 } from "./js/services/refs";
 
-import { fullCardMarkup } from "./js/components/fullCard";
+export const navListIcons = {
+  logo: `<svg class="icon">
+            <use xlink:href="./src/svgSprite.svg#Logo-icon"></use>
+          </svg>`,
+  home: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-home"></use>
+              </svg>`,
+  movies: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-heart"></use>
+              </svg>`,
+  genres: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-saved"></use>
+              </svg>`,
+  popular: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-films"></use>
+              </svg>`,
+  "top rated": `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-films"></use>
+              </svg>`,
+  upcoming: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-films"></use>
+              </svg>`,
+  favorites: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-heart"></use>
+              </svg>`,
+  queue: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-queue"></use>
+              </svg>`,
+  settings: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-settings"></use>
+              </svg>`,
+  logout: `<svg class="icon">
+                <use xlink:href="./src/svgSprite.svg#main-logout"></use>
+              </svg>`,
+};
 
-const root = appRootRef("app");
-if (!mainRef())
-  root.insertAdjacentElement("afterbegin", document.createElement("main"));
-root.insertAdjacentHTML("afterbegin", headerMarkup());
+export const ORDER = {
+  ASC: "asc",
+  DESC: "desc",
+};
+export const SORTBY = {
+  ORIGINAL_TITLE: "original_title",
+  POPULARITY: "popularity",
+  REVENUE: "revenue",
+  RELEASE_DATE: "primary_release_date",
+  TITLE: "title",
+  VOTE_AVG: "vote_average",
+  VOTE_COUNT: "vote_count",
+};
 
-const main = mainRef();
-
-drawMarkupFromPageURL();
+function appInit() {
+  const root = appRootRef("app");
+  if (!mainRef())
+    root.insertAdjacentElement("afterbegin", document.createElement("main"));
+  root.insertAdjacentHTML("afterbegin", headerMarkup());
+  const main = mainRef();
+  drawMarkupFromPageURL();
+}
 
 export function drawMarkupFromPageURL(targetURL = document.URL) {
   const actualPath = window.location.pathname;
@@ -69,6 +103,7 @@ export function drawMarkupFromPageURL(targetURL = document.URL) {
     changeTitleText(pathName);
     listenersReload();
     setUrlInfo({ searchQuery: null, page: null, pathName });
+
     return;
   }
 
@@ -76,6 +111,7 @@ export function drawMarkupFromPageURL(targetURL = document.URL) {
     main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
     changeTitleText(pathName);
     setUrlInfo({ searchQuery, page, pathName });
+
     listenersReload();
     return;
   } else {
@@ -83,39 +119,6 @@ export function drawMarkupFromPageURL(targetURL = document.URL) {
     setUrlInfo({ searchQuery: searchQuery, page: page, pathName: "movies" });
     listenersReload();
   }
-}
-
-function getUrlInfo() {
-  if (!window.location.search) {
-    return { searchQuery: "", page: null };
-  }
-  let [searchQuery, ...params] = window.location.search.split("&");
-
-  searchQuery = searchQuery.slice(1);
-  let page = params?.find((i) => i.slice(0, 5) === "page=")?.slice(5);
-
-  if (!page || isNaN(page) || page < 1) page = 1;
-  return { searchQuery, page };
-}
-
-export function setUrlInfo({ pathName, searchQuery = "", page = 1 }) {
-  let newURL;
-  if (!searchQuery) {
-    newURL =
-      window.location.protocol +
-      "//" +
-      window.location.host +
-      pathObject[pathName].path;
-  } else {
-    newURL =
-      window.location.protocol +
-      "//" +
-      window.location.host +
-      pathObject[pathName].path +
-      `?${searchQuery}&page=${page}`;
-  }
-
-  window.history.pushState({ path: newURL }, "", newURL);
 }
 
 export function drawFetchedGalleryPage(page = 1, searchQuery) {
@@ -168,3 +171,22 @@ export function openGalleryByGenres(page, genreIdArr) {
     listenersReload();
   });
 }
+
+// const pathName = "/random";
+// const searchQuery = "testQuery";
+// const page = 2;
+// const genresArr = [1, 2, 3];
+// const sortBy = "";
+// const order = "desc";
+
+// setUrlInfo({
+//   pathName,
+//   searchQuery,
+//   page,
+//   genresArr,
+//   sortBy,
+//   order,
+// });
+
+console.log(getUrlInfo());
+setUrlInfo(getUrlInfo());

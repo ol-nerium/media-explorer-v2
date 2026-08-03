@@ -62,7 +62,7 @@ const mainGallerySectionItem = (data) => {
 export const mainGallerySectionMarkup = (title, data) => {
   return `<section class="main-gallery">
         <div class="container">
-        <h2>Films in the category ${title}</h2>
+        <h2 class="main-gallery-title">${title}</span></h2>
           <ul class="gallery-list">
             ${data.map((film) => mainGallerySectionItem(film)).join("")}
           </ul>

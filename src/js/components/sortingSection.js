@@ -1,10 +1,14 @@
 import { genresListData } from "../utils";
 
-const sortingSectiongenres = () => {
+const sortingSectionGenresList = (activeGenresIdsArr) => {
   return genresListData.genres
-    .map(
-      (genre) => `<li class="genres-chips-list_item">
-                <button class="genres-chips-list_item-btn" data-genreId=${genre.id}>
+    .map((genre) => {
+      const isGenreActive = activeGenresIdsArr.includes(
+        JSON.stringify(genre.id),
+      );
+
+      return `<li class="genres-chips-list_item">
+                <button class="genres-chips-list_item-btn ${isGenreActive ? "active" : ""}" data-genreId=${genre.id}>
                   <span>${genre.name}</span>
                 </button>
                 <div title="closeBtn" class="closeBtn">
@@ -12,12 +16,12 @@ const sortingSectiongenres = () => {
                     <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
                   </svg>
                 </div>
-              </li>`,
-    )
+              </li>`;
+    })
     .join("");
 };
 
-export const createGenreChipsListMarkup = () => {
+export const createGenreChipsListMarkup = (activeGenresIdsArr) => {
   return `<div class="genres-chips">
             <button class="genres-chips-btn-left" title="left-arrow" data-control="left">
               <svg class="icon left-arrow">
@@ -26,7 +30,7 @@ export const createGenreChipsListMarkup = () => {
             </button>
 
             <ul class="genres-chips-list snaps-inline">
-              ${sortingSectiongenres()}             
+              ${sortingSectionGenresList(activeGenresIdsArr)}             
             </ul>
 
             <button class="genres-chips-btn-right" title="right-arrow" data-control="right">

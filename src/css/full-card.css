@@ -200,10 +200,16 @@
   font-size: var(--font-size-lg);
 }
 .additional-film-content-list_item-desc {
-  font-size: var(--font-size-sm);
+  /* font-size: var(--font-size-sm); */
+  font-size: var(--font-size-xss);
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+.additional-film-content-list_item-desc li:not(:last-of-type)::after {
+  padding-left: 0.5rem;
+  content: ",";
 }
 
 .reviews {

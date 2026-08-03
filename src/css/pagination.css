@@ -1,11 +1,22 @@
 .pagination {
-  display: none;
+  /* display: none; */
   padding: 20px 0;
+  width: 100%;
+  /* overflow-x: auto; */
 }
 
 @media screen and (min-width: 744px) {
-  .pagination {
-    display: block;
+  .leftArrow,
+  .rightArrow,
+  .dots-icon {
+    background-color: transparent;
+    width: 54px;
+    height: 54px;
+  }
+
+  .pagBtn {
+    min-width: 54px;
+    height: 54px;
   }
 }
 
@@ -13,9 +24,10 @@
   .pagination-layout {
     background-color: var(--grey-color);
     border-radius: 15px;
-    gap: 60px;
-    justify-content: center;
-    width: fit-content;
+    /* gap: 60px; */
+    /* justify-content: center; */
+    justify-content: space-between;
+    /* width: fit-content; */
   }
 }
 
@@ -30,8 +42,6 @@
 .rightArrow,
 .dots-icon {
   background-color: transparent;
-  width: 54px;
-  height: 54px;
 
   display: flex;
   justify-content: center;
@@ -41,10 +51,8 @@
 }
 
 .pagBtn {
-  width: 54px;
-  height: 54px;
-  height: 100%;
-  font-size: 1.3rem;
+  /* height: 100%; */
+  /* font-size: var(--font-size-sm); */
   background-color: var(--accentColor);
   color: var(--white-color);
   background-color: var(--obsidian-color);

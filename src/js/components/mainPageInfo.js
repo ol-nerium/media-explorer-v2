@@ -1,4 +1,4 @@
-import { pathObject } from "../routingMarkup";
+import { pathObject } from "../services/routing";
 
 export const mainPageInfoSectionMarkup = (additionalTitle = null) => {
   const navLinksArr = [{ name: "Home", link: "/" }];

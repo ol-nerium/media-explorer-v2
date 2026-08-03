@@ -1,1 +1,0 @@
-import { openFilmCard } from "../../main";

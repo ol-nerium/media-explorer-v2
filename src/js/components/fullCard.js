@@ -2,7 +2,6 @@ import { format } from "date-fns";
 
 import { createAvatar, createBackdropBackgound, createPoster } from "../utils";
 import { sliderGalleryItem } from "./sliderGallery";
-import { setUrlInfo } from "../../main";
 
 let adult,
   backdrop_path,
@@ -105,12 +104,13 @@ const baseFilmContent = () => {
 const additionalFilmContent = (data) => {
   const { cast, crew } = data.credits;
   const directorArr = crew.filter((i) => i.job === "Director");
-  let starringActors = [];
-  if (cast.length < 10) {
-    starringActors = cast;
-  } else {
-    starringActors = cast.filter((i) => Number(i.popularity) > 10);
-  }
+  // let starringActors = [];
+  // if (cast.length < 10) {
+  //   starringActors = cast;
+  // } else {
+  //   starringActors = cast.filter((i) => Number(i.popularity) > 10);
+  // }
+  let starringActors = cast;
 
   return `<div class="additional-film-content">
             <h2 class="sr-only">Additional film content</h2>
@@ -120,7 +120,7 @@ const additionalFilmContent = (data) => {
                   Starring
                 </h3>
                 <ul class="additional-film-content-list_item-desc">
-                  ${starringActors.map((i) => `<li data-character="${i.character}">${i.name}</li>`).join(", ")}
+                  ${starringActors.map((i) => `<li data-character="${i.character}">${i.name}</li>`).join("")}
                 </ul>
               </li>
               <li class="additional-film-content-list_item">
@@ -247,21 +247,6 @@ export function setFilmCardUrlInfo(filmId) {
     window.location.protocol + "//" + window.location.host + `/${filmId}`;
 
   window.history.pushState({ path: newURL }, "", newURL);
-
-  // if (!searchQuery) {
-  //   newURL =
-  //     window.location.protocol +
-  //     "//" +
-  //     window.location.host +
-  //     pathObject[pathName].path;
-  // } else {
-  //   newURL =
-  //     window.location.protocol +
-  //     "//" +
-  //     window.location.host +
-  //     pathObject[pathName].path +
-  //     `?${searchQuery}&page=${page}`;
-  // }
 }
 
 export const fullCardMarkup = (filmData) => {

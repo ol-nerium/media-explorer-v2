@@ -1,1 +1,3 @@
-export const paginationInterface = () => {};
+export const paginationInterface = (evt) => {
+  console.log(evt);
+};

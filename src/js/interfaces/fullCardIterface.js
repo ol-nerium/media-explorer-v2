@@ -1,12 +1,11 @@
 import { changeQuequeBtnTextByFilmId } from "../utils";
 import { toggleValueFromLSKey } from "../utils/localStorage";
 
+const CONTROLS = {
+  SHOWTRAILER: "showTrailer",
+  ADDTOWATCHLIST: "addToWatchlist",
+};
 export function fullCardInterface(evt) {
-  //   const fullCardRoot = evt.currentTarget;
-  const CONTROLS = {
-    SHOWTRAILER: "showTrailer",
-    ADDTOWATCHLIST: "addToWatchlist",
-  };
   if (evt.currentTarget.nodeName !== "BUTTON") return;
 
   const dataControl = evt.currentTarget.dataset.control;

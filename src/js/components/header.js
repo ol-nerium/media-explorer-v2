@@ -1,4 +1,5 @@
-import { pathObject } from "../routingMarkup";
+import { navListIcons } from "../../main";
+import { pathObject } from "../services/routing";
 
 const mobileLayout = `<div class="container mobile-header-layout">
         <button
@@ -23,42 +24,6 @@ const mobileLayout = `<div class="container mobile-header-layout">
           </svg>
         </button>
       </div>`;
-
-export const navListIcons = {
-  logo: `<svg class="icon">
-            <use xlink:href="./src/svgSprite.svg#Logo-icon"></use>
-          </svg>`,
-  home: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-home"></use>
-              </svg>`,
-  movies: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-heart"></use>
-              </svg>`,
-  genres: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-saved"></use>
-              </svg>`,
-  popular: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-films"></use>
-              </svg>`,
-  "top rated": `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-films"></use>
-              </svg>`,
-  upcoming: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-films"></use>
-              </svg>`,
-  favorites: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-heart"></use>
-              </svg>`,
-  queue: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-queue"></use>
-              </svg>`,
-  settings: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-settings"></use>
-              </svg>`,
-  logout: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-logout"></use>
-              </svg>`,
-};
 
 const createHeaderMenu = (pathsObj) => {
   const mainLinks = [

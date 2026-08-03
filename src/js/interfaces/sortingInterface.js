@@ -1,5 +1,10 @@
+import { setUrlInfo } from "../services/routing";
+import { searchedMoviesPage } from "../routes/movies";
+import { getMoviesByGenre } from "../services/apiService";
+import { listenersReload } from "../services/refs";
+
 export function genreChipsInterface(evt) {
-  // can be bug here
+  // can be bugged here
   let targetedBtn = evt.target.closest("button");
   if (evt.target.nodeName === "button") targetedBtn = evt.target;
   if (evt.target.nodeName === "span")
@@ -13,8 +18,7 @@ export function genreChipsInterface(evt) {
     onGenreChipClick(targetedBtn.dataset.genreid);
 }
 
-const activeGenres = [];
-
+export const activeGenresArr = [];
 function onControlArrowClick(controlDir) {
   const genresList = document.querySelector(".genres-chips-list");
   const avgElementWidth = Math.ceil(
@@ -40,11 +44,11 @@ function onGenreChipClick(genreId) {
     `[data-genreid="${genreId}"]`,
   );
 
-  const genreIndex = activeGenres.indexOf(genreId);
+  const genreIndex = activeGenresArr.indexOf(genreId);
 
   const startPosition = genresList.getBoundingClientRect().left;
   if (genreIndex < 0) {
-    activeGenres.push(genreId);
+    activeGenresArr.push(genreId);
     clickedElement.classList.add("active");
 
     const nextPosition = clickedElement.getBoundingClientRect().left;
@@ -58,7 +62,7 @@ function onGenreChipClick(genreId) {
   } else {
     const currentPosition = clickedElement.getBoundingClientRect().left;
 
-    activeGenres.splice(genreIndex, 1);
+    activeGenresArr.splice(genreIndex, 1);
     clickedElement.classList.remove("active");
 
     const prevPositionInRoot = currentPosition - startPosition;
@@ -69,7 +73,23 @@ function onGenreChipClick(genreId) {
     });
   }
 
-  return activeGenres;
+  // fetch films from activeGenresArrData
+  getMoviesByGenre(1, activeGenresArr).then((galleryData) => {
+    setUrlInfo({
+      pathName: "genres",
+      searchQuery: "",
+      page: 1,
+      genres: activeGenresArr,
+    });
+
+    const galleryMarkup = searchedMoviesPage(
+      `${activeGenresArr.join(",")}`,
+      galleryData,
+    );
+    document.querySelector("main").innerHTML = galleryMarkup;
+    listenersReload();
+  });
+  return activeGenresArr;
 }
 
 export function onSelectChange(evt) {

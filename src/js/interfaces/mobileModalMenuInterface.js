@@ -1,5 +1,10 @@
 import { mobileModalMenuMarkup } from "../components/mobileModalMenu";
 import { clickOnNavLink } from "../interfaces/headerInterface";
+import {
+  backdropRef,
+  mobileModalMenuRef,
+  modalCloseBtnRef,
+} from "../services/refs";
 
 export function onMobHeaderBtnClick(evt) {
   const target = evt.target.closest("button");
@@ -9,26 +14,30 @@ export function onMobHeaderBtnClick(evt) {
   if (btnControl === "openMobileMenu") openModal();
 }
 
-const backdrop = document.querySelector(".backdrop");
-let mobileLinks = null;
+let backdrop = null;
+let modalCloseBtn = null;
+let mobileModalMenu = null;
 function openModal() {
-  backdrop.classList.remove("is-hidden");
+  backdrop = backdropRef();
 
+  backdrop.classList.remove("is-hidden");
   backdrop.insertAdjacentHTML("afterbegin", mobileModalMenuMarkup());
 
-  const modalCloseBtn = document.querySelector(".modal-closeBtn");
+  modalCloseBtn = modalCloseBtnRef();
+  mobileModalMenu = mobileModalMenuRef();
+
   modalCloseBtn.addEventListener("click", closeModal);
   backdrop.addEventListener("click", onBackdropClick);
   window.addEventListener("keydown", onKeyClose);
 
-  mobileLinks = document.querySelector(".mobile-modal-menu");
-  mobileLinks.addEventListener("click", modaleMenuIntarface);
+  mobileModalMenu.addEventListener("click", modaleMenuIntarface);
 }
 
 function closeModal() {
-  mobileLinks.removeEventListener("click", modaleMenuIntarface);
+  mobileModalMenu.removeEventListener("click", modaleMenuIntarface);
   backdrop.removeEventListener("click", onBackdropClick);
   window.removeEventListener("keydown", onKeyClose);
+  modalCloseBtn.removeEventListener("click", closeModal);
 
   backdrop.classList.add("is-hidden");
   backdrop.innerHTML = "";

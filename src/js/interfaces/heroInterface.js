@@ -2,11 +2,7 @@ import { heroSliderData } from "../data";
 import { heroSectionMarkup } from "../components/hero";
 import { listenersReload, refs } from "../services/refs";
 import { openFilmCard } from "../../main";
-import {
-  getFromLS,
-  saveToLS,
-  toggleValueFromLSKey,
-} from "../utils/localStorage";
+import { toggleValueFromLSKey } from "../utils/localStorage";
 import { changeQuequeBtnTextByFilmId } from "../utils";
 
 export const heroInterface = (evt) => {

@@ -67,6 +67,7 @@ export const heroSectionMarkup = (data, i = 0) => {
 
   return heroWrapper(`<div class="hero-img-wrap" style="background-image:url('${createPoster(poster_path)}')"></div>
         <div class="container hero-layout">
+          <div class='hero-content'>
           <h2 class="hero-title poppins-medium">${title}</h2>
           <div class="hero-short-desc">
             <p class="hero-short-desc-year">${release_date.split("-")[0]}</p>
@@ -75,6 +76,7 @@ export const heroSectionMarkup = (data, i = 0) => {
           <p class="hero-description poppins-regular">
             ${overview}
           </p>
+          </div>
 
           <div class="hero-controls">
             <button class="hero-controls-arrows_left" title="left-arrow" data-control="arrow-left">

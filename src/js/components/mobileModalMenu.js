@@ -1,5 +1,5 @@
-import { pathObject } from "../routingMarkup";
-import { navListIcons } from "./header";
+import { pathObject } from "../services/routing";
+import { navListIcons } from "../../main";
 
 // navListIcons
 

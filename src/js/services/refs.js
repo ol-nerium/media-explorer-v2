@@ -11,7 +11,7 @@ import {
 
 import { mobileGenresInterface } from "../interfaces/mobileGenresInterface";
 import { clickOnGalleryCardInterface } from "../interfaces/clickOnGalleryCardInterface";
-import { mainPageInfoInterface } from "../interfaces/mainPageInfoInterface";
+// import { mainPageInfoInterface } from "../interfaces/mainPageInfoInterface";
 import { mainGalleryInterface } from "../interfaces/mainGalleryInterface";
 import { paginationInterface } from "../interfaces/paginationInterface";
 import { genresSectionInterface } from "../interfaces/genresSectionInterface";
@@ -45,7 +45,17 @@ let sliderGallerySectionUpComingRef = () =>
 let sliderGallerySectionFullCardRef = () =>
   document.querySelector(".full-card-gallery");
 
-let mainPageInfoRef = () => document.querySelector(".main-page-info");
+export const mainPageInfoRef = () => document.querySelector(".main-page-info");
+export const headerTitle = () => document.querySelector(".headerTitle");
+export const heroQuequeBtn = () =>
+  document.querySelector(".hero-controls-addToQueque");
+export const fullCardWatchlistBtn = () =>
+  document.querySelector(".full-card-controls_AddToWatchlist");
+export const backdropRef = () => document.querySelector(".backdrop");
+export const modalCloseBtnRef = () => document.querySelector(".modal-closeBtn");
+export const mobileModalMenuRef = () =>
+  document.querySelector(".mobile-modal-menu");
+
 let mainGalleryRef = () => document.querySelector(".main-gallery");
 let paginationRef = () => document.querySelector(".pagination");
 let genresSectionRef = () => document.querySelector(".genresSection");
@@ -131,22 +141,17 @@ export const refs = {
 
   // you are here
 
-  // mainHeading: {
-  //   elem: mainHeadingRef,
-  //   func: mainHeadingInterface,
-  //   eventType: "click",
-  // },
   // mainHeadingButtons: {
   //   elem: mainHeadingButtonsRef,
   //   func: mainHeadingButtonsInterface,
   //   eventType: "click",
   // },
 
-  mainPageInfo: {
-    elem: mainPageInfoRef,
-    func: mainPageInfoInterface,
-    eventType: "click",
-  },
+  // mainPageInfo: {
+  //   elem: mainPageInfoRef,
+  //   func: mainPageInfoInterface,
+  //   eventType: "click",
+  // },
   mainGallery: {
     elem: mainGalleryRef,
     func: mainGalleryInterface,

@@ -13,12 +13,17 @@ function getGenresList() {
   return axios.get("genre/movie/list").then((res) => res.data);
 }
 
-function getMoviesByGenre(page = 1, genreIdArr) {
+function getMoviesByGenre(
+  page = 1,
+  genreIdArr,
+  sortBy = "popularity",
+  order = "desc",
+) {
   // with_genres
   const with_genres = genreIdArr.join(",");
   return axios
     .get(
-      `discover/movie?&page=${page}&sort_by=popularity.desc&with_genres=${with_genres}`,
+      `discover/movie?&page=${page}&sort_by=${sortBy}.${order}&with_genres=${with_genres}`,
     )
     .then((res) => res.data);
 }

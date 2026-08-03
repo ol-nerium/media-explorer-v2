@@ -1,21 +1,21 @@
-import { genresListData } from "../utils";
 import { createPoster } from "../utils";
 
-const savedGalleryItemGenres = (genreIds) => {
-  const genresList = [];
-  genresListData.genres.forEach((i) => {
-    if (genreIds.includes(i.id))
-      genresList.push(
-        `<li class="gallery-list_item-genres_item" data-genreid="${i.id}">${i.name}</li>`,
-      );
-  });
-  return genresList.join("");
-};
+// const savedGalleryItemGenres = (genreIds) => {
+//   const genresList = [];
+//   genresListData.genres.forEach((i) => {
+//     if (genreIds.includes(i.id))
+//       genresList.push(
+//         `<li class="gallery-list_item-genres_item" data-genreid="${i.id}">${i.name}</li>`,
+//       );
+//   });
+//   return genresList.join("");
+// };
 const savedGalleryItem = (data) => {
   const {
     adult,
     backdrop_path,
-    genre_ids,
+    // genre_ids,
+    // genres,
     id,
     title,
     original_language,
@@ -55,7 +55,9 @@ const savedGalleryItem = (data) => {
               <div class="saved-gallery-list_item-desc">
                 <h3 class="title">${title} <span class="year">(${release_date.slice(0, 4)})</span></h3>
                 <ul class="gallery-list_item-genres">
-                  ${savedGalleryItemGenres(genre_ids)}                  
+                  ${data.genres.forEach((genre) => {
+                    return `<li class="gallery-list_item-genres_item" data-genreid="${genre.id}">${genre.name}</li>`;
+                  })}                  
                 </ul>
               </div>
             </li>`;

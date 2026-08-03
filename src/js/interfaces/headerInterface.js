@@ -16,6 +16,7 @@ export function onSearchFormSubmit(evt) {
     alert(
       "here should be notification for not searching empty string or whatever",
     );
+    // TODO
     return;
   }
 

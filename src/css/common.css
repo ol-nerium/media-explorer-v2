@@ -7,13 +7,6 @@ html {
   /* scrollbar-gutter: stable; */
 }
 
-h2,
-p {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 body {
   margin: 0;
   background-color: var(--carbon-color);
@@ -196,4 +189,10 @@ button {
   .tablet-home-section {
     display: none;
   }
+}
+
+.collapsedWithEllipis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

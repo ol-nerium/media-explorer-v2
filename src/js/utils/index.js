@@ -1,4 +1,10 @@
 import { getGenresList, getImageConfiguration } from "../services/apiService";
+import {
+  fullCardWatchlistBtn,
+  headerTitle,
+  heroQuequeBtn,
+  mainPageInfoRef,
+} from "../services/refs";
 import { getFromLS } from "./localStorage";
 
 const configuration = await getImageConfiguration();
@@ -60,8 +66,8 @@ export const createBackdropBackgound = (backdrop_path) => {
 };
 
 export function changeTitleText(pathName) {
-  const headerTitleNarrowScreen = document.querySelector(".headerTitle");
-  const headerTitleWideScreen = document.querySelector(".main-page-info-title");
+  const headerTitleNarrowScreen = headerTitle();
+  const headerTitleWideScreen = mainPageInfoRef();
 
   if (headerTitleNarrowScreen) headerTitleNarrowScreen.textContent = pathName;
   if (headerTitleWideScreen) headerTitleWideScreen.textContent = pathName;
@@ -78,10 +84,8 @@ export function removeDubles(array) {
 
 export function changeQuequeBtnTextByFilmId(filmId) {
   const isFilmInQueque = getFromLS("quequeFilmsList").includes(filmId);
-  const heroBtn = document.querySelector(".hero-controls-addToQueque");
-  const fullCardBtn = document.querySelector(
-    ".full-card-controls_AddToWatchlist",
-  );
+  const heroBtn = heroQuequeBtn();
+  const fullCardBtn = fullCardWatchlistBtn();
 
   if (heroBtn) {
     heroBtn.textContent = isFilmInQueque
