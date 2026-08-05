@@ -16,6 +16,14 @@ import {
   refs,
   sortingDropdownRef,
 } from "./js/services/refs";
+import { changeTitleText, genresListData } from "./js/utils";
+import {
+  getCreditsByFilmId,
+  getMovieById,
+  getMoviesByGenre,
+  getReviewsByFilmId,
+  getSimilarMoviesById,
+} from "./js/services/apiService";
 
 export const navListIcons = {
   logo: `<svg class="icon">
@@ -67,14 +75,18 @@ export const SORTBY = {
   VOTE_COUNT: "vote_count",
 };
 
+let root;
+let main;
 function appInit() {
-  const root = appRootRef("app");
+  root = appRootRef("app");
   if (!mainRef())
     root.insertAdjacentElement("afterbegin", document.createElement("main"));
   root.insertAdjacentHTML("afterbegin", headerMarkup());
-  const main = mainRef();
+  main = mainRef();
   drawMarkupFromPageURL();
 }
+
+appInit();
 
 export function drawMarkupFromPageURL(targetURL = document.URL) {
   const actualPath = window.location.pathname;
@@ -161,6 +173,7 @@ export function openGalleryByGenres(page, genreIdArr) {
     setUrlInfo({ pathName: "movies", genreIdArrString, page });
 
     console.log(genreIdArr);
+    console.log(galleryData);
     let searchedGenreNames = "";
     genresListData.genres.forEach((genre) => {
       if (genreIdArr.includes(JSON.stringify(genre.id)))

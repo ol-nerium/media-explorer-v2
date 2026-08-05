@@ -46,6 +46,8 @@ let sliderGallerySectionFullCardRef = () =>
   document.querySelector(".full-card-gallery");
 
 export const mainPageInfoRef = () => document.querySelector(".main-page-info");
+export const mainPageInfoTitleRef = () =>
+  document.querySelector(".main-page-info-title");
 export const headerTitle = () => document.querySelector(".headerTitle");
 export const heroQuequeBtn = () =>
   document.querySelector(".hero-controls-addToQueque");

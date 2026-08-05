@@ -51,7 +51,7 @@ export function getUrlInfo() {
   const pathName = window.location.pathname.slice(1);
 
   if (!window.location.search) {
-    return { pathName, searchQuery: "", page: null, genres: [] };
+    return { pathName, search: "", page: null, genres: [] };
   }
   // let [searchQuery, ...params] = window.location.search.split("&");
   const searchParams = window.location.search.slice(1).split("&");
@@ -74,7 +74,7 @@ export function getUrlInfo() {
     pageQueryStr = null;
   return {
     pathName,
-    searchQuery: searchQueryStr,
+    search: searchQueryStr,
     page: pageQueryStr,
     genres: genresQueryArr,
   };
@@ -82,7 +82,7 @@ export function getUrlInfo() {
 
 export function setUrlInfo({
   pathName = null,
-  searchQuery = "",
+  search = "",
   page = null,
   genresArr = [],
   sortBy = SORTBY.POPULARITY,
@@ -93,6 +93,20 @@ export function setUrlInfo({
   let baseUrl = locationProtocol + "//" + locationHost;
   let newURL = "";
 
+  const pageStr = page ? `&page=${page}` : "";
+
+  const searchQueryStr = search ? `?query=${search}` : "";
+
+  const genresArrStr =
+    genresArr.length > 0 ? `&with_genres=${genresArr.join(",")}` : "";
+
+  const sortByStr =
+    sortBy && Object.values(SORTBY).includes(sortBy)
+      ? sortBy
+      : SORTBY.POPULARITY;
+  const orderStr =
+    order && Object.values(ORDER).includes(order) ? order : ORDER.DESC;
+
   if (pathName === "home" || !pathObject[pathName]) {
     pathName = "home";
     newURL = baseUrl + pathObject[pathName].path;
@@ -101,12 +115,19 @@ export function setUrlInfo({
   }
 
   if (pathName === "movies") {
-    const searchQueryStr = searchQuery ? `?query=${searchQuery}` : "";
     const pageStr = page && searchQueryStr ? `&page=${page}` : "";
+    // !!
     newURL = baseUrl + pathObject[pathName].path + searchQueryStr + pageStr;
-    console.log(searchQueryStr, pageStr);
     window.history.pushState({ path: newURL }, "", newURL);
     return newURL;
+  }
+
+  if (pathName === "genres") {
+    if (!genresArrStr) {
+      newURL = baseUrl + pathObject[pathName].path;
+      window.history.pushState({ path: newURL }, "", newURL);
+      return;
+    }
   }
 
   if (
@@ -114,18 +135,11 @@ export function setUrlInfo({
     pathName === "toprated" ||
     pathName === "upcoming"
   ) {
-    const pageStr = page ? `&page=${page}` : "";
-    newURL =
-      baseUrl + pathObject[pathName].path + "?" + searchQueryStr + pageStr;
+    newURL = !pageStr
+      ? baseUrl + pathObject[pathName].path
+      : baseUrl + pathObject[pathName].path + "?" + pageStr;
     window.history.pushState({ path: newURL }, "", newURL);
     return newURL;
-  }
-
-  if (pathName === "movies") {
-  }
-  if (pathName === "logout") {
-  }
-  if (pathName === "movies") {
   }
 
   // if pathName is falsy or location pathname isn't valid route (not it pathObj), set to default home and return:

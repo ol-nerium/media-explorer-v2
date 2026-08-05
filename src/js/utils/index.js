@@ -4,6 +4,7 @@ import {
   headerTitle,
   heroQuequeBtn,
   mainPageInfoRef,
+  mainPageInfoTitleRef,
 } from "../services/refs";
 import { getFromLS } from "./localStorage";
 
@@ -67,7 +68,7 @@ export const createBackdropBackgound = (backdrop_path) => {
 
 export function changeTitleText(pathName) {
   const headerTitleNarrowScreen = headerTitle();
-  const headerTitleWideScreen = mainPageInfoRef();
+  const headerTitleWideScreen = mainPageInfoTitleRef();
 
   if (headerTitleNarrowScreen) headerTitleNarrowScreen.textContent = pathName;
   if (headerTitleWideScreen) headerTitleWideScreen.textContent = pathName;
