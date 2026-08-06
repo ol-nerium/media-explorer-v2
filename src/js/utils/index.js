@@ -100,3 +100,7 @@ export function changeQuequeBtnTextByFilmId(filmId) {
       : "Add to queque";
   }
 }
+
+export function changeActiveNavLink(pathName) {
+  console.log(pathName);
+}

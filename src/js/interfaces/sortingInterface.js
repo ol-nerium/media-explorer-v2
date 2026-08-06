@@ -77,7 +77,7 @@ function onGenreChipClick(genreId) {
   getMoviesByGenre(1, activeGenresArr).then((galleryData) => {
     setUrlInfo({
       pathName: "genres",
-      searchQuery: "",
+      search: "",
       page: 1,
       genres: activeGenresArr,
     });

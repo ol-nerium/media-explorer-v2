@@ -1,4 +1,5 @@
 import { pathObject } from "../services/routing";
+import { changeTitleText } from "../utils";
 
 export const mainPageInfoSectionMarkup = (additionalTitle = null) => {
   const navLinksArr = [{ name: "Home", link: "/" }];
@@ -9,6 +10,9 @@ export const mainPageInfoSectionMarkup = (additionalTitle = null) => {
   }
   if (!!additionalTitle)
     navLinksArr.push({ name: additionalTitle, link: window.location.href });
+  // if (additionalTitle) changeTitleText(additionalTitle);
+
+  console.log(currentPathName, pathName, navLinksArr);
 
   return `<section class="main-page-info">
         <div class="container main-page-info-layout">

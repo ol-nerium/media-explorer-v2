@@ -21,6 +21,7 @@ import {
   getCreditsByFilmId,
   getMovieById,
   getMoviesByGenre,
+  getMoviesByTitle,
   getReviewsByFilmId,
   getSimilarMoviesById,
 } from "./js/services/apiService";
@@ -83,66 +84,95 @@ function appInit() {
     root.insertAdjacentElement("afterbegin", document.createElement("main"));
   root.insertAdjacentHTML("afterbegin", headerMarkup());
   main = mainRef();
+
+  window.addEventListener("popstate", (e) => console.log(e));
+
   drawMarkupFromPageURL();
 }
 
 appInit();
 
-export function drawMarkupFromPageURL(targetURL = document.URL) {
-  const actualPath = window.location.pathname;
+export function drawMarkupFromPageURL(targetURL = null) {
+  if (targetURL) {
+    // redirecting after navigation actions logic:
+    const targetLocation = new URL(targetURL);
+    const targetPath = targetLocation.pathname;
+    const targetPathName =
+      targetPath === "/" || !pathObject[targetPath.slice(1)]
+        ? "home"
+        : targetPath.slice(1);
 
-  const targetLocation = new URL(targetURL);
-  const targetPath = targetLocation.pathname;
-
-  let pathName = targetPath === "/" ? "home" : targetPath.slice(1);
-  if (!pathObject[pathName]) {
-    pathName = "home";
-    setUrlInfo({ pathName });
-    // here can be usage of setFilmCardUrlInfo and return
-  }
-  if (!targetLocation.search) {
-    setUrlInfo({ pathName });
-  }
-
-  const { searchQuery, page } = getUrlInfo();
-  if (
-    actualPath !== targetPath
-    // ?
-    //page
-  ) {
+    setUrlInfo({ pathName: targetPathName });
     main.innerHTML = "";
-    main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
-    changeTitleText(pathName);
+    main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
+    changeTitleText(targetPathName);
+
     listenersReload();
-    setUrlInfo({ searchQuery: null, page: null, pathName });
 
     return;
   }
 
-  if (!searchQuery) {
-    main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
-    changeTitleText(pathName);
-    setUrlInfo({ searchQuery, page, pathName });
+  const { pathName, search, page, genres } = getUrlInfo();
 
+  console.log(pathName, search, page, genres);
+
+  if (!pathObject[pathName]) {
+    const targetPathName = "home";
+
+    setUrlInfo({ pathName: targetPathName });
+    main.innerHTML = "";
+    main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
+    changeTitleText(targetPathName);
     listenersReload();
     return;
-  } else {
-    drawFetchedGalleryPage(page || 1, searchQuery);
-    setUrlInfo({ searchQuery: searchQuery, page: page, pathName: "movies" });
-    listenersReload();
   }
+
+  setUrlInfo({ pathName, search, page, genres });
+  main.innerHTML = "";
+  main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
+  changeTitleText(pathName);
+  listenersReload();
+
+  // if (!targetLocation.search) {
+  //   setUrlInfo({ pathName });
+  // }
+
+  // if (actualPath !== targetPath) {
+  //   main.innerHTML = "";
+  //   main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
+  //   changeTitleText(pathName);
+  //   listenersReload();
+  //   setUrlInfo({ search: null, page: null, pathName });
+
+  //   return;
+  // }
+
+  // if (!searchQuery) {
+  //   main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
+  //   changeTitleText(pathName);
+  //   setUrlInfo({ search:searchQuery, page, pathName });
+
+  //   listenersReload();
+  //   return;
+  // } else {
+  //   drawFetchedGalleryPage(page || 1, searchQuery);
+  //   setUrlInfo({ search: searchQuery, page: page, pathName: "movies" });
+  //   listenersReload();
+  // }
 }
 
 export function drawFetchedGalleryPage(page = 1, searchQuery) {
   getMoviesByTitle(page, searchQuery)
     .catch(console.log)
     .then((galleryData) => {
-      setUrlInfo({ pathName: "movies", searchQuery, page });
+      setUrlInfo({ pathName: "movies", search: searchQuery, page });
 
       const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
       document.querySelector("main").innerHTML = galleryMarkup;
       listenersReload();
 
+      // console.log(window.location);
+      console.log(window.history.state);
       // can be doubling code
     });
 }
@@ -167,13 +197,10 @@ export function openFilmCard(filmId) {
 }
 
 export function openGalleryByGenres(page, genreIdArr) {
-  // console.log(page, genreIdArr);
   getMoviesByGenre(page, genreIdArr).then((galleryData) => {
     const genreIdArrString = genreIdArr.join(",");
-    setUrlInfo({ pathName: "movies", genreIdArrString, page });
+    setUrlInfo({ pathName: "genres", genreIdArrString, page });
 
-    console.log(genreIdArr);
-    console.log(galleryData);
     let searchedGenreNames = "";
     genresListData.genres.forEach((genre) => {
       if (genreIdArr.includes(JSON.stringify(genre.id)))
@@ -184,22 +211,3 @@ export function openGalleryByGenres(page, genreIdArr) {
     listenersReload();
   });
 }
-
-// const pathName = "/random";
-// const searchQuery = "testQuery";
-// const page = 2;
-// const genresArr = [1, 2, 3];
-// const sortBy = "";
-// const order = "desc";
-
-// setUrlInfo({
-//   pathName,
-//   searchQuery,
-//   page,
-//   genresArr,
-//   sortBy,
-//   order,
-// });
-
-console.log(getUrlInfo());
-setUrlInfo(getUrlInfo());

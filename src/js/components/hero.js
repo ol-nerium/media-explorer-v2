@@ -63,7 +63,7 @@ export const heroSectionMarkup = (data, i = 0) => {
     heroRoot.dataset.filmid = id;
     return markup;
   };
-  const isFilmInQueque = getFromLS("quequeFilmsList").includes(id);
+  const isFilmInQueque = getFromLS("quequeFilmsList")?.includes(id);
 
   return heroWrapper(`<div class="hero-img-wrap" style="background-image:url('${createPoster(poster_path)}')"></div>
         <div class="container hero-layout">

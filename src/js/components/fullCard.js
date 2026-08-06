@@ -33,6 +33,9 @@ let adult,
 
 const fullCardNav = ({ title, id }) => {
   // class="back-link" a need fix for previous page before card render
+  // console.log(window.history.back());
+  window.history.pushState({ page: 1 }, "title 1", "?page=1");
+  console.log(window.history);
   return `<div class="full-card-nav">
           <a href="/movies" title="back" class="back-link">
             <svg class="icon">
@@ -241,7 +244,7 @@ const comments = (data) => {
 };
 
 export function setFilmCardUrlInfo(filmId) {
-  console.log(window.location);
+  // console.log(window.location);
 
   let newURL =
     window.location.protocol + "//" + window.location.host + `/${filmId}`;

@@ -8,6 +8,7 @@ import { logoutPage } from "../routes/logout";
 import { moviesPage } from "../routes/movies";
 import { queuePage } from "../routes/queque";
 import { settingsPage } from "../routes/settings";
+import { changeActiveNavLink } from "../utils";
 import { mainRef } from "./refs";
 
 export const pathObject = {
@@ -47,21 +48,17 @@ export const pathObject = {
 };
 
 export function getUrlInfo() {
-  console.log(window.location.search);
   const pathName = window.location.pathname.slice(1);
 
   if (!window.location.search) {
     return { pathName, search: "", page: null, genres: [] };
   }
-  // let [searchQuery, ...params] = window.location.search.split("&");
   const searchParams = window.location.search.slice(1).split("&");
 
   let searchQueryStr = "";
   let genresQueryArr = [];
   let pageQueryStr = "";
   // ??? other queries
-
-  console.log(searchParams);
 
   searchParams.forEach((query) => {
     if (query.includes("page=")) pageQueryStr = query.split("page=")[1];
@@ -80,112 +77,116 @@ export function getUrlInfo() {
   };
 }
 
+const locationProtocol = window.location.protocol;
+const locationHost = window.location.host;
+let baseUrl = locationProtocol + "//" + locationHost;
+
+let newURL = baseUrl;
+
 export function setUrlInfo({
   pathName = null,
-  search = "",
   page = null,
+  search = "",
   genresArr = [],
-  sortBy = SORTBY.POPULARITY,
+  sortBy = "",
   order = ORDER.DESC,
 }) {
-  const locationProtocol = window.location.protocol;
-  const locationHost = window.location.host;
-  let baseUrl = locationProtocol + "//" + locationHost;
-  let newURL = "";
+  changeActiveNavLink(pathName);
 
-  const pageStr = page ? `&page=${page}` : "";
-
-  const searchQueryStr = search ? `?query=${search}` : "";
-
-  const genresArrStr =
-    genresArr.length > 0 ? `&with_genres=${genresArr.join(",")}` : "";
-
-  const sortByStr =
-    sortBy && Object.values(SORTBY).includes(sortBy)
-      ? sortBy
-      : SORTBY.POPULARITY;
-  const orderStr =
-    order && Object.values(ORDER).includes(order) ? order : ORDER.DESC;
+  // createPageQueryObj();
+  // createSearchQueryObj();
+  // createGenresQueryObj();
+  // createSortQueryObj();
 
   if (pathName === "home" || !pathObject[pathName]) {
-    pathName = "home";
     newURL = baseUrl + pathObject[pathName].path;
     window.history.pushState({ path: newURL }, "", newURL);
     return newURL;
   }
 
   if (pathName === "movies") {
-    const pageStr = page && searchQueryStr ? `&page=${page}` : "";
-    // !!
-    newURL = baseUrl + pathObject[pathName].path + searchQueryStr + pageStr;
-    window.history.pushState({ path: newURL }, "", newURL);
-    return newURL;
+    const path = pathObject[pathName].path;
+    newURL = baseUrl + path + "?";
+    let stateObj = { path };
+    [createSearchQueryObj(search), createPageQueryObj(page)].forEach((item) => {
+      if (item.query) newURL += item.query + "&";
+      if (item.obj) stateObj = { ...stateObj, ...item.obj };
+    });
+
+    window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
   }
 
   if (pathName === "genres") {
-    if (!genresArrStr) {
-      newURL = baseUrl + pathObject[pathName].path;
-      window.history.pushState({ path: newURL }, "", newURL);
-      return;
-    }
+    const path = pathObject[pathName].path;
+    newURL = baseUrl + path + "?";
+    let stateObj = { path };
+    [
+      createPageQueryObj(page),
+      createGenresQueryObj(genresArr),
+      createSortQueryObj(sortBy, order),
+    ].forEach((item) => {
+      if (item.query) newURL += item.query + "&";
+      if (item.obj) stateObj = { ...stateObj, ...item.obj };
+    });
+
+    window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
   }
 
   if (
     pathName === "popular" ||
     pathName === "toprated" ||
-    pathName === "upcoming"
+    pathName === "upcoming" ||
+    pathName === "favorites" ||
+    pathName === "queue"
   ) {
-    newURL = !pageStr
-      ? baseUrl + pathObject[pathName].path
-      : baseUrl + pathObject[pathName].path + "?" + pageStr;
-    window.history.pushState({ path: newURL }, "", newURL);
-    return newURL;
+    const path = pathObject[pathName].path;
+    newURL = baseUrl + path + "?";
+    let stateObj = { path };
+    [createPageQueryObj(page)].forEach((item) => {
+      if (item.query) newURL += item.query + "&";
+      if (item.obj) stateObj = { ...stateObj, ...item.obj };
+    });
+
+    window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
   }
 
-  // if pathName is falsy or location pathname isn't valid route (not it pathObj), set to default home and return:
-  // if (!pathName || !pathObject[pathName]) {
-  //   pathName = "home";
-  //   newURL = baseUrl + pathObject[pathName].path;
-  //   window.history.pushState({ path: newURL }, "", newURL);
-  //   return newURL;
-  // }
+  if (pathName === "settings" || pathName === "logout") {
+    const path = pathObject[pathName].path;
+    newURL = baseUrl + path;
+    let stateObj = { path };
 
-  // for search by title
-  // if (!!searchQuery) {
-  //   pathName = "movies";
-  //   page = !!page ? page : 1;
-  // }
-  // for
+    window.history.pushState({ ...stateObj }, "", newURL);
+  }
+}
 
-  // if genresArr was passed, slug it:
-  const genresList =
-    genresArr.length > 1 ? `&with_genres=${genresArr.join(",")}` : "";
-  // if orderQuery and sortQuery valid, overwise use default values
-  const orderQuery = ORDER[order] ? order : ORDER.DESC;
-  const sortQuery = SORTBY[sortBy] ? sortBy : SORTBY.POPULARITY;
-
-  // if (pathObject[window.location.pathname.slice(1)]) {
-  //   pathName = window.location.pathname.slice(1);
-  // }
-
-  // if searchQuery is emplty or false
-  // if (!searchQuery) {
-  //   newURL =
-  //     window.location.protocol +
-  //     "//" +
-  //     window.location.host +
-  //     pathObject[pathName].path +
-  //     `${genresList}`;
-  // }
-
-  // else {
-  //   newURL =
-  //     window.location.protocol +
-  //     "//" +
-  //     window.location.host +
-  //     pathObject[pathName].path +
-  //     `?${searchQuery}&page=${page}`;
-  // }
-
-  // window.history.pushState({ path: newURL }, "", newURL);
+function createPageQueryObj(page) {
+  if (page) {
+    return { obj: { page }, query: `page=${page}` };
+  }
+  return { obj: {}, query: "" };
+}
+function createSearchQueryObj(search) {
+  if (search) {
+    return { obj: { query: search }, query: `query=${search}` };
+  }
+  return { obj: {}, query: "" };
+}
+function createGenresQueryObj(genresArr) {
+  console.log(genresArr?.length > 0);
+  if (genresArr?.length > 0) {
+    return {
+      obj: { genres: genresArr },
+      query: `with_genres=${genresArr.join(",")}`,
+    };
+  }
+  return { obj: {}, query: "" };
+}
+function createSortQueryObj(sortBy, order = ORDER.DESC) {
+  if (sortBy) {
+    return {
+      obj: { sortBy: sortBy, order },
+      query: `sortBy=${sortBy}.${order}`,
+    };
+  }
+  return { obj: {}, query: "" };
 }
