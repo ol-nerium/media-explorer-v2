@@ -1,9 +1,13 @@
-import { drawFetchedGalleryPage, drawMarkupFromPageURL } from "../../main";
+import { drawMarkupFromPageURL } from "../../main";
+import { drawFetchedGalleryPage } from "../../main";
 
 export function clickOnNavLink(evt) {
   evt.preventDefault();
-  const link = evt.target.closest("a");
-  if (link) drawMarkupFromPageURL(link.href);
+  const link = evt?.target?.closest("a");
+  if (link) {
+    drawMarkupFromPageURL(link.href);
+    return link;
+  }
 }
 
 export function onSearchFormSubmit(evt) {

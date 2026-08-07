@@ -17,6 +17,8 @@ import { paginationInterface } from "../interfaces/paginationInterface";
 import { genresSectionInterface } from "../interfaces/genresSectionInterface";
 import { savedGalleryInterface } from "../interfaces/savedGalleryInterface";
 import { fullCardInterface } from "../interfaces/fullCardIterface";
+import { mainPageInfoInterface } from "../interfaces/mainPageInfoInterface";
+import { fullCardNavInterface } from "../interfaces/fullCardNavInterface";
 
 const appRootRef = () => document.getElementById("app");
 const mainRef = () => document.querySelector("main");
@@ -69,6 +71,7 @@ let fullCardtrailerBtn = () =>
   fullCardRef()?.querySelector('[data-control="showTrailer"]');
 let fullCardaddToQuequeBtn = () =>
   fullCardRef()?.querySelector('[data-control="addToWatchlist"]');
+let fullCardNavRef = () => document.querySelector(".full-card-nav");
 
 export const refs = {
   header: { elem: headerRootRef, func: null, eventType: "click" },
@@ -149,11 +152,16 @@ export const refs = {
   //   eventType: "click",
   // },
 
-  // mainPageInfo: {
-  //   elem: mainPageInfoRef,
-  //   func: mainPageInfoInterface,
-  //   eventType: "click",
-  // },
+  mainPageInfo: {
+    elem: mainPageInfoRef,
+    func: mainPageInfoInterface,
+    eventType: "click",
+  },
+  fullCardNav: {
+    elem: fullCardNavRef,
+    func: fullCardNavInterface,
+    eventType: "click",
+  },
   mainGallery: {
     elem: mainGalleryRef,
     func: mainGalleryInterface,

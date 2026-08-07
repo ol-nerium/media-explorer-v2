@@ -1,4 +1,5 @@
 import { ORDER, SORTBY } from "../../main";
+import { fullCardMarkup } from "../components/fullCard";
 import { popularObj, topRatedObj, upcomingObj } from "../data";
 
 import { favoritesPage } from "../routes/favorites";
@@ -6,9 +7,12 @@ import { genresPage } from "../routes/genres";
 import { homePage } from "../routes/home";
 import { logoutPage } from "../routes/logout";
 import { moviesPage } from "../routes/movies";
+import { popularPage } from "../routes/popular";
 import { queuePage } from "../routes/queque";
 import { settingsPage } from "../routes/settings";
-import { changeActiveNavLink } from "../utils";
+import { topRatedPage } from "../routes/toprated";
+import { upcomingPage } from "../routes/upcoming";
+import { changeActiveNavLinkColor } from "../utils";
 import { mainRef } from "./refs";
 
 export const pathObject = {
@@ -19,22 +23,21 @@ export const pathObject = {
   popular: {
     path: "/popular",
     name: "popular",
-    func: () => moviesPage("Popular", popularObj),
+    func: popularPage,
   },
   toprated: {
     path: "/toprated",
     name: "top rated",
-    func: () => moviesPage("Top Rated", topRatedObj),
+    func: topRatedPage,
   },
   upcoming: {
     path: "/upcoming",
     name: "upcoming",
-    func: () => moviesPage("Upcoming", upcomingObj),
+    func: upcomingPage,
   },
 
   favorites: { path: "/favorites", name: "favorites", func: favoritesPage },
   queue: { path: "/queue", name: "queue", func: queuePage },
-
   settings: {
     path: "/settings",
     name: "settings",
@@ -54,10 +57,12 @@ export function getUrlInfo() {
     return { pathName, search: "", page: null, genres: [] };
   }
   const searchParams = window.location.search.slice(1).split("&");
+  // console.log(searchParams);
 
   let searchQueryStr = "";
   let genresQueryArr = [];
   let pageQueryStr = "";
+  let filmIdQuery = "";
   // ??? other queries
 
   searchParams.forEach((query) => {
@@ -65,7 +70,10 @@ export function getUrlInfo() {
     if (query.includes("with_genres="))
       genresQueryArr = query.split("with_genres=")[1].split(",");
     if (query.includes("query=")) searchQueryStr = query.split("query=")[1];
+    if (query.includes("filmId=")) filmIdQuery = query.split("filmId=")[1];
   });
+
+  // console.log(searchParams);
 
   if (!pageQueryStr || isNaN(pageQueryStr) || Number(pageQueryStr) < 1)
     pageQueryStr = null;
@@ -74,6 +82,7 @@ export function getUrlInfo() {
     search: searchQueryStr,
     page: pageQueryStr,
     genres: genresQueryArr,
+    filmId: filmIdQuery,
   };
 }
 
@@ -91,7 +100,7 @@ export function setUrlInfo({
   sortBy = "",
   order = ORDER.DESC,
 }) {
-  changeActiveNavLink(pathName);
+  changeActiveNavLinkColor(pathName);
 
   // createPageQueryObj();
   // createSearchQueryObj();
@@ -157,6 +166,18 @@ export function setUrlInfo({
 
     window.history.pushState({ ...stateObj }, "", newURL);
   }
+}
+
+export function setFilmCardUrlInfo(filmId) {
+  console.log("previous link (go from)", getUrlInfo());
+
+  const { genres, page, pathName, search } = getUrlInfo();
+  const newPath = pathName + "?filmId=" + filmId;
+
+  let newURL =
+    window.location.protocol + "//" + window.location.host + "/" + newPath;
+
+  window.history.pushState({ path: newURL }, "", newURL);
 }
 
 function createPageQueryObj(page) {

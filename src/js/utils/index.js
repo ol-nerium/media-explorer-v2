@@ -101,6 +101,6 @@ export function changeQuequeBtnTextByFilmId(filmId) {
   }
 }
 
-export function changeActiveNavLink(pathName) {
+export function changeActiveNavLinkColor(pathName) {
   console.log(pathName);
 }

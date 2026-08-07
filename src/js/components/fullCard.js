@@ -2,6 +2,11 @@ import { format } from "date-fns";
 
 import { createAvatar, createBackdropBackgound, createPoster } from "../utils";
 import { sliderGalleryItem } from "./sliderGallery";
+import {
+  getUrlInfo,
+  pathObject,
+  setFilmCardUrlInfo,
+} from "../services/routing";
 
 let adult,
   backdrop_path,
@@ -33,24 +38,28 @@ let adult,
 
 const fullCardNav = ({ title, id }) => {
   // class="back-link" a need fix for previous page before card render
-  // console.log(window.history.back());
-  window.history.pushState({ page: 1 }, "title 1", "?page=1");
-  console.log(window.history);
+  const { pathName, search, page, genres, filmId } = getUrlInfo();
+  // let path = pathName;
+  // if (!pathObject[pathName] || !pathName) path = "home";
   return `<div class="full-card-nav">
-          <a href="/movies" title="back" class="back-link">
+          <button href="#" title="back" class="back-btn">
             <svg class="icon">
               <use xlink:href="./src/svgSprite.svg#main-left-arrow"></use>
             </svg>
-          </a>
+          </button>
           <ul class="full-card-nav-list">
             <li class="full-card-nav-list_item">
               <a href="/">Home</a>
             </li>
+            ${
+              !pathObject[pathName] || !pathName
+                ? ""
+                : `<li class="full-card-nav-list_item">
+              <a href="${pathObject[pathName].path}">${pathName}</a>
+            </li>`
+            }
             <li class="full-card-nav-list_item">
-              <a href="/movies">Movies</a>
-            </li>
-            <li class="full-card-nav-list_item">
-              <a href="/${id}">${title}</a>
+              <span>${title}</span>
             </li>
           </ul>
         </div>`;
@@ -139,7 +148,7 @@ const additionalFilmContent = (data) => {
                   Release date
                 </h3>
                 <p class="additional-film-content-list_item-desc">
-                  ${format(release_date, "LLLL 	dd, yyyy")}
+                  ${release_date ? format(release_date, "LLLL 	dd, yyyy") : ""}
                 </p>
               </li>
             </ul>
@@ -164,7 +173,7 @@ const fullCardGallery = (data) => {
 
 const comments = (data) => {
   const reviews = data.reviews.results;
-  console.log(data);
+  // console.log(data);
 
   const item = (comment) => {
     const { author, author_details, content, created_at, id, updated_at, url } =
@@ -193,8 +202,12 @@ const comments = (data) => {
       if (!created_at) return "";
       const wasUpdated = created_at !== updated_at;
 
-      const formatedCreatedDate = format(created_at, "LLLL dd, yyyy kk:mm:ss");
-      const formatedUpdatedDate = format(updated_at, "LLLL dd, yyyy kk:mm:ss");
+      const formatedCreatedDate = created_at
+        ? format(created_at, "LLLL dd, yyyy kk:mm:ss")
+        : "";
+      const formatedUpdatedDate = updated_at
+        ? format(updated_at, "LLLL dd, yyyy kk:mm:ss")
+        : "";
       const resStr = wasUpdated
         ? `created: ${formatedCreatedDate} `
         : `created: ${formatedCreatedDate}. edited: ${formatedUpdatedDate}`;
@@ -243,18 +256,9 @@ const comments = (data) => {
           </ul>`;
 };
 
-export function setFilmCardUrlInfo(filmId) {
-  // console.log(window.location);
-
-  let newURL =
-    window.location.protocol + "//" + window.location.host + `/${filmId}`;
-
-  window.history.pushState({ path: newURL }, "", newURL);
-}
-
 export const fullCardMarkup = (filmData) => {
   // console.log();
-  setFilmCardUrlInfo(filmData.mainData.id);
+  // setFilmCardUrlInfo(filmData.mainData.id);
   //
   ({
     adult,
@@ -286,7 +290,7 @@ export const fullCardMarkup = (filmData) => {
     vote_count,
   } = filmData.mainData);
 
-  return `<section class="full-card">
+  return `
       <div class="container full-card-layout" data-filmid="${id}" >
         ${fullCardNav({ title, id })}
         <div class="film-content">
@@ -299,5 +303,5 @@ export const fullCardMarkup = (filmData) => {
           ${comments(filmData)}          
         </div>
       </div>
-    </section>`;
+    `;
 };

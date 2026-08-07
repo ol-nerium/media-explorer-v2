@@ -6,11 +6,13 @@ import {
   createGenreChipsListMarkup,
   sortingSectionMarkup,
 } from "../components/sortingSection";
-import { activeGenresArr } from "../interfaces/sortingInterface";
+import { activeGenresArr } from "../../main";
+import { popularObj } from "../data";
 
 export const moviesPage = (
   title = "Default",
-  galleryData = { results: [], page: 1 },
+  // galleryData = { results: [], page: 1 },
+  galleryData = popularObj,
 ) => {
   return (
     mainPageInfoSectionMarkup() +
@@ -24,7 +26,7 @@ export const moviesPage = (
 };
 
 export const searchedMoviesPage = (
-  searchQuery = "Default",
+  searchQuery = "your search query",
   galleryData = { results: [], page: 1 },
 ) => {
   return (

@@ -139,7 +139,8 @@ button {
   left: 0;
 }
 
-.sr-only {
+.sr-only,
+h2.sr-only {
   display: none;
 }
 
@@ -195,4 +196,8 @@ button {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+li.active a {
+  color: var(--purple-color);
 }

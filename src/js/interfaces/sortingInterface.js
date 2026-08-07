@@ -2,6 +2,7 @@ import { setUrlInfo } from "../services/routing";
 import { searchedMoviesPage } from "../routes/movies";
 import { getMoviesByGenre } from "../services/apiService";
 import { listenersReload } from "../services/refs";
+import { activeGenresArr } from "../../main";
 
 export function genreChipsInterface(evt) {
   // can be bugged here
@@ -18,7 +19,6 @@ export function genreChipsInterface(evt) {
     onGenreChipClick(targetedBtn.dataset.genreid);
 }
 
-export const activeGenresArr = [];
 function onControlArrowClick(controlDir) {
   const genresList = document.querySelector(".genres-chips-list");
   const avgElementWidth = Math.ceil(

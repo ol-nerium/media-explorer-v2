@@ -5,53 +5,33 @@ import {
   mobileModalMenuRef,
   modalCloseBtnRef,
 } from "../services/refs";
+import { closeModal, openModal } from "./modalInterface";
 
 export function onMobHeaderBtnClick(evt) {
   const target = evt.target.closest("button");
 
   if (!target) return;
   const btnControl = target.dataset?.control;
-  if (btnControl === "openMobileMenu") openModal();
+  if (btnControl === "openMobileMenu") openModal(mobileModalMenuMarkup());
 }
 
-let backdrop = null;
 let modalCloseBtn = null;
 let mobileModalMenu = null;
-function openModal() {
-  backdrop = backdropRef();
 
-  backdrop.classList.remove("is-hidden");
-  backdrop.insertAdjacentHTML("afterbegin", mobileModalMenuMarkup());
-
+export function addMobileModalMenuListeners() {
   modalCloseBtn = modalCloseBtnRef();
   mobileModalMenu = mobileModalMenuRef();
 
-  modalCloseBtn.addEventListener("click", closeModal);
-  backdrop.addEventListener("click", onBackdropClick);
-  window.addEventListener("keydown", onKeyClose);
-
-  mobileModalMenu.addEventListener("click", modaleMenuIntarface);
+  if (modalCloseBtn) modalCloseBtn.addEventListener("click", closeModal);
+  if (mobileModalMenu)
+    mobileModalMenu.addEventListener("click", modaleMenuInterface);
 }
-
-function closeModal() {
-  mobileModalMenu.removeEventListener("click", modaleMenuIntarface);
-  backdrop.removeEventListener("click", onBackdropClick);
-  window.removeEventListener("keydown", onKeyClose);
-  modalCloseBtn.removeEventListener("click", closeModal);
-
-  backdrop.classList.add("is-hidden");
-  backdrop.innerHTML = "";
+export function removeMobileModalMenuListeners() {
+  if (modalCloseBtn)
+    mobileModalMenu.removeEventListener("click", modaleMenuInterface);
+  if (mobileModalMenu) modalCloseBtn.removeEventListener("click", closeModal);
 }
-
-function onBackdropClick(evt) {
-  if (evt.target === evt.currentTarget) closeModal();
-}
-
-function onKeyClose(evt) {
-  if (evt.code === "Escape") closeModal();
-}
-
-function modaleMenuIntarface(evt) {
+function modaleMenuInterface(evt) {
   clickOnNavLink(evt);
   const isLinkClicked = !!evt.target.closest("a");
   if (isLinkClicked) closeModal();

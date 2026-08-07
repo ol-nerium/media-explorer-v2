@@ -19,7 +19,7 @@ const paginationButtonsList = (data) => {
 };
 export const paginationSectionMarkup = (data) => {
   // const { page, total_pages, results, total_results } = data;
-
+  console.log(data);
   const buttonsList = paginationButtonsList(data);
   if (buttonsList.length < 2) {
     // paginationRoot.innerHTML = "";

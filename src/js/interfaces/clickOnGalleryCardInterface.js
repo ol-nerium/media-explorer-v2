@@ -1,4 +1,6 @@
-import { drawMarkupFromPageURL, openFilmCard } from "../../main";
+import { drawMarkupFromPageURL } from "../../main";
+import { openFilmCard } from "../interfaces/openFullFilmCard";
+import { getUrlInfo } from "../services/routing";
 
 export const clickOnGalleryCardInterface = (evt) => {
   evt.preventDefault();
@@ -8,9 +10,7 @@ export const clickOnGalleryCardInterface = (evt) => {
 
   if (target.nodeName !== "li") {
     listItem = target.closest("li");
-  } else {
-    listItem = target;
-  }
+  } else listItem = target;
 
   if (target.classList.contains("section-expand-link")) {
     navLink = target;
@@ -19,10 +19,11 @@ export const clickOnGalleryCardInterface = (evt) => {
   const filmId = listItem?.dataset?.filmid;
   const genreId = listItem?.dataset?.genreid;
 
-  if (filmId) openFilmCard(filmId);
+  if (filmId) {
+    openFilmCard(filmId);
+  }
   if (genreId) console.log("add genre and further");
   if (navLink) {
-    console.log("navigate to section");
     drawMarkupFromPageURL(navLink.href);
   }
 };

@@ -1,1 +1,4 @@
-export const savedGalleryInterface = () => {};
+export const savedGalleryInterface = (evt) => {
+  evt.preventDefault();
+  console.log(evt.target);
+};

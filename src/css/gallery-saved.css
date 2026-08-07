@@ -49,6 +49,8 @@
   background-color: var(--grey-color);
   opacity: 0.5;
   border-color: transparent;
+
+  z-index: 10;
 }
 
 .saved-gallery .cross-icon {

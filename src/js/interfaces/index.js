@@ -11,7 +11,6 @@ import { paginationInterface } from "./paginationInterface";
 import { savedGalleryInterface } from "./savedGalleryInterface";
 import { searchbarFormInterface } from "./searchbarFormInterface";
 import { genreChipsInterface } from "./sortingInterface";
-import { activeGenresArr } from "./sortingInterface";
 import { onSelectChange } from "./sortingInterface";
 
 export {
@@ -28,6 +27,5 @@ export {
   savedGalleryInterface,
   searchbarFormInterface,
   genreChipsInterface,
-  activeGenresArr,
   onSelectChange,
 };

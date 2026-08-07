@@ -15,6 +15,7 @@ import {
   mobileLayoutRef,
   refs,
   sortingDropdownRef,
+  backdropRef,
 } from "./js/services/refs";
 import { changeTitleText, genresListData } from "./js/utils";
 import {
@@ -25,6 +26,7 @@ import {
   getReviewsByFilmId,
   getSimilarMoviesById,
 } from "./js/services/apiService";
+import { openFilmCard } from "./js/interfaces/openFullFilmCard";
 
 export const navListIcons = {
   logo: `<svg class="icon">
@@ -78,7 +80,19 @@ export const SORTBY = {
 
 let root;
 let main;
+
+let pathName = "";
+let search = "";
+let page = "";
+let genres = [];
+
+let filmId = "";
+
+export let activeGenresArr = [];
+
 function appInit() {
+  ({ pathName, search, page, genres, filmId } = getUrlInfo());
+
   root = appRootRef("app");
   if (!mainRef())
     root.insertAdjacentElement("afterbegin", document.createElement("main"));
@@ -112,10 +126,6 @@ export function drawMarkupFromPageURL(targetURL = null) {
     return;
   }
 
-  const { pathName, search, page, genres } = getUrlInfo();
-
-  console.log(pathName, search, page, genres);
-
   if (!pathObject[pathName]) {
     const targetPathName = "home";
 
@@ -127,7 +137,13 @@ export function drawMarkupFromPageURL(targetURL = null) {
     return;
   }
 
-  setUrlInfo({ pathName, search, page, genres });
+  // setUrlInfo({ pathName, search, page, genres, filmId });
+
+  console.log(filmId);
+  if (filmId) {
+    openFilmCard(filmId);
+  }
+
   main.innerHTML = "";
   main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
   changeTitleText(pathName);
@@ -161,41 +177,6 @@ export function drawMarkupFromPageURL(targetURL = null) {
   // }
 }
 
-export function drawFetchedGalleryPage(page = 1, searchQuery) {
-  getMoviesByTitle(page, searchQuery)
-    .catch(console.log)
-    .then((galleryData) => {
-      setUrlInfo({ pathName: "movies", search: searchQuery, page });
-
-      const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
-      document.querySelector("main").innerHTML = galleryMarkup;
-      listenersReload();
-
-      // console.log(window.location);
-      console.log(window.history.state);
-      // can be doubling code
-    });
-}
-
-export function openFilmCard(filmId) {
-  if (!filmId) {
-    console.log("no film id");
-    return;
-  }
-
-  Promise.all([
-    getMovieById(filmId),
-    getCreditsByFilmId(filmId),
-    getReviewsByFilmId(filmId),
-    getSimilarMoviesById(filmId),
-  ]).then(([mainData, credits, reviews, similar]) => {
-    const filmData = { mainData, credits, reviews, similar };
-    const filmCardMarkup = fullCardMarkup(filmData);
-    root.innerHTML = filmCardMarkup;
-    listenersReload();
-  });
-}
-
 export function openGalleryByGenres(page, genreIdArr) {
   getMoviesByGenre(page, genreIdArr).then((galleryData) => {
     const genreIdArrString = genreIdArr.join(",");
@@ -210,4 +191,20 @@ export function openGalleryByGenres(page, genreIdArr) {
     document.querySelector("main").innerHTML = galleryMarkup;
     listenersReload();
   });
+}
+
+export function drawFetchedGalleryPage(page = 1, searchQuery) {
+  getMoviesByTitle(page, searchQuery)
+    .catch(console.log)
+    .then((galleryData) => {
+      setUrlInfo({ pathName: "movies", search: searchQuery, page });
+
+      const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
+      document.querySelector("main").innerHTML = galleryMarkup;
+      listenersReload();
+
+      // console.log(window.location);
+      console.log(window.history.state);
+      // can be doubling code
+    });
 }

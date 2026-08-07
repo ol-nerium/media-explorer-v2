@@ -6,13 +6,14 @@ export const mainPageInfoSectionMarkup = (additionalTitle = null) => {
   const currentPathName = window.location.pathname;
   const pathName = currentPathName === "/" ? "home" : currentPathName.slice(1);
   if (pathName !== "home" && pathObject[pathName]) {
-    navLinksArr.push({ name: pathName, link: pathObject[pathName].path });
+    // navLinksArr.push({ name: pathName, link: pathObject[pathName].path });
+    navLinksArr.push({ name: pathName, link: "#" });
   }
   if (!!additionalTitle)
     navLinksArr.push({ name: additionalTitle, link: window.location.href });
   // if (additionalTitle) changeTitleText(additionalTitle);
 
-  console.log(currentPathName, pathName, navLinksArr);
+  // console.log(currentPathName, pathName, navLinksArr);
 
   return `<section class="main-page-info">
         <div class="container main-page-info-layout">

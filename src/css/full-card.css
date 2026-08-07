@@ -25,9 +25,11 @@
   padding: 20px;
 }
 
-.back-link {
+.back-btn {
   width: 54px;
   height: 54px;
+  background-color: transparent;
+  border: none;
 }
 
 /* .back-link .icon {
@@ -42,6 +44,7 @@
 }
 .full-card-nav-list_item {
   font-size: var(--font-size-xs);
+  text-transform: capitalize;
 }
 
 .full-card-nav-list_item:not(:last-of-type)::after {
