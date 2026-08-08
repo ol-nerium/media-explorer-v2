@@ -1,17 +1,20 @@
 import { clickOnGalleryCardInterface } from "./clickOnGalleryCardInterface";
 import { fullCardInterface } from "./fullCardIterface";
-import { genresSectionInterface } from "./genresSectionInterface";
-import { clickOnNavLink } from "./headerInterface";
-import { onSearchFormSubmit } from "./headerInterface";
+import {
+  genreChipsInterface,
+  genresSectionInterface,
+  mobileGenresInterface,
+} from "./genresInterface";
+import { clickOnNavLink } from "./navLinkClickInterface";
+import { onSearchFormSubmit } from "./searchbarFormInterface";
 import { heroInterface } from "./heroInterface";
 import { mainGalleryInterface } from "./mainGalleryInterface";
-import { mobileGenresInterface } from "./mobileGenresInterface";
+
 import { onMobHeaderBtnClick } from "./mobileModalMenuInterface";
 import { paginationInterface } from "./paginationInterface";
 import { savedGalleryInterface } from "./savedGalleryInterface";
 import { searchbarFormInterface } from "./searchbarFormInterface";
-import { genreChipsInterface } from "./sortingInterface";
-import { onSelectChange } from "./sortingInterface";
+import { onSelectChange } from "./dropdownInterface";
 
 export {
   clickOnGalleryCardInterface,

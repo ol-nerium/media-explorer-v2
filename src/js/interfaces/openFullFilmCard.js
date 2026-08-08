@@ -1,4 +1,3 @@
-import { drawMarkupFromPageURL } from "../../main";
 import { fullCardMarkup } from "../components/fullCard";
 import {
   getCreditsByFilmId,
@@ -29,7 +28,7 @@ export function openFilmCard(filmId) {
   ])
     .then(([mainData, credits, reviews, similar]) => {
       const filmData = { mainData, credits, reviews, similar };
-      console.log(filmData);
+      // console.log(filmData);
 
       setFilmCardUrlInfo(filmData.mainData.id);
       const filmCardMarkup = fullCardMarkup(filmData);

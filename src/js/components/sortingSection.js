@@ -1,3 +1,4 @@
+import { SORTBY } from "../../main";
 import { genresListData } from "../utils";
 
 const sortingSectionGenresList = (activeGenresIdsArr) => {
@@ -40,7 +41,18 @@ export const createGenreChipsListMarkup = (activeGenresIdsArr) => {
             </button>
           </div>`;
 };
+
 export const createDropdownMarkup = () => {
+  const sortByKeys = Object.keys(SORTBY);
+  let optionsMarkup = "";
+  sortByKeys.forEach((sortOption) => {
+    SORTBY[sortOption];
+
+    optionsMarkup += `<option value="${SORTBY[sortOption]}">
+                <span>${sortOption.split("_").join(" ").toLowerCase()}</span>
+              </option>`;
+  });
+
   return `<label for="sortingDropdown" class="dropdown"
             >Sort by:
             <select name="sortingDropdown" id="sortingDropdown">
@@ -52,19 +64,7 @@ export const createDropdownMarkup = () => {
               <option value="">
                 <span>Choose option!</span>
               </option>  
-
-              <option value="nowPlaying">
-                <span>Now Playing</span>
-              </option>
-              <option value="popular">
-                <span>Popular</span>
-              </option>
-              <option value="topRated">
-                <span>Top Rated</span>
-              </option>
-              <option value="upcoming">
-                <span>Upcoming</span>
-              </option>
+              ${optionsMarkup}
             </select>
           </label>`;
 };

@@ -31,6 +31,8 @@ function onKeyClose(evt) {
   if (evt.code === "Escape") closeModal();
 }
 export function closeModal() {
+  backdrop = backdropRef();
+
   removeMobileModalMenuListeners();
   backdrop.removeEventListener("click", onBackdropClick);
   window.removeEventListener("keydown", onKeyClose);

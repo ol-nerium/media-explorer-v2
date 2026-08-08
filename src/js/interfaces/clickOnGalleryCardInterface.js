@@ -1,6 +1,5 @@
-import { drawMarkupFromPageURL } from "../../main";
 import { openFilmCard } from "../interfaces/openFullFilmCard";
-import { getUrlInfo } from "../services/routing";
+import { drawMarkupFromPageURL, getUrlInfo } from "../services/routing";
 
 export const clickOnGalleryCardInterface = (evt) => {
   evt.preventDefault();

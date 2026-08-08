@@ -1,5 +1,5 @@
 import { mobileModalMenuMarkup } from "../components/mobileModalMenu";
-import { clickOnNavLink } from "../interfaces/headerInterface";
+import { clickOnNavLink } from "../interfaces";
 import {
   backdropRef,
   mobileModalMenuRef,
@@ -31,6 +31,7 @@ export function removeMobileModalMenuListeners() {
     mobileModalMenu.removeEventListener("click", modaleMenuInterface);
   if (mobileModalMenu) modalCloseBtn.removeEventListener("click", closeModal);
 }
+
 function modaleMenuInterface(evt) {
   clickOnNavLink(evt);
   const isLinkClicked = !!evt.target.closest("a");

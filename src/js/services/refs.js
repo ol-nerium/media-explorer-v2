@@ -1,24 +1,22 @@
 import { heroInterface } from "../interfaces/heroInterface";
 import { onMobHeaderBtnClick } from "../interfaces/mobileModalMenuInterface";
-import {
-  clickOnNavLink,
-  onSearchFormSubmit,
-} from "../interfaces/headerInterface";
+import { clickOnNavLink, onSearchFormSubmit } from "../interfaces";
+import { onSelectChange } from "../interfaces/dropdownInterface";
+
 import {
   genreChipsInterface,
-  onSelectChange,
-} from "../interfaces/sortingInterface";
-
-import { mobileGenresInterface } from "../interfaces/mobileGenresInterface";
+  mobileGenresInterface,
+} from "../interfaces/genresInterface";
 import { clickOnGalleryCardInterface } from "../interfaces/clickOnGalleryCardInterface";
-// import { mainPageInfoInterface } from "../interfaces/mainPageInfoInterface";
 import { mainGalleryInterface } from "../interfaces/mainGalleryInterface";
 import { paginationInterface } from "../interfaces/paginationInterface";
-import { genresSectionInterface } from "../interfaces/genresSectionInterface";
+import { genresSectionInterface } from "../interfaces/genresInterface";
 import { savedGalleryInterface } from "../interfaces/savedGalleryInterface";
-import { fullCardInterface } from "../interfaces/fullCardIterface";
+import {
+  fullCardInterface,
+  fullCardNavInterface,
+} from "../interfaces/fullCardIterface";
 import { mainPageInfoInterface } from "../interfaces/mainPageInfoInterface";
-import { fullCardNavInterface } from "../interfaces/fullCardNavInterface";
 
 const appRootRef = () => document.getElementById("app");
 const mainRef = () => document.querySelector("main");

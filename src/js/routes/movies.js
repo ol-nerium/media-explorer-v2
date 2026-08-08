@@ -6,7 +6,7 @@ import {
   createGenreChipsListMarkup,
   sortingSectionMarkup,
 } from "../components/sortingSection";
-import { activeGenresArr } from "../../main";
+import { activeGenresArr } from "../services/routing";
 import { popularObj } from "../data";
 
 export const moviesPage = (
@@ -31,9 +31,26 @@ export const searchedMoviesPage = (
 ) => {
   return (
     mainPageInfoSectionMarkup(searchQuery) +
-    sortingSectionMarkup(createGenreChipsListMarkup(activeGenresArr)) +
+    // sortingSectionMarkup(createGenreChipsListMarkup(activeGenresArr)) +
     mainGallerySectionMarkup(
       "Search for <span>" + searchQuery + "</span>",
+      galleryData.results,
+    ) +
+    paginationSectionMarkup(galleryData)
+  );
+};
+
+export const searchedByGenresMoviesPage = (
+  genresListNames = "genres",
+  galleryData = { results: [], page: 1 },
+) => {
+  return (
+    mainPageInfoSectionMarkup(genresListNames) +
+    sortingSectionMarkup(
+      createGenreChipsListMarkup(activeGenresArr) + createDropdownMarkup(),
+    ) +
+    mainGallerySectionMarkup(
+      "Search for <span>" + genresListNames + "</span>",
       galleryData.results,
     ) +
     paginationSectionMarkup(galleryData)

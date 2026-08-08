@@ -2,21 +2,16 @@ import "./style.css";
 import { headerMarkup } from "./js/components/header";
 
 import { searchedMoviesPage } from "./js/routes/movies";
-import { getUrlInfo, pathObject, setUrlInfo } from "./js/services/routing";
+import {
+  drawMarkupFromPageURL,
+  getUrlInfo,
+  pathObject,
+  setUrlInfo,
+} from "./js/services/routing";
 
 import { fullCardMarkup } from "./js/components/fullCard";
 
-import {
-  listenersReload,
-  appRootRef,
-  genresChipsRootRef,
-  headerRootRef,
-  mainRef,
-  mobileLayoutRef,
-  refs,
-  sortingDropdownRef,
-  backdropRef,
-} from "./js/services/refs";
+import { listenersReload, appRootRef, mainRef } from "./js/services/refs";
 import { changeTitleText, genresListData } from "./js/utils";
 import {
   getCreditsByFilmId,
@@ -81,130 +76,19 @@ export const SORTBY = {
 let root;
 let main;
 
-let pathName = "";
-let search = "";
-let page = "";
-let genres = [];
-
-let filmId = "";
-
-export let activeGenresArr = [];
-
 function appInit() {
-  ({ pathName, search, page, genres, filmId } = getUrlInfo());
-
   root = appRootRef("app");
   if (!mainRef())
     root.insertAdjacentElement("afterbegin", document.createElement("main"));
   root.insertAdjacentHTML("afterbegin", headerMarkup());
   main = mainRef();
 
-  window.addEventListener("popstate", (e) => console.log(e));
+  window.addEventListener("popstate", (e) => {
+    console.log(e);
+    drawMarkupFromPageURL();
+  });
 
   drawMarkupFromPageURL();
 }
 
 appInit();
-
-export function drawMarkupFromPageURL(targetURL = null) {
-  if (targetURL) {
-    // redirecting after navigation actions logic:
-    const targetLocation = new URL(targetURL);
-    const targetPath = targetLocation.pathname;
-    const targetPathName =
-      targetPath === "/" || !pathObject[targetPath.slice(1)]
-        ? "home"
-        : targetPath.slice(1);
-
-    setUrlInfo({ pathName: targetPathName });
-    main.innerHTML = "";
-    main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
-    changeTitleText(targetPathName);
-
-    listenersReload();
-
-    return;
-  }
-
-  if (!pathObject[pathName]) {
-    const targetPathName = "home";
-
-    setUrlInfo({ pathName: targetPathName });
-    main.innerHTML = "";
-    main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
-    changeTitleText(targetPathName);
-    listenersReload();
-    return;
-  }
-
-  // setUrlInfo({ pathName, search, page, genres, filmId });
-
-  console.log(filmId);
-  if (filmId) {
-    openFilmCard(filmId);
-  }
-
-  main.innerHTML = "";
-  main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
-  changeTitleText(pathName);
-  listenersReload();
-
-  // if (!targetLocation.search) {
-  //   setUrlInfo({ pathName });
-  // }
-
-  // if (actualPath !== targetPath) {
-  //   main.innerHTML = "";
-  //   main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
-  //   changeTitleText(pathName);
-  //   listenersReload();
-  //   setUrlInfo({ search: null, page: null, pathName });
-
-  //   return;
-  // }
-
-  // if (!searchQuery) {
-  //   main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
-  //   changeTitleText(pathName);
-  //   setUrlInfo({ search:searchQuery, page, pathName });
-
-  //   listenersReload();
-  //   return;
-  // } else {
-  //   drawFetchedGalleryPage(page || 1, searchQuery);
-  //   setUrlInfo({ search: searchQuery, page: page, pathName: "movies" });
-  //   listenersReload();
-  // }
-}
-
-export function openGalleryByGenres(page, genreIdArr) {
-  getMoviesByGenre(page, genreIdArr).then((galleryData) => {
-    const genreIdArrString = genreIdArr.join(",");
-    setUrlInfo({ pathName: "genres", genreIdArrString, page });
-
-    let searchedGenreNames = "";
-    genresListData.genres.forEach((genre) => {
-      if (genreIdArr.includes(JSON.stringify(genre.id)))
-        searchedGenreNames += genre.name + " ";
-    });
-    const galleryMarkup = searchedMoviesPage(searchedGenreNames, galleryData);
-    document.querySelector("main").innerHTML = galleryMarkup;
-    listenersReload();
-  });
-}
-
-export function drawFetchedGalleryPage(page = 1, searchQuery) {
-  getMoviesByTitle(page, searchQuery)
-    .catch(console.log)
-    .then((galleryData) => {
-      setUrlInfo({ pathName: "movies", search: searchQuery, page });
-
-      const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
-      document.querySelector("main").innerHTML = galleryMarkup;
-      listenersReload();
-
-      // console.log(window.location);
-      console.log(window.history.state);
-      // can be doubling code
-    });
-}
