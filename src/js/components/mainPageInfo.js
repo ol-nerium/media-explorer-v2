@@ -13,8 +13,6 @@ export const mainPageInfoSectionMarkup = (additionalTitle = null) => {
     navLinksArr.push({ name: additionalTitle, link: window.location.href });
   // if (additionalTitle) changeTitleText(additionalTitle);
 
-  // console.log(currentPathName, pathName, navLinksArr);
-
   return `<section class="main-page-info">
         <div class="container main-page-info-layout">
           <ul class="nav-list">

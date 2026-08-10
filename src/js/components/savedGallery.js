@@ -1,3 +1,4 @@
+import { activeGenresArr } from "../services/routing";
 import { createPoster } from "../utils";
 
 // const savedGalleryItemGenres = (genreIds) => {
@@ -56,7 +57,7 @@ const savedGalleryItem = (data) => {
                 <h3 class="title">${title} <span class="year">(${release_date.slice(0, 4)})</span></h3>
                 <ul class="gallery-list_item-genres">
                   ${data.genres.forEach((genre) => {
-                    return `<li class="gallery-list_item-genres_item" data-genreid="${genre.id}">${genre.name}</li>`;
+                    return `<li class="gallery-list_item-genres_item ${activeGenresArr.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">${genre.name}</li>`;
                   })}                  
                 </ul>
               </div>

@@ -22,7 +22,7 @@ const appRootRef = () => document.getElementById("app");
 const mainRef = () => document.querySelector("main");
 
 let headerRootRef = () => document.querySelector(".header");
-let headerMenuRef = () => document.querySelector(".header-menu-layout");
+export let headerMenuRef = () => document.querySelector(".header-menu-layout");
 
 let mobileLayoutRef = () => document.querySelector(".mobile-header-layout");
 // sorting:

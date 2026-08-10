@@ -4,17 +4,13 @@ import { paginationSectionMarkup } from "../components/pagination";
 import { topRatedObj } from "../data";
 
 export const topRatedPage = (
-  title = "Default",
+  title = null,
   // galleryData = { results: [], page: 1 },
   galleryData = topRatedObj,
 ) => {
   return (
     mainPageInfoSectionMarkup() +
-    // sortingSectionMarkup(
-    //   createGenreChipsListMarkup(activeGenresArr),
-    //   createDropdownMarkup(),
-    // ) +
-    mainGallerySectionMarkup(title, topRatedObj.results) +
+    mainGallerySectionMarkup(title, galleryData.results) +
     paginationSectionMarkup(galleryData)
   );
 };

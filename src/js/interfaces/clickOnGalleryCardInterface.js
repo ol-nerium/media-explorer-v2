@@ -1,5 +1,9 @@
 import { openFilmCard } from "../interfaces/openFullFilmCard";
-import { drawMarkupFromPageURL, getUrlInfo } from "../services/routing";
+import {
+  activeGenresArr,
+  handleLocation,
+  openGalleryByGenres,
+} from "../services/routing";
 
 export const clickOnGalleryCardInterface = (evt) => {
   evt.preventDefault();
@@ -21,8 +25,12 @@ export const clickOnGalleryCardInterface = (evt) => {
   if (filmId) {
     openFilmCard(filmId);
   }
-  if (genreId) console.log("add genre and further");
+  if (genreId) {
+    if (activeGenresArr.includes(genreId)) return;
+    activeGenresArr.push(genreId);
+    openGalleryByGenres(1, activeGenresArr);
+  }
   if (navLink) {
-    drawMarkupFromPageURL(navLink.href);
+    handleLocation(navLink.href);
   }
 };

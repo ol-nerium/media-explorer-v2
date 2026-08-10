@@ -1,27 +1,9 @@
 import "./style.css";
 import { headerMarkup } from "./js/components/header";
 
-import { searchedMoviesPage } from "./js/routes/movies";
-import {
-  drawMarkupFromPageURL,
-  getUrlInfo,
-  pathObject,
-  setUrlInfo,
-} from "./js/services/routing";
+import { handleLocation } from "./js/services/routing";
 
-import { fullCardMarkup } from "./js/components/fullCard";
-
-import { listenersReload, appRootRef, mainRef } from "./js/services/refs";
-import { changeTitleText, genresListData } from "./js/utils";
-import {
-  getCreditsByFilmId,
-  getMovieById,
-  getMoviesByGenre,
-  getMoviesByTitle,
-  getReviewsByFilmId,
-  getSimilarMoviesById,
-} from "./js/services/apiService";
-import { openFilmCard } from "./js/interfaces/openFullFilmCard";
+import { appRootRef, mainRef } from "./js/services/refs";
 
 export const navListIcons = {
   logo: `<svg class="icon">
@@ -85,10 +67,10 @@ function appInit() {
 
   window.addEventListener("popstate", (e) => {
     console.log(e);
-    drawMarkupFromPageURL();
+    handleLocation();
   });
 
-  drawMarkupFromPageURL();
+  handleLocation();
 }
 
 appInit();

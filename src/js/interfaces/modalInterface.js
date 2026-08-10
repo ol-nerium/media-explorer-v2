@@ -1,4 +1,6 @@
 import { appRootRef, backdropRef, mainRef } from "../services/refs";
+import { getUrlInfo, setUrlInfo } from "../services/urlInfoService";
+import { changeActiveNavLinkColor } from "../utils";
 import {
   addMobileModalMenuListeners,
   removeMobileModalMenuListeners,
@@ -22,12 +24,12 @@ export function openModal(markup) {
   window.addEventListener("keydown", onKeyClose);
 
   document.querySelector("body").style.overflow = "hidden";
+  changeActiveNavLinkColor();
 }
 function onBackdropClick(evt) {
   if (evt.target === evt.currentTarget) closeModal();
 }
 function onKeyClose(evt) {
-  console.log(evt);
   if (evt.code === "Escape") closeModal();
 }
 export function closeModal() {
@@ -40,4 +42,7 @@ export function closeModal() {
   backdrop.classList.add("is-hidden");
   backdrop.innerHTML = "";
   document.querySelector("body").style.overflow = "";
+
+  const currentUrlInfo = getUrlInfo();
+  setUrlInfo({ ...currentUrlInfo, filmId: "" });
 }

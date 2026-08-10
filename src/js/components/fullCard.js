@@ -3,10 +3,12 @@ import { format } from "date-fns";
 import { createAvatar, createBackdropBackgound, createPoster } from "../utils";
 import { sliderGalleryItem } from "./sliderGallery";
 import {
-  getUrlInfo,
+  activeGenresArr,
   pathObject,
   setFilmCardUrlInfo,
 } from "../services/routing";
+import { getUrlInfo } from "../services/urlInfoService";
+import { getFromLS } from "../utils/localStorage";
 
 let adult,
   backdrop_path,
@@ -35,6 +37,8 @@ let adult,
   video,
   vote_average,
   vote_count;
+
+let isFilmInQueque;
 
 const fullCardNav = ({ title, id }) => {
   // class="back-link" a need fix for previous page before card render
@@ -107,7 +111,8 @@ const baseFilmContent = () => {
                   Watch trailer
                 </button>
                 <button type="button" class="full-card-controls_AddToWatchlist" data-control="addToWatchlist">
-                  Add to Watchlist
+                  
+${isFilmInQueque ? "Remove from queque" : "Add to queque"}
                 </button>
               </div>
             </div>
@@ -173,7 +178,6 @@ const fullCardGallery = (data) => {
 
 const comments = (data) => {
   const reviews = data.reviews.results;
-  // console.log(data);
 
   const item = (comment) => {
     const { author, author_details, content, created_at, id, updated_at, url } =
@@ -257,9 +261,6 @@ const comments = (data) => {
 };
 
 export const fullCardMarkup = (filmData) => {
-  // console.log();
-  // setFilmCardUrlInfo(filmData.mainData.id);
-  //
   ({
     adult,
     backdrop_path,
@@ -289,6 +290,8 @@ export const fullCardMarkup = (filmData) => {
     vote_average,
     vote_count,
   } = filmData.mainData);
+
+  isFilmInQueque = getFromLS("quequeFilmsList")?.includes(id);
 
   return `
       <div class="container full-card-layout" data-filmid="${id}" >

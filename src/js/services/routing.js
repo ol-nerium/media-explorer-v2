@@ -1,18 +1,11 @@
-import { ORDER, SORTBY } from "../../main";
-import { fullCardMarkup } from "../components/fullCard";
-import { popularObj, topRatedObj, upcomingObj } from "../data";
 import { closeModal } from "../interfaces/modalInterface";
 import { openFilmCard } from "../interfaces/openFullFilmCard";
 
 import { favoritesPage } from "../routes/favorites";
-import { genresPage } from "../routes/genres";
+import { genresPage, searchedByGenresPage } from "../routes/genres";
 import { homePage } from "../routes/home";
 import { logoutPage } from "../routes/logout";
-import {
-  moviesPage,
-  searchedByGenresMoviesPage,
-  searchedMoviesPage,
-} from "../routes/movies";
+import { moviesPage, searchedMoviesPage } from "../routes/movies";
 import { popularPage } from "../routes/popular";
 import { queuePage } from "../routes/queque";
 import { settingsPage } from "../routes/settings";
@@ -21,9 +14,11 @@ import { upcomingPage } from "../routes/upcoming";
 import {
   changeActiveNavLinkColor,
   changeTitleText,
+  genresArr,
   genresListData,
 } from "../utils";
 import {
+  fetchResultsByIds,
   getMoviesByGenre,
   getMoviesByTitle,
   getPopularMoviesList,
@@ -31,23 +26,22 @@ import {
   getUpcomingMoviesList,
 } from "./apiService";
 import { listenersReload, mainRef } from "./refs";
+import { getUrlInfo, setUrlInfo } from "./urlInfoService";
 
 let pathName = "";
 let search = "";
 let page = "";
+let sortBy = "";
+let order = "";
 let genres = [];
 
 let filmId = "";
 
 let main;
 
-const locationProtocol = window.location.protocol;
-const locationHost = window.location.host;
-let baseUrl = locationProtocol + "//" + locationHost;
-
-let newURL = baseUrl;
-
 export let activeGenresArr = [];
+
+const defaultMoviesFetchFunc = getPopularMoviesList;
 
 export const pathObject = {
   home: { path: "/", name: "home", func: homePage, fetchFunc: null },
@@ -55,14 +49,14 @@ export const pathObject = {
     path: "/movies",
     name: "movies",
     func: moviesPage,
-    fetchFunc: null,
+    fetchFunc: defaultMoviesFetchFunc,
   },
 
   genres: {
     path: "/genres",
     name: "genres",
     func: genresPage,
-    fetchFunc: null,
+    fetchFunc: getMoviesByGenre,
   },
   popular: {
     path: "/popular",
@@ -87,9 +81,14 @@ export const pathObject = {
     path: "/favorites",
     name: "favorites",
     func: favoritesPage,
-    fetchFunc: null,
+    fetchFunc: fetchResultsByIds,
   },
-  queue: { path: "/queue", name: "queue", func: queuePage, fetchFunc: null },
+  queue: {
+    path: "/queue",
+    name: "queue",
+    func: queuePage,
+    fetchFunc: fetchResultsByIds,
+  },
   settings: {
     path: "/settings",
     name: "settings",
@@ -104,138 +103,7 @@ export const pathObject = {
   },
 };
 
-export function getUrlInfo() {
-  const pathName = window.location.pathname.slice(1);
-  let searchQueryStr = "";
-  let genresQueryArr = [];
-  let pageQueryStr = "";
-  let filmIdQuery = "";
-
-  let sortByQuery = "";
-  let orderQuery = "";
-
-  if (!window.location.search) {
-    return { pathName, search: "", page: null, genres: [] };
-  }
-  const searchParams = window.location.search.slice(1).split("&");
-  // console.log(searchParams);
-
-  // ??? other queries
-
-  searchParams.forEach((query) => {
-    if (query.includes("page=")) pageQueryStr = query.split("page=")[1];
-    if (query.includes("with_genres="))
-      genresQueryArr = query.split("with_genres=")[1].split(",");
-    if (query.includes("query=")) searchQueryStr = query.split("query=")[1];
-    if (query.includes("filmId=")) filmIdQuery = query.split("filmId=")[1];
-    if (query.includes("sortBy=")) {
-      [sortByQuery, orderQuery] = query.split("sortBy=")[1].split(".");
-    }
-    // if (query.includes("sortBy=")) orderQuery = query.split("filmId=")[1];
-  });
-
-  // console.log(searchParams);
-
-  if (!pageQueryStr || isNaN(pageQueryStr) || Number(pageQueryStr) < 1)
-    pageQueryStr = null;
-  return {
-    pathName,
-    search: searchQueryStr,
-    page: pageQueryStr,
-    genres: genresQueryArr,
-    filmId: filmIdQuery,
-    sortBy: sortByQuery,
-  };
-}
-
-export function setUrlInfo({
-  pathName = null,
-  page = null,
-  search = "",
-  genresArr = [],
-  sortBy = "",
-  order = ORDER.DESC,
-  filmId = null,
-}) {
-  changeActiveNavLinkColor(pathName);
-  console.log("changes url params");
-  // createPageQueryObj();
-  // createSearchQueryObj();
-  // createGenresQueryObj();
-  // createSortQueryObj();
-
-  if (!pathName) getUrlInfo().pathName;
-  if (!page) getUrlInfo().page;
-  if (!search) getUrlInfo().search;
-  if (genresArr.length < 1) getUrlInfo().genres;
-  if (!sortBy) getUrlInfo().sortBy;
-  if (!order) getUrlInfo().order;
-  if (!filmId) getUrlInfo().filmId; // why?
-
-  if (pathName === "home" || !pathObject[pathName]) {
-    newURL = baseUrl + pathObject[pathName].path;
-    window.history.pushState({ path: newURL }, "", newURL);
-    return newURL;
-  }
-
-  if (pathName === "movies") {
-    const path = pathObject[pathName].path;
-    newURL = baseUrl + path + "?";
-    let stateObj = { path };
-    [createSearchQueryObj(search), createPageQueryObj(page)].forEach((item) => {
-      if (item.query) newURL += item.query + "&";
-      if (item.obj) stateObj = { ...stateObj, ...item.obj };
-    });
-
-    window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
-  }
-
-  if (pathName === "genres") {
-    const path = pathObject[pathName].path;
-    newURL = baseUrl + path + "?";
-    let stateObj = { path };
-    [
-      createPageQueryObj(page),
-      createGenresQueryObj(genresArr),
-      createSortQueryObj(sortBy, order),
-    ].forEach((item) => {
-      if (item.query) newURL += item.query + "&";
-      if (item.obj) stateObj = { ...stateObj, ...item.obj };
-    });
-
-    window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
-  }
-
-  if (
-    pathName === "popular" ||
-    pathName === "toprated" ||
-    pathName === "upcoming" ||
-    pathName === "favorites" ||
-    pathName === "queue"
-  ) {
-    const path = pathObject[pathName].path;
-    newURL = baseUrl + path + "?";
-    let stateObj = { path };
-    [createPageQueryObj(page)].forEach((item) => {
-      if (item.query) newURL += item.query + "&";
-      if (item.obj) stateObj = { ...stateObj, ...item.obj };
-    });
-
-    window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
-  }
-
-  if (pathName === "settings" || pathName === "logout") {
-    const path = pathObject[pathName].path;
-    newURL = baseUrl + path;
-    let stateObj = { path };
-
-    window.history.pushState({ ...stateObj }, "", newURL);
-  }
-}
-
 export function setFilmCardUrlInfo(filmId) {
-  console.log("previous link (go from)", getUrlInfo());
-
   // const { genres, page, pathName, search } = getUrlInfo();
   ({ pathName, search, page, genres } = getUrlInfo());
   console.log(filmId);
@@ -247,42 +115,13 @@ export function setFilmCardUrlInfo(filmId) {
   window.history.pushState({ path: newURL }, "", newURL);
 }
 
-function createPageQueryObj(page) {
-  if (page) {
-    return { obj: { page }, query: `page=${page}` };
-  }
-  return { obj: {}, query: "" };
-}
-function createSearchQueryObj(search) {
-  if (search) {
-    return { obj: { query: search }, query: `query=${search}` };
-  }
-  return { obj: {}, query: "" };
-}
-function createGenresQueryObj(genresArr) {
-  console.log(genresArr?.length > 0);
-  if (genresArr?.length > 0) {
-    return {
-      obj: { genres: genresArr },
-      query: `with_genres=${genresArr.join(",")}`,
-    };
-  }
-  return { obj: {}, query: "" };
-}
-function createSortQueryObj(sortBy, order = ORDER.DESC) {
-  if (sortBy) {
-    return {
-      obj: { sortBy: sortBy, order },
-      query: `sortBy=${sortBy}.${order}`,
-    };
-  }
-  return { obj: {}, query: "" };
-}
-
-export function drawMarkupFromPageURL(targetURL = null, page = 1) {
+export function handleLocation(targetURL = null) {
+  // console.log(targetURL);
   main = mainRef();
-  ({ pathName, search, page, genres, filmId } = getUrlInfo());
-  console.log(pathName, search, page, genres, filmId);
+  ({ pathName, search, page, genres, filmId, sortBy, order } = getUrlInfo());
+  if (genres.length > 0) {
+    activeGenresArr = genres;
+  } else activeGenresArr = [];
 
   if (targetURL) {
     // redirecting after navigation actions logic:
@@ -293,10 +132,19 @@ export function drawMarkupFromPageURL(targetURL = null, page = 1) {
         ? "home"
         : targetPath.slice(1);
 
+    if (targetPathName === "movies") {
+      pathObject[targetPathName].fetchFunc = defaultMoviesFetchFunc;
+    }
+
+    activeGenresArr = [];
+
     setUrlInfo({ pathName: targetPathName });
     main.innerHTML = "";
     main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
+
     changeTitleText(targetPathName);
+
+    changeActiveNavLinkColor();
 
     listenersReload();
 
@@ -304,66 +152,215 @@ export function drawMarkupFromPageURL(targetURL = null, page = 1) {
   }
 
   if (!pathObject[pathName]) {
+    console.log(pathObject[pathName]);
     const targetPathName = "home";
 
     setUrlInfo({ pathName: targetPathName });
     main.innerHTML = "";
     main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
     changeTitleText(targetPathName);
+    activeGenresArr = []; //?
+    changeActiveNavLinkColor();
+
     listenersReload();
     return;
   }
 
-  // setUrlInfo({ pathName, search, page, genres, filmId });
   if (filmId) {
     openFilmCard(filmId);
   } else closeModal();
 
-  main.innerHTML = "";
-  main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
-  changeTitleText(pathName);
-  listenersReload();
+  // setUrlInfo({ pathName, search, page, genres, filmId });
 
-  // if (!targetLocation.search) {
-  //   setUrlInfo({ pathName });
-  // }
+  // main.innerHTML = "";
+  // here should be handling if there are something in the url that will change behaviour and fetch another page than default
+  // main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
+  // changeTitleText(pathName);
+  // listenersReload();
 
-  // if (actualPath !== targetPath) {
-  //   main.innerHTML = "";
-  //   main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
-  //   changeTitleText(pathName);
-  //   listenersReload();
-  //   setUrlInfo({ search: null, page: null, pathName });
+  // console.log(pathName, search, page, genres, filmId, sortBy, order);
 
-  //   return;
-  // }
+  drawMarkupFromUrlParams({
+    pathName,
+    search,
+    page,
+    genres,
+    filmId,
+    sortBy,
+    order,
+  });
+}
 
-  // if (!searchQuery) {
-  //   main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
-  //   changeTitleText(pathName);
-  //   setUrlInfo({ search:searchQuery, page, pathName });
+// function handleHomePageLocation() {}
+// function handleMoviesPageLocation() {}
+// function handleGenresPageLocation() {}
 
-  //   listenersReload();
-  //   return;
-  // } else {
-  //   openFetchedGalleryPage(page || 1, searchQuery);
-  //   setUrlInfo({ search: searchQuery, page: page, pathName: "movies" });
-  //   listenersReload();
-  // }
+// function drawMarkupFromNavLinkClick() {}
+
+function drawMarkupFromUrlParams({
+  pathName,
+  search,
+  page,
+  genres,
+  filmId,
+  sortBy,
+  order,
+}) {
+  console.log(pathName, search, page, genres, filmId, sortBy, order);
+
+  if (pathName === "home" || !pathObject[pathName]) return;
+
+  if (pathName === "movies" && search) {
+    openFetchedGalleryPage(page, search);
+    return;
+  }
+
+  if (pathName === "movies" && !search) {
+    pathObject[pathName].fetchFunc = defaultMoviesFetchFunc;
+
+    if (page && page > 0) {
+      setUrlInfo({ pathName, page });
+
+      openFetchedByPathName(page, pathName);
+    } else drawDefaultPage();
+
+    // changeActiveNavLinkColor();
+    return;
+  }
+
+  if (pathName === "genres" && genres?.length < 1) {
+    console.log(genres);
+    setUrlInfo({ pathName });
+    drawDefaultPage();
+    // changeActiveNavLinkColor();
+    return;
+  }
+  if (pathName === "genres" && genres?.length > 0) {
+    console.log(genres);
+    page = page ? page : 1;
+    console.log(page);
+    setUrlInfo({ pathName, page, genres });
+    openGalleryByGenres(
+      page,
+      genres,
+      (sortBy = "popularity"),
+      (order = "desc"),
+    );
+    // changeActiveNavLinkColor();
+    return;
+  }
+
+  if (
+    pathName === "popular" ||
+    pathName === "toprated" ||
+    pathName === "upcoming"
+  ) {
+    if (page && page > 0) {
+      setUrlInfo({ pathName, page });
+
+      openFetchedByPathName(page, pathName);
+      // changeActiveNavLinkColor();
+    } else drawDefaultPage();
+  }
+
+  if (pathName === "favorites" || pathName === "queue") {
+    if (page && page > 0) {
+      setUrlInfo({ pathName, page });
+
+      openSavedGallery(page, pathName);
+      // changeActiveNavLinkColor();
+    } else drawDefaultPage();
+  }
 }
 
 export function openFetchedGalleryPage(page = 1, searchQuery) {
   getMoviesByTitle(page, searchQuery)
     .catch(console.log)
     .then((galleryData) => {
-      setUrlInfo({ pathName: "movies", search: searchQuery, page });
+      pathName = "movies";
+      setUrlInfo({ pathName, search: searchQuery, page });
+      pathObject[pathName].fetchFunc = (page) =>
+        getMoviesByTitle(page, searchQuery);
 
       const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
       document.querySelector("main").innerHTML = galleryMarkup;
+      changeActiveNavLinkColor();
       listenersReload();
 
-      // console.log(window.location);
       console.log(window.history.state);
-      // can be doubling code
     });
+}
+
+export function openFetchedByPathName(page = 1, pathName) {
+  const fetchFunc = pathObject[pathName]
+    ? pathObject[pathName].fetchFunc
+    : null;
+  if (fetchFunc) {
+    fetchFunc(page)
+      .catch(console.log)
+      .then((galleryData) => {
+        // setUrlInfo({ pathName, page });
+        pathObject[pathName].fetchFunc = (page) =>
+          fetchFunc(page, `search for ${pathName}`);
+
+        // const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
+        const galleryMarkup = pathObject[pathName].func(pathName, galleryData);
+        document.querySelector("main").innerHTML = galleryMarkup;
+        changeActiveNavLinkColor();
+        listenersReload();
+
+        // can be doubling code
+      });
+  } else {
+    const galleryMarkup = pathObject[pathName].func();
+    document.querySelector("main").innerHTML = galleryMarkup;
+    changeActiveNavLinkColor();
+    listenersReload();
+  }
+}
+
+export function openGalleryByGenres(
+  page,
+  genreIdArr,
+  sortBy = "popularity",
+  order = "desc",
+) {
+  getMoviesByGenre(page, genreIdArr, sortBy, order).then((galleryData) => {
+    // const genreIdArrString = genreIdArr.join(",");
+    setUrlInfo({
+      pathName: "genres",
+      genres: genreIdArr,
+      page,
+      sortBy,
+      order,
+    });
+
+    pathObject["genres"].fetchFunc = (page) =>
+      getMoviesByGenre(page, genreIdArr, sortBy, order);
+
+    let searchedGenreNames = "";
+    genresListData.genres.forEach((genre) => {
+      if (genreIdArr.includes(JSON.stringify(genre.id)))
+        searchedGenreNames += genre.name + " ";
+    });
+    const galleryMarkup = searchedByGenresPage(searchedGenreNames, galleryData);
+    document.querySelector("main").innerHTML = galleryMarkup;
+
+    changeActiveNavLinkColor();
+    listenersReload();
+  });
+}
+
+export function openSavedGallery(page, pathName) {
+  console.log(page, pathName, "nothing for now, need update");
+}
+
+export function drawDefaultPage() {
+  main.innerHTML = "";
+  // here should be handling if there are something in the url that will change behaviour and fetch another page than default
+  main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
+  changeTitleText(pathName);
+
+  changeActiveNavLinkColor();
+  listenersReload();
 }

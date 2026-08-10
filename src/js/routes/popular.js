@@ -4,7 +4,7 @@ import { paginationSectionMarkup } from "../components/pagination";
 import { popularObj } from "../data";
 
 export const popularPage = (
-  title = "Popular",
+  title = null,
   // galleryData = { results: [], page: 1 },
   galleryData = popularObj,
 ) => {

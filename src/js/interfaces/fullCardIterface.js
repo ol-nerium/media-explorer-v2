@@ -1,11 +1,9 @@
 import { changeQuequeBtnTextByFilmId } from "../utils";
 import { toggleValueFromLSKey } from "../utils/localStorage";
-import {
-  drawMarkupFromPageURL,
-  getUrlInfo,
-  pathObject,
-} from "../services/routing";
+import { handleLocation } from "../services/routing";
 import { closeModal } from "./modalInterface";
+import { getUrlInfo } from "../services/urlInfoService";
+
 const CONTROLS = {
   SHOWTRAILER: "showTrailer",
   ADDTOWATCHLIST: "addToWatchlist",
@@ -36,7 +34,7 @@ export function fullCardNavInterface(evt) {
       return;
     }
 
-    drawMarkupFromPageURL(link.href);
+    handleLocation(link.href);
     // return link;
   }
 

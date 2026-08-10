@@ -1,11 +1,14 @@
 import { getGenresList, getImageConfiguration } from "../services/apiService";
 import {
   fullCardWatchlistBtn,
+  headerMenuRef,
   headerTitle,
   heroQuequeBtn,
   mainPageInfoRef,
   mainPageInfoTitleRef,
+  mobileModalMenuRef,
 } from "../services/refs";
+import { getUrlInfo } from "../services/urlInfoService";
 import { getFromLS } from "./localStorage";
 
 const configuration = await getImageConfiguration();
@@ -101,6 +104,25 @@ export function changeQuequeBtnTextByFilmId(filmId) {
   }
 }
 
-export function changeActiveNavLinkColor(pathName) {
-  console.log(pathName);
+export function changeActiveNavLinkColor() {
+  const headerMenuRoot = headerMenuRef();
+  const mobileMenuRoot = mobileModalMenuRef();
+  const { pathName } = getUrlInfo();
+
+  const links = [
+    ...Array.from(headerMenuRoot?.querySelectorAll("a") || []),
+    ...Array.from(mobileMenuRoot?.querySelectorAll("a") || []),
+  ];
+
+  links.forEach((link) => {
+    const linkUrl = new URL(link.href);
+    const linkPathName = linkUrl.pathname.slice(1);
+    if (linkPathName === pathName && !!link.closest("li")) {
+      link.closest("li").classList.add("active");
+    }
+
+    if (linkPathName !== pathName && !!link.closest("li")) {
+      link.closest("li").classList.remove("active");
+    }
+  });
 }

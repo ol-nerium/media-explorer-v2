@@ -1,3 +1,4 @@
+import { activeGenresArr } from "../services/routing";
 import { genresArr } from "../utils";
 
 export const mobileGenresSectionMarkup = () => {
@@ -11,7 +12,7 @@ export const mobileGenresSectionMarkup = () => {
             ${genresArr
               .map((genre) => {
                 return `<li class="mobile-genres-list_item">
-              <button href="#" class="mobile-genres-btn" data-genreid="${genre.id}">
+              <button href="#" class="mobile-genres-btn ${activeGenresArr.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">
                 <div class="mobile-genres-icon-wrap">
                   <svg class="icon">
                     <use xlink:href="./src/svgSprite.svg#${genre.icon}"></use>

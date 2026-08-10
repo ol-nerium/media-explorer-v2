@@ -1,4 +1,5 @@
-import { getUrlInfo, pathObject, setUrlInfo } from "../services/routing";
+import { handleLocation, pathObject } from "../services/routing";
+import { getUrlInfo, setUrlInfo } from "../services/urlInfoService";
 
 export const paginationInterface = (evt) => {
   console.log(evt.target.nodeName);
@@ -25,7 +26,11 @@ export const paginationInterface = (evt) => {
 };
 
 async function fetchFilmDataFromPagination(page, pathName) {
-  const filmData = await pathObject[pathName].fetchFunc(page, null);
-  setUrlInfo({ page });
-  console.log(filmData);
+  const currentUrlInfo = getUrlInfo();
+
+  const newUrlParams = { ...currentUrlInfo, page, pathName };
+  setUrlInfo(newUrlParams);
+
+  // console.log(newUrlParams);
+  handleLocation();
 }

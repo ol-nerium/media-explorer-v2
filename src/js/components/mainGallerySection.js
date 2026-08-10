@@ -1,3 +1,4 @@
+import { activeGenresArr } from "../services/routing";
 import { genresListData } from "../utils";
 import { createPoster } from "../utils";
 
@@ -6,7 +7,7 @@ const genresList = (genreIds) => {
   genresListData.genres.forEach((i) => {
     if (genreIds.includes(i.id))
       genresList.push(
-        `<li class="genres-list_item" data-genreid="${i.id}"><a href="">${i.name}</a></li>`,
+        `<li class="genres-list_item ${activeGenresArr.includes(JSON.stringify(i.id)) ? "active" : ""}" data-genreid="${i.id}"><a href="">${i.name}</a></li>`,
       );
   });
   return genresList.join("");
@@ -62,7 +63,7 @@ const mainGallerySectionItem = (data) => {
 export const mainGallerySectionMarkup = (title, data) => {
   return `<section class="main-gallery">
         <div class="container">
-        <h2 class="main-gallery-title">${title}</h2>
+        ${title ? `<h2 class="main-gallery-title">${title}</h2>` : ""}
           <ul class="gallery-list">
             ${data.map((film) => mainGallerySectionItem(film)).join("")}
           </ul>

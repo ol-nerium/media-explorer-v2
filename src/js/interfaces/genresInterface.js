@@ -1,33 +1,5 @@
-import { getUrlInfo, setUrlInfo } from "../services/routing";
-import {
-  searchedByGenresMoviesPage,
-  searchedMoviesPage,
-} from "../routes/movies";
-import { getMoviesByGenre } from "../services/apiService";
-import { listenersReload } from "../services/refs";
-
+import { openGalleryByGenres } from "../services/routing";
 import { activeGenresArr } from "../services/routing";
-import { genresListData } from "../utils";
-
-export function openGalleryByGenres(page, genreIdArr) {
-  getMoviesByGenre(page, genreIdArr).then((galleryData) => {
-    // const genreIdArrString = genreIdArr.join(",");
-    setUrlInfo({ pathName: "genres", genresArr: genreIdArr, page });
-
-    let searchedGenreNames = "";
-    genresListData.genres.forEach((genre) => {
-      if (genreIdArr.includes(JSON.stringify(genre.id)))
-        searchedGenreNames += genre.name + " ";
-    });
-    const galleryMarkup = searchedByGenresMoviesPage(
-      searchedGenreNames,
-      galleryData,
-    );
-
-    document.querySelector("main").innerHTML = galleryMarkup;
-    listenersReload();
-  });
-}
 
 export const genresSectionInterface = (evt) => {
   evt.preventDefault();
@@ -38,7 +10,11 @@ export const genresSectionInterface = (evt) => {
   if (!targetItem) return;
 
   const chipGenreId = targetItem?.dataset?.genreid;
-  if (chipGenreId) openGalleryByGenres(1, [chipGenreId]);
+  if (chipGenreId) {
+    if (!activeGenresArr.includes(chipGenreId))
+      activeGenresArr.push(chipGenreId);
+    openGalleryByGenres(1, [chipGenreId]);
+  }
 };
 
 export const mobileGenresInterface = (evt) => {
@@ -160,27 +136,6 @@ function onGenreChipClick(genreId) {
   }
 
   // fetch films from activeGenresArrData
-  getMoviesByGenre(1, activeGenresArr).then((galleryData) => {
-    setUrlInfo({
-      pathName: "genres",
-      search: "",
-      page: 1,
-      genresArr: activeGenresArr,
-    });
 
-    let searchedGenreNames = "";
-    genresListData.genres.forEach((genre) => {
-      if (activeGenresArr.includes(JSON.stringify(genre.id)))
-        searchedGenreNames += genre.name + " ";
-    });
-    const galleryMarkup = searchedByGenresMoviesPage(
-      searchedGenreNames,
-      galleryData,
-    );
-
-    // setUrlInfo()
-    document.querySelector("main").innerHTML = galleryMarkup;
-    listenersReload();
-  });
-  return activeGenresArr;
+  openGalleryByGenres(1, activeGenresArr);
 }

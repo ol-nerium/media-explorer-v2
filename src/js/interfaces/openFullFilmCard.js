@@ -6,11 +6,8 @@ import {
   getSimilarMoviesById,
 } from "../services/apiService";
 import { backdropRef, listenersReload } from "../services/refs";
-import {
-  getUrlInfo,
-  setFilmCardUrlInfo,
-  setUrlInfo,
-} from "../services/routing";
+import { setFilmCardUrlInfo } from "../services/routing";
+import { getUrlInfo, setUrlInfo } from "../services/urlInfoService";
 import { openModal } from "./modalInterface";
 
 // let prevScrollPostion = 0;
@@ -47,7 +44,7 @@ export function openFilmCard(filmId) {
         currentUrlInfo.filmId = null;
         console.log(currentUrlInfo);
         setUrlInfo(currentUrlInfo);
-        // drawMarkupFromPageURL();
+        // handleLocation();
       }
     });
 }

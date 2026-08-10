@@ -71,7 +71,6 @@ export function toggleValueFromLSKey(value, key) {
   }
   if (!storedInLS[key]) {
     localStorage.setItem(key, sterializedValue);
-    console.log(newValue, " added to LS");
 
     // showNotification("Ви додали фільм " + "..." + "до бібліотеки");
   }

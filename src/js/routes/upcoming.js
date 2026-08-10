@@ -4,13 +4,13 @@ import { paginationSectionMarkup } from "../components/pagination";
 import { upcomingObj } from "../data";
 
 export const upcomingPage = (
-  title = "Default",
+  title = null,
   // galleryData = { results: [], page: 1 },
   galleryData = upcomingObj,
 ) => {
   return (
     mainPageInfoSectionMarkup() +
-    mainGallerySectionMarkup(title, upcomingObj.results) +
+    mainGallerySectionMarkup(title, galleryData.results) +
     paginationSectionMarkup(galleryData)
   );
 };

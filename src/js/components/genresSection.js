@@ -1,3 +1,4 @@
+import { activeGenresArr } from "../services/routing";
 import { genresArr } from "../utils";
 
 export const genresSectionMarkup = () => {
@@ -8,7 +9,7 @@ export const genresSectionMarkup = () => {
               .map(
                 (
                   genre,
-                ) => `<li class="genresSection-list_item" data-genreid="${genre.id}">
+                ) => `<li class="genresSection-list_item ${activeGenresArr.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">
               <a href="/">
                 <div class="genresSection-icon-wrap">
                   <svg class="icon">

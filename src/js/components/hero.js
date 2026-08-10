@@ -1,4 +1,5 @@
 import { refs } from "../services/refs";
+import { activeGenresArr } from "../services/routing";
 import { createPoster, genresListData } from "../utils";
 import { getFromLS } from "../utils/localStorage";
 
@@ -7,7 +8,7 @@ const heroSectionGenres = (genre_ids) => {
   genresListData.genres.forEach((i) => {
     if (genre_ids.includes(i.id))
       genresList.push(
-        `<li class="hero-genreList_item" data-genreid="${i.id}">${i.name}</li>`,
+        `<li class="hero-genreList_item ${activeGenresArr.includes(JSON.stringify(i.id)) ? "active" : ""}" data-genreid="${i.id}">${i.name}</li>`,
       );
   });
   return genresList.join("");
