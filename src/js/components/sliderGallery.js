@@ -47,7 +47,7 @@ export const sliderGallerySectionMarkup = (title, data) => {
         <div class="container">
           <div class="section-heading">
             <h2 class="section-title">${title}</h2>
-            <a href="/${title}" class="section-expand-link">View all... (fix links here pls)</a>
+            <a href="/${title.split(" ").join("")}" class="section-expand-link">View all...</a>
           </div>
 
           <ul class="gallery-list-slider snaps-inline">

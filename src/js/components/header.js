@@ -1,5 +1,5 @@
 import { navListIcons } from "../../main";
-import { pathObject } from "../services/routing";
+import { libraryLinks, mainLinks, settingsLinks } from "../data";
 
 const mobileLayout = `<div class="container mobile-header-layout">
         <button
@@ -25,17 +25,18 @@ const mobileLayout = `<div class="container mobile-header-layout">
         </button>
       </div>`;
 
-const createHeaderMenu = (pathsObj) => {
-  const mainLinks = [
-    pathsObj.home,
-    pathsObj.movies,
-    pathsObj.genres,
-    pathsObj.popular,
-    pathsObj.toprated,
-    pathsObj.upcoming,
-  ];
-  const libraryLinks = [pathsObj.favorites, pathsObj.queue];
-  const settingsLinks = [pathsObj.settings, pathsObj.logout];
+const createHeaderMenu = () => {
+  // const mainLinks = [
+  //   pathsObj.home,
+  //   pathsObj.movies,
+  //   pathsObj.genres,
+  //   pathsObj.popular,
+  //   pathsObj.toprated,
+  //   pathsObj.upcoming,
+  // ].filter((i) => !!i);
+  // const libraryLinks = [pathsObj.favorites, pathsObj.queue].filter((i) => !!i);
+  // const settingsLinks = [pathsObj.settings, pathsObj.logout].filter((i) => !!i);
+
   return `<div class="header-menu-layout">
         <a href="/" title="logo" class="logo">
           ${navListIcons.logo}
@@ -89,7 +90,7 @@ const createHeaderMenu = (pathsObj) => {
 export const headerMarkup = () => {
   return `<header class="header">
       ${mobileLayout}
-      ${createHeaderMenu(pathObject)}
+      ${createHeaderMenu()}
 
       <section class="main-heading">
         <h2 class="sr-only">Main page heading</h2>

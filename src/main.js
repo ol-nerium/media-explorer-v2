@@ -66,8 +66,15 @@ function appInit() {
   main = mainRef();
 
   window.addEventListener("popstate", (e) => {
-    console.log(e);
+    // console.log(e);
     handleLocation();
+
+    console.log("POPSTATE", {
+      href: location.href,
+      historyLength: history.length,
+    });
+
+    return;
   });
 
   handleLocation();

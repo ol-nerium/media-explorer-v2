@@ -1,3 +1,4 @@
+import { processSavedGalleryData } from "../data";
 import { closeModal } from "../interfaces/modalInterface";
 import { openFilmCard } from "../interfaces/openFullFilmCard";
 
@@ -77,30 +78,31 @@ export const pathObject = {
     fetchFunc: getUpcomingMoviesList,
   },
 
-  favorites: {
-    path: "/favorites",
-    name: "favorites",
-    func: favoritesPage,
-    fetchFunc: fetchResultsByIds,
-  },
   queue: {
     path: "/queue",
     name: "queue",
     func: queuePage,
     fetchFunc: fetchResultsByIds,
   },
-  settings: {
-    path: "/settings",
-    name: "settings",
-    func: settingsPage,
-    fetchFunc: null,
-  },
-  logout: {
-    path: "/logout",
-    name: "logout",
-    func: logoutPage,
-    fetchFunc: null,
-  },
+  // favorites: {
+  //   path: "/favorites",
+  //   name: "favorites",
+  //   func: favoritesPage,
+  //   fetchFunc: fetchResultsByIds,
+  // },
+
+  // settings: {
+  //   path: "/settings",
+  //   name: "settings",
+  //   func: settingsPage,
+  //   fetchFunc: null,
+  // },
+  // logout: {
+  //   path: "/logout",
+  //   name: "logout",
+  //   func: logoutPage,
+  //   fetchFunc: null,
+  // },
 };
 
 export function setFilmCardUrlInfo(filmId) {
@@ -123,6 +125,9 @@ export function handleLocation(targetURL = null) {
     activeGenresArr = genres;
   } else activeGenresArr = [];
 
+  console.log(pathName);
+  // if (pathName === "") pathName = "home";
+
   if (targetURL) {
     // redirecting after navigation actions logic:
     const targetLocation = new URL(targetURL);
@@ -139,6 +144,12 @@ export function handleLocation(targetURL = null) {
     activeGenresArr = [];
 
     setUrlInfo({ pathName: targetPathName });
+
+    if (targetPathName === "favorites" || targetPathName === "queue") {
+      openSavedGallery(page, targetPathName);
+      return;
+    }
+
     main.innerHTML = "";
     main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
 
@@ -150,6 +161,10 @@ export function handleLocation(targetURL = null) {
 
     return;
   }
+
+  if (filmId) {
+    openFilmCard(filmId);
+  } else closeModal();
 
   if (!pathObject[pathName]) {
     console.log(pathObject[pathName]);
@@ -165,10 +180,6 @@ export function handleLocation(targetURL = null) {
     listenersReload();
     return;
   }
-
-  if (filmId) {
-    openFilmCard(filmId);
-  } else closeModal();
 
   // setUrlInfo({ pathName, search, page, genres, filmId });
 
@@ -224,7 +235,6 @@ function drawMarkupFromUrlParams({
       openFetchedByPathName(page, pathName);
     } else drawDefaultPage();
 
-    // changeActiveNavLinkColor();
     return;
   }
 
@@ -232,7 +242,6 @@ function drawMarkupFromUrlParams({
     console.log(genres);
     setUrlInfo({ pathName });
     drawDefaultPage();
-    // changeActiveNavLinkColor();
     return;
   }
   if (pathName === "genres" && genres?.length > 0) {
@@ -246,7 +255,6 @@ function drawMarkupFromUrlParams({
       (sortBy = "popularity"),
       (order = "desc"),
     );
-    // changeActiveNavLinkColor();
     return;
   }
 
@@ -264,12 +272,7 @@ function drawMarkupFromUrlParams({
   }
 
   if (pathName === "favorites" || pathName === "queue") {
-    if (page && page > 0) {
-      setUrlInfo({ pathName, page });
-
-      openSavedGallery(page, pathName);
-      // changeActiveNavLinkColor();
-    } else drawDefaultPage();
+    openSavedGallery(page, pathName);
   }
 }
 
@@ -351,14 +354,65 @@ export function openGalleryByGenres(
   });
 }
 
-export function openSavedGallery(page, pathName) {
-  console.log(page, pathName, "nothing for now, need update");
+export function openSavedGallery(page = 1, pathName) {
+  const { idResults, total_pages, total_results } =
+    processSavedGalleryData(pathName);
+
+  const pageQuery = page ? page - 1 : 0; // pageQuery shifted by -1 relative to page index here
+
+  let filmData = [];
+
+  if (!idResults[pageQuery]) {
+    console.log("no data ", filmData);
+    filmData = {
+      page: pageQuery,
+      results: [],
+      total_pages: 1,
+      total_results: 0,
+    };
+    const markup = queuePage(filmData);
+    main.innerHTML = "";
+    main.insertAdjacentHTML("afterbegin", markup);
+
+    changeTitleText(pathName);
+
+    changeActiveNavLinkColor();
+
+    listenersReload();
+    return filmData;
+  }
+
+  fetchResultsByIds(idResults[pageQuery]).then((res) => {
+    filmData = {
+      page: pageQuery + 1,
+      results: res.map((i) => i.value),
+      total_pages,
+      total_results,
+    };
+
+    const markup = queuePage(filmData);
+    main.innerHTML = "";
+    main.insertAdjacentHTML("afterbegin", markup);
+
+    changeTitleText(pathName);
+
+    changeActiveNavLinkColor();
+
+    listenersReload();
+    return filmData;
+  });
 }
 
 export function drawDefaultPage() {
+  console.log(pathName);
+  if (pathName === "queue") {
+    openSavedGallery(1, pathName);
+    return;
+  }
   main.innerHTML = "";
   // here should be handling if there are something in the url that will change behaviour and fetch another page than default
-  main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
+  const markup = pathObject[pathName].func();
+  main.insertAdjacentHTML("afterbegin", markup);
   changeTitleText(pathName);
 
   changeActiveNavLinkColor();

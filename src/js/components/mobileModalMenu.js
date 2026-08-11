@@ -1,20 +1,10 @@
-import { pathObject } from "../services/routing";
+// import { pathObject } from "../services/routing";
 import { navListIcons } from "../../main";
+import { libraryLinks, mainLinks, settingsLinks } from "../data";
 
 // navListIcons
 
-const createMobileMenuLinks = (pathsObj) => {
-  const mainLinks = [
-    pathsObj.home,
-    pathsObj.movies,
-    pathsObj.genres,
-    pathsObj.popular,
-    pathsObj.toprated,
-    pathsObj.upcoming,
-  ];
-  const libraryLinks = [pathsObj.favorites, pathsObj.queue];
-  const settingsLinks = [pathsObj.settings, pathsObj.logout];
-
+const createMobileMenuLinks = () => {
   return `
         <ul class="main-links-list">
           ${mainLinks

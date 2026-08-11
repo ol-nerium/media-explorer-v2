@@ -64,6 +64,13 @@ const savedGalleryItem = (data) => {
             </li>`;
 };
 export const savedGalleryMarkup = (data) => {
+  console.log(data);
+  if (data.length < 1 || !data)
+    return `<section class="saved-gallery">
+        <div class="container">
+          <h2 class="saved-gallery_title">Nothing in the moment</h2>
+        </div>
+      </section>`;
   return `<section class="saved-gallery">
         <div class="container">
           <h2 class="saved-gallery_title sr-only">Watchlist</h2>

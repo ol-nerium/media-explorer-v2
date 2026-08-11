@@ -1,6 +1,6 @@
 import { changeQuequeBtnTextByFilmId } from "../utils";
 import { toggleValueFromLSKey } from "../utils/localStorage";
-import { handleLocation } from "../services/routing";
+import { handleLocation, pathObject } from "../services/routing";
 import { closeModal } from "./modalInterface";
 import { getUrlInfo } from "../services/urlInfoService";
 
@@ -29,7 +29,7 @@ export function fullCardNavInterface(evt) {
   if (link) {
     const { pathName } = getUrlInfo();
     const linkUrl = new URL(link.href);
-    if (linkUrl.pathname.slice(1) === pathName) {
+    if (pathObject[linkUrl.pathname.slice(1) || "home"].name === pathName) {
       closeModal();
       return;
     }

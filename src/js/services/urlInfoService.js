@@ -9,7 +9,7 @@ let baseUrl = locationProtocol + "//" + locationHost;
 let newURL = baseUrl;
 
 export function getUrlInfo() {
-  const pathName = window.location.pathname.slice(1);
+  let pathName = window.location.pathname.slice(1);
   let searchQueryStr = "";
   let genresQueryArr = [];
   let pageQueryStr = "";
@@ -17,6 +17,8 @@ export function getUrlInfo() {
 
   let sortByQuery = "";
   let orderQuery = "";
+
+  // pathName = pathName === "" ? "home" : pathName;
 
   if (!window.location.search) {
     return { pathName, search: "", page: null, genres: [] };
@@ -58,18 +60,18 @@ export function setUrlInfo({
   order = ORDER.DESC,
   filmId = null,
 }) {
-  console.log(
-    "changes url params",
-    `{
-  pathName = ${pathName},
-  page = ${page},
-  search = ${search},
-  genres = ${genres},
-  sortBy = ${sortBy},
-  order = ${order},
-  filmId = ${filmId},
-}`,
-  );
+  //   console.log(
+  //     "changes url params",
+  //     `{
+  //   pathName = ${pathName},
+  //   page = ${page},
+  //   search = ${search},
+  //   genres = ${genres},
+  //   sortBy = ${sortBy},
+  //   order = ${order},
+  //   filmId = ${filmId},
+  // }`,
+  //   );
 
   if (pathName === "home") {
     newURL = baseUrl + pathObject[pathName].path;
@@ -134,6 +136,11 @@ export function setUrlInfo({
 
     window.history.pushState({ ...stateObj }, "", newURL);
   }
+
+  console.log("PUSH:", {
+    url: location.href,
+    length: history.length,
+  });
 }
 
 function createPageQueryObj(page) {
