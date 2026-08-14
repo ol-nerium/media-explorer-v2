@@ -21,9 +21,9 @@
 .imdbIcon .icon {
   width: 80px;
   /* height: 100%; */
-  background-color: var(--golden-color);
+  background-color: var(--raiting-icon-color);
   border-radius: 10px;
-  color: var(--carbon-color);
+  color: var(--base-variant);
 }
 
 .raiting-value {
@@ -39,14 +39,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--golden-color);
+  background-color: var(--raiting-icon-color);
   border-radius: 10px;
   width: 48px;
   height: 28px;
 }
 
 .star-icon {
-  color: var(--golden-color);
+  color: var(--raiting-icon-color);
   width: 16px;
   height: 16px;
 }

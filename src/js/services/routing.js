@@ -1,3 +1,4 @@
+import { ORDER, SORTBY } from "../../main";
 import { processSavedGalleryData } from "../data";
 import { closeModal } from "../interfaces/modalInterface";
 import { openFilmCard } from "../interfaces/openFullFilmCard";
@@ -14,6 +15,7 @@ import { topRatedPage } from "../routes/toprated";
 import { upcomingPage } from "../routes/upcoming";
 import {
   changeActiveNavLinkColor,
+  changeCheckedSortSelect,
   changeTitleText,
   genresArr,
   genresListData,
@@ -108,7 +110,6 @@ export const pathObject = {
 export function setFilmCardUrlInfo(filmId) {
   // const { genres, page, pathName, search } = getUrlInfo();
   ({ pathName, search, page, genres } = getUrlInfo());
-  console.log(filmId);
   const newPath = pathName + "?filmId=" + filmId;
 
   let newURL =
@@ -118,15 +119,11 @@ export function setFilmCardUrlInfo(filmId) {
 }
 
 export function handleLocation(targetURL = null) {
-  // console.log(targetURL);
   main = mainRef();
   ({ pathName, search, page, genres, filmId, sortBy, order } = getUrlInfo());
   if (genres.length > 0) {
     activeGenresArr = genres;
   } else activeGenresArr = [];
-
-  console.log(pathName);
-  // if (pathName === "") pathName = "home";
 
   if (targetURL) {
     // redirecting after navigation actions logic:
@@ -142,7 +139,6 @@ export function handleLocation(targetURL = null) {
     }
 
     activeGenresArr = [];
-
     setUrlInfo({ pathName: targetPathName });
 
     if (targetPathName === "favorites" || targetPathName === "queue") {
@@ -152,11 +148,8 @@ export function handleLocation(targetURL = null) {
 
     main.innerHTML = "";
     main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
-
     changeTitleText(targetPathName);
-
     changeActiveNavLinkColor();
-
     listenersReload();
 
     return;
@@ -167,7 +160,6 @@ export function handleLocation(targetURL = null) {
   } else closeModal();
 
   if (!pathObject[pathName]) {
-    console.log(pathObject[pathName]);
     const targetPathName = "home";
 
     setUrlInfo({ pathName: targetPathName });
@@ -180,17 +172,6 @@ export function handleLocation(targetURL = null) {
     listenersReload();
     return;
   }
-
-  // setUrlInfo({ pathName, search, page, genres, filmId });
-
-  // main.innerHTML = "";
-  // here should be handling if there are something in the url that will change behaviour and fetch another page than default
-  // main.insertAdjacentHTML("afterbegin", pathObject[pathName].func());
-  // changeTitleText(pathName);
-  // listenersReload();
-
-  // console.log(pathName, search, page, genres, filmId, sortBy, order);
-
   drawMarkupFromUrlParams({
     pathName,
     search,
@@ -202,12 +183,6 @@ export function handleLocation(targetURL = null) {
   });
 }
 
-// function handleHomePageLocation() {}
-// function handleMoviesPageLocation() {}
-// function handleGenresPageLocation() {}
-
-// function drawMarkupFromNavLinkClick() {}
-
 function drawMarkupFromUrlParams({
   pathName,
   search,
@@ -215,10 +190,8 @@ function drawMarkupFromUrlParams({
   genres,
   filmId,
   sortBy,
-  order,
+  order = ORDER.DESC,
 }) {
-  console.log(pathName, search, page, genres, filmId, sortBy, order);
-
   if (pathName === "home" || !pathObject[pathName]) return;
 
   if (pathName === "movies" && search) {
@@ -239,22 +212,16 @@ function drawMarkupFromUrlParams({
   }
 
   if (pathName === "genres" && genres?.length < 1) {
-    console.log(genres);
     setUrlInfo({ pathName });
     drawDefaultPage();
     return;
   }
   if (pathName === "genres" && genres?.length > 0) {
-    console.log(genres);
     page = page ? page : 1;
-    console.log(page);
-    setUrlInfo({ pathName, page, genres });
-    openGalleryByGenres(
-      page,
-      genres,
-      (sortBy = "popularity"),
-      (order = "desc"),
-    );
+
+    openGalleryByGenres(page, genres, sortBy, order);
+    changeCheckedSortSelect();
+
     return;
   }
 
@@ -278,7 +245,9 @@ function drawMarkupFromUrlParams({
 
 export function openFetchedGalleryPage(page = 1, searchQuery) {
   getMoviesByTitle(page, searchQuery)
-    .catch(console.log)
+    .catch((err) => {
+      throw err;
+    })
     .then((galleryData) => {
       pathName = "movies";
       setUrlInfo({ pathName, search: searchQuery, page });
@@ -288,9 +257,8 @@ export function openFetchedGalleryPage(page = 1, searchQuery) {
       const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
       document.querySelector("main").innerHTML = galleryMarkup;
       changeActiveNavLinkColor();
+      changeTitleText(`Movies search`);
       listenersReload();
-
-      console.log(window.history.state);
     });
 }
 
@@ -300,7 +268,9 @@ export function openFetchedByPathName(page = 1, pathName) {
     : null;
   if (fetchFunc) {
     fetchFunc(page)
-      .catch(console.log)
+      .catch((err) => {
+        throw err;
+      })
       .then((galleryData) => {
         // setUrlInfo({ pathName, page });
         pathObject[pathName].fetchFunc = (page) =>
@@ -310,6 +280,7 @@ export function openFetchedByPathName(page = 1, pathName) {
         const galleryMarkup = pathObject[pathName].func(pathName, galleryData);
         document.querySelector("main").innerHTML = galleryMarkup;
         changeActiveNavLinkColor();
+        changeTitleText(pathName);
         listenersReload();
 
         // can be doubling code
@@ -318,6 +289,8 @@ export function openFetchedByPathName(page = 1, pathName) {
     const galleryMarkup = pathObject[pathName].func();
     document.querySelector("main").innerHTML = galleryMarkup;
     changeActiveNavLinkColor();
+    changeTitleText(pathName);
+
     listenersReload();
   }
 }
@@ -325,33 +298,50 @@ export function openFetchedByPathName(page = 1, pathName) {
 export function openGalleryByGenres(
   page,
   genreIdArr,
-  sortBy = "popularity",
-  order = "desc",
+  sortBy = null,
+  order = null,
 ) {
-  getMoviesByGenre(page, genreIdArr, sortBy, order).then((galleryData) => {
-    // const genreIdArrString = genreIdArr.join(",");
-    setUrlInfo({
-      pathName: "genres",
-      genres: genreIdArr,
-      page,
-      sortBy,
-      order,
-    });
+  const currentUrlInfo = getUrlInfo();
 
-    pathObject["genres"].fetchFunc = (page) =>
-      getMoviesByGenre(page, genreIdArr, sortBy, order);
+  let sortByQuery = currentUrlInfo.sortBy || sortBy ? null : SORTBY.POPULARITY;
+  console.log("sortByQuery: ", sortByQuery);
+  if (!sortByQuery) {
+    console.log(sortBy, currentUrlInfo.sortBy);
 
-    let searchedGenreNames = "";
-    genresListData.genres.forEach((genre) => {
-      if (genreIdArr.includes(JSON.stringify(genre.id)))
-        searchedGenreNames += genre.name + " ";
-    });
-    const galleryMarkup = searchedByGenresPage(searchedGenreNames, galleryData);
-    document.querySelector("main").innerHTML = galleryMarkup;
+    sortByQuery = sortBy ? sortBy : currentUrlInfo.sortBy;
+  }
+  let orderQuery =
+    order && (ORDER.ASC === order || ORDER.DESC === order) ? order : ORDER.DESC;
 
-    changeActiveNavLinkColor();
-    listenersReload();
-  });
+  getMoviesByGenre(page, genreIdArr, sortByQuery, orderQuery).then(
+    (galleryData) => {
+      setUrlInfo({
+        pathName: "genres",
+        genres: genreIdArr,
+        page,
+        sortBy,
+        order,
+      });
+
+      pathObject["genres"].fetchFunc = (page) =>
+        getMoviesByGenre(page, genreIdArr, sortBy, order);
+
+      let searchedGenreNames = "";
+      genresListData.genres.forEach((genre) => {
+        if (genreIdArr.includes(JSON.stringify(genre.id)))
+          searchedGenreNames += genre.name + " ";
+      });
+      const galleryMarkup = searchedByGenresPage(
+        searchedGenreNames,
+        galleryData,
+      );
+      document.querySelector("main").innerHTML = galleryMarkup;
+      changeTitleText("genres");
+
+      changeActiveNavLinkColor();
+      listenersReload();
+    },
+  );
 }
 
 export function openSavedGallery(page = 1, pathName) {
@@ -363,7 +353,6 @@ export function openSavedGallery(page = 1, pathName) {
   let filmData = [];
 
   if (!idResults[pageQuery]) {
-    console.log("no data ", filmData);
     filmData = {
       page: pageQuery,
       results: [],
@@ -404,7 +393,6 @@ export function openSavedGallery(page = 1, pathName) {
 }
 
 export function drawDefaultPage() {
-  console.log(pathName);
   if (pathName === "queue") {
     openSavedGallery(1, pathName);
     return;

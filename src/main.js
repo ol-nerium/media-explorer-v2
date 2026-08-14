@@ -4,6 +4,8 @@ import { headerMarkup } from "./js/components/header";
 import { handleLocation } from "./js/services/routing";
 
 import { appRootRef, mainRef } from "./js/services/refs";
+import { setThemeFromLS } from "./js/interfaces/headerInterface";
+import { hideLoader, showLoader } from "./js/interfaces/notificationInterface";
 
 export const navListIcons = {
   logo: `<svg class="icon">
@@ -65,9 +67,12 @@ function appInit() {
   root.insertAdjacentHTML("afterbegin", headerMarkup());
   main = mainRef();
 
+  setThemeFromLS();
+
   window.addEventListener("popstate", (e) => {
-    // console.log(e);
+    showLoader();
     handleLocation();
+    hideLoader();
 
     console.log("POPSTATE", {
       href: location.href,
@@ -77,7 +82,9 @@ function appInit() {
     return;
   });
 
+  showLoader();
   handleLocation();
+  hideLoader();
 }
 
 appInit();

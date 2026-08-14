@@ -25,7 +25,7 @@ export const mainPageInfoSectionMarkup = (additionalTitle = null) => {
             )
             .join("")}
           </ul>
-          <h2 class="main-page-info-title">${additionalTitle ? additionalTitle : "DefaultValue"}</h2>
+          <h2 class="main-page-info-title">${additionalTitle ? additionalTitle : "Movies"}</h2>
         </div>
       </section>`;
 };

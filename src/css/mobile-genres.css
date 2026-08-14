@@ -33,15 +33,15 @@
 }
 
 .mobile-genres-btn.active {
-  color: var(--purple-color);
+  color: var(--accent-color);
 }
 .mobile-genres-btn.active .mobile-genres-icon-wrap {
-  background-color: var(--white-color);
+  background-color: var(--text-color);
 }
 
 .mobile-genres-icon-wrap {
   border-radius: 50% 50%;
-  background-color: var(--grey-color);
+  background-color: var(--secondary-color);
   aspect-ratio: 1/1;
   width: 100%;
 
@@ -58,6 +58,6 @@
 }
 
 /* .mobile-genres .icon {
-  color: var(--purple-color);
+  color: var(--accent-color);
   padding: 20%;
 } */

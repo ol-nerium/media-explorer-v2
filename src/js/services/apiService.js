@@ -68,11 +68,11 @@ function getMovieById(movie_id) {
     });
 }
 
-export function getSimilarMoviesById(movie_id) {
+export function getSimilarMoviesById(page = 1, movie_id) {
   // Get the similar movies based on genres and keywords.
   // ?language=en-US&page=1
   return axios
-    .get(`movie/${movie_id}/similar`)
+    .get(`movie/${movie_id}/similar?page=${page}`)
     .then((res) => res.data)
     .catch((e) => {
       throw e;

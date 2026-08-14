@@ -41,6 +41,7 @@ export function getUrlInfo() {
 
   if (!pageQueryStr || isNaN(pageQueryStr) || Number(pageQueryStr) < 1)
     pageQueryStr = null;
+
   return {
     pathName,
     search: searchQueryStr,
@@ -48,8 +49,20 @@ export function getUrlInfo() {
     genres: genresQueryArr,
     filmId: filmIdQuery,
     sortBy: sortByQuery,
+    order: orderQuery,
   };
 }
+
+const prevValues = {
+  pathName: null,
+  search: null,
+  genres: null,
+  page: null,
+  filmId: null,
+  sortBy: null,
+  order: null,
+};
+const keys = Object.keys(prevValues);
 
 export function setUrlInfo({
   pathName = null,
@@ -60,23 +73,33 @@ export function setUrlInfo({
   order = ORDER.DESC,
   filmId = null,
 }) {
-  //   console.log(
-  //     "changes url params",
-  //     `{
-  //   pathName = ${pathName},
-  //   page = ${page},
-  //   search = ${search},
-  //   genres = ${genres},
-  //   sortBy = ${sortBy},
-  //   order = ${order},
-  //   filmId = ${filmId},
-  // }`,
-  //   );
+  const currentValues = {
+    pathName,
+    page,
+    search,
+    genres,
+    sortBy,
+    order,
+    filmId,
+  };
+
+  keys.forEach((key) => {
+    if (prevValues[key] !== currentValues[key]) {
+      console.log(
+        "changes ",
+        key,
+        "from ",
+        prevValues[key],
+        "to ",
+        currentValues[key],
+      );
+      prevValues[key] = currentValues[key];
+    }
+  });
 
   if (pathName === "home") {
     newURL = baseUrl + pathObject[pathName].path;
     window.history.pushState({ path: newURL }, "", newURL);
-    // return newURL;
   }
 
   if (pathName !== "" && !pathObject[pathName]) {
@@ -107,8 +130,8 @@ export function setUrlInfo({
       if (item.query) newURL += item.query + "&";
       if (item.obj) stateObj = { ...stateObj, ...item.obj };
     });
-    console.log(stateObj);
     window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
+    console.log(newURL);
   }
 
   if (

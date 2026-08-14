@@ -29,11 +29,14 @@ export const searchedMoviesPage = (
   searchQuery = "your search query",
   galleryData = { results: [], page: 1 },
 ) => {
-  console.log(galleryData);
   return (
     mainPageInfoSectionMarkup(searchQuery) +
     mainGallerySectionMarkup(
-      "Search for <span>" + searchQuery + "</span>",
+      "Search for:<span>" +
+        searchQuery.trim() +
+        "</span>, page: <span>" +
+        galleryData.page +
+        "</span>",
       galleryData.results,
     ) +
     paginationSectionMarkup(galleryData)

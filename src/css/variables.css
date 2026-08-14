@@ -1,11 +1,10 @@
 :root {
-  --obsidian-color: #0d0d0f;
-  --carbon-color: #1a1a1e;
-  --purple-color: #6c47ff;
-  --white-color: #ffffff;
-  --red-color: #e50914;
-  --grey-color: #aaaaaa;
-  --golden-color: #f5c518;
+  /* --base-color: #0d0d0f;
+  --base-variant: #1a1a1e;
+  --accent-color: #6c47ff;
+  --text-color: #ffffff;
+  --secondary-color: #aaaaaa;
+  --raiting-icon-color: #f5c518; */
 
   --font-size-xxxl: 64px;
   --font-size-xxl: 48px;
@@ -48,4 +47,57 @@
   --mobile-width: 390px;
   --tablet-width: 744px;
   --desktop-width: 1024px;
+}
+
+.darkmode {
+  --base-color: #0d0d0f;
+  --base-variant: #1a1a1e;
+  --accent-color: #6c47ff;
+  --text-color: #ffffff;
+  --secondary-color: #aaaaaa;
+  --raiting-icon-color: #f5c518;
+
+  .darkmode {
+    display: none;
+  }
+  .lightmode {
+    display: block;
+  }
+}
+.lightmode {
+  --base-color: #f3f4f8;
+  --base-variant: #ffffff;
+  --accent-color: #7c5cff;
+  --text-color: #171827;
+  --secondary-color: #74778a;
+  --raiting-icon-color: #f5c518;
+}
+
+.lightmode {
+  .hero-img-wrap {
+    opacity: 0.3;
+  }
+
+  .genresSection-list_item-title {
+    color: var(--base-color);
+  }
+
+  #search-field {
+    color: var(--base-color);
+  }
+
+  #search-field::placeholder {
+    color: var(--base-color);
+  }
+
+  .raiting-value {
+    color: var(--base-color);
+  }
+
+  .darkmode {
+    display: block;
+  }
+  .lightmode {
+    display: none;
+  }
 }

@@ -44,7 +44,7 @@
     /* justify-content: center; */
   }
 }
-@media screen and (min-width: 980px) {
+@media screen and (min-width: 1000px) {
   .genresSection-list {
     column-gap: calc((100% - var(--item-width) * 3) / 2);
   }
@@ -71,7 +71,7 @@
 .genresSection-list_item {
   width: var(--item-width);
   height: 240px;
-  background-color: var(--grey-color);
+  background-color: var(--secondary-color);
   border-radius: 15px;
 }
 
@@ -95,11 +95,11 @@
   align-items: center;
 
   border-radius: 50% 50%;
-  background-color: var(--white-color);
+  /* background-color: var(--text-color); */
 }
 
 .genresSection-icon-wrap .icon {
-  color: var(--obsidian-color);
+  color: var(--base-color);
   width: 100px;
   height: 100px;
 }

@@ -14,7 +14,7 @@ export const topRatedObj = await getTopRatedMoviesList();
 export const upcomingObj = await getUpcomingMoviesList();
 
 export const heroSliderData = nowPlayingObj.results.slice(0, 5);
-const lsKeys = {
+export const lsKeys = {
   queue: "quequeFilmsList",
 };
 export const processSavedGalleryData = (pathName = "queue") => {

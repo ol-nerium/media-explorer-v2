@@ -56,21 +56,23 @@ const savedGalleryItem = (data) => {
               <div class="saved-gallery-list_item-desc">
                 <h3 class="title">${title} <span class="year">(${release_date.slice(0, 4)})</span></h3>
                 <ul class="gallery-list_item-genres">
-                  ${data.genres.forEach((genre) => {
-                    return `<li class="gallery-list_item-genres_item ${activeGenresArr.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">${genre.name}</li>`;
-                  })}                  
+                  ${data.genres
+                    .map((genre) => {
+                      return `<li class="gallery-list_item-genres_item ${activeGenresArr.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">${genre.name}</li>`;
+                    })
+                    .join("")}                  
                 </ul>
               </div>
             </li>`;
 };
 export const savedGalleryMarkup = (data) => {
-  console.log(data);
   if (data.length < 1 || !data)
     return `<section class="saved-gallery">
         <div class="container">
           <h2 class="saved-gallery_title">Nothing in the moment</h2>
         </div>
       </section>`;
+
   return `<section class="saved-gallery">
         <div class="container">
           <h2 class="saved-gallery_title sr-only">Watchlist</h2>

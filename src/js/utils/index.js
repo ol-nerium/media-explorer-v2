@@ -4,9 +4,9 @@ import {
   headerMenuRef,
   headerTitle,
   heroQuequeBtn,
-  mainPageInfoRef,
   mainPageInfoTitleRef,
   mobileModalMenuRef,
+  sortingDropdownRef,
 } from "../services/refs";
 import { getUrlInfo } from "../services/urlInfoService";
 import { getFromLS } from "./localStorage";
@@ -22,8 +22,6 @@ const {
   still_sizes,
 } = configuration.images;
 export const fallbackImg = "./src/blank-picture.png";
-
-// console.log(configuration);
 
 export const genresListData = await getGenresList();
 const genreIcons = {
@@ -53,28 +51,29 @@ export const genresArr = genresListData.genres.map((item) => {
 
 export const createPoster = (poster_path) => {
   return poster_path
-    ? secure_base_url + poster_sizes[poster_sizes.length - 1] + poster_path
+    ? secure_base_url + poster_sizes[poster_sizes.length - 3] + poster_path
     : fallbackImg;
 };
 
 export const createAvatar = (avatar_path) => {
   return avatar_path
-    ? secure_base_url + profile_sizes[profile_sizes.length - 1] + avatar_path
+    ? secure_base_url + profile_sizes[profile_sizes.length - 3] + avatar_path
     : fallbackImg;
 };
 
 export const createBackdropBackgound = (backdrop_path) => {
+  if (!backdrop_path) return null;
   return (
-    secure_base_url + backdrop_sizes[backdrop_sizes.length - 1] + backdrop_path
+    secure_base_url + backdrop_sizes[backdrop_sizes.length - 3] + backdrop_path
   );
 };
 
-export function changeTitleText(pathName) {
+export function changeTitleText(titleText) {
   const headerTitleNarrowScreen = headerTitle();
   const headerTitleWideScreen = mainPageInfoTitleRef();
 
-  if (headerTitleNarrowScreen) headerTitleNarrowScreen.textContent = pathName;
-  if (headerTitleWideScreen) headerTitleWideScreen.textContent = pathName;
+  if (headerTitleNarrowScreen) headerTitleNarrowScreen.textContent = titleText;
+  if (headerTitleWideScreen) headerTitleWideScreen.textContent = titleText;
 }
 
 export function removeDubles(array) {
@@ -125,4 +124,10 @@ export function changeActiveNavLinkColor() {
       link.closest("li").classList.remove("active");
     }
   });
+}
+
+export function changeCheckedSortSelect() {
+  const dropDown = sortingDropdownRef();
+  const optionsArray = Array.from(dropDown?.querySelectorAll("option") || []);
+  if (optionsArray < 1) return;
 }

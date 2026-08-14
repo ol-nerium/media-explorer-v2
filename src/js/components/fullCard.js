@@ -41,10 +41,8 @@ let adult,
 let isFilmInQueque;
 
 const fullCardNav = ({ title, id }) => {
-  // class="back-link" a need fix for previous page before card render
   const { pathName, search, page, genres, filmId } = getUrlInfo();
-  // let path = pathName;
-  // if (!pathObject[pathName] || !pathName) path = "home";
+
   return `<div class="full-card-nav">
           <button href="#" title="back" class="back-btn">
             <svg class="icon">
@@ -73,12 +71,14 @@ const baseFilmContent = () => {
 
   return `<div class="base-film-content">
             <div class="full-card-img-wrap">
-              <img src="${createBackdropBackgound(backdrop_path)}" alt="${title}" />
+              ${backdrop_path ? `<img src="${createBackdropBackgound(backdrop_path)}" alt="${title}" />` : ""}
             </div>
 
             <div class="full-card-heading">
               <h1 class="title">${title}</h1>
-              <div class="raiting">
+              ${
+                vote_count
+                  ? `<div class="raiting">
                 <div class="raiting-value">
                   <svg class="icon star-icon">
                     <use xlink:href="./src/svgSprite.svg#main-star"></use>
@@ -90,7 +90,9 @@ const baseFilmContent = () => {
                     <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
                   </svg>
                 </div>
-              </div>
+              </div>`
+                  : ""
+              }
 
               <div class="short-desc">
                 <ul class="short-desc-list">
@@ -98,7 +100,12 @@ const baseFilmContent = () => {
                   <li class="short-desc-list_item">${173}min</li>
                 </ul>
                 <ul class="genres-list">
-                ${genres.map((genre) => `<li class="genres-list-item" data-genreid="${genre.id}"><a href="#">${genre.name}</a></li>`).join("")}
+                  ${genres
+                    .map(
+                      (genre) =>
+                        `<li class="genres-list-item" data-genreid="${genre.id}">${genre.name}</li>`,
+                    )
+                    .join("")}
                 </ul>
               </div>
 
@@ -120,14 +127,27 @@ ${isFilmInQueque ? "Remove from queque" : "Add to queque"}
 };
 const additionalFilmContent = (data) => {
   const { cast, crew } = data.credits;
-  const directorArr = crew.filter((i) => i.job === "Director");
-  // let starringActors = [];
-  // if (cast.length < 10) {
-  //   starringActors = cast;
-  // } else {
-  //   starringActors = cast.filter((i) => Number(i.popularity) > 10);
-  // }
-  let starringActors = cast;
+  let directorArr = crew.filter((i) => i.job === "Director");
+
+  let starringActors =
+    cast.length > 0
+      ? cast
+      : [
+          {
+            adult: false,
+            gender: 2,
+            id: 0,
+            known_for_department: null,
+            name: "No information",
+            original_name: "",
+            popularity: 0,
+            profile_path: "/",
+            cast_id: 0,
+            character: null,
+            credit_id: null,
+            order: 0,
+          },
+        ];
 
   return `<div class="additional-film-content">
             <h2 class="sr-only">Additional film content</h2>
@@ -145,7 +165,7 @@ const additionalFilmContent = (data) => {
                   Director
                 </h3>
                 <p class="additional-film-content-list_item-desc">
-                  ${directorArr.map((i) => i.name).join("")}
+                  ${directorArr.length !== 0 ? directorArr.map((i) => i.name).join("") : "No information"}
                 </p>
               </li>
               <li class="additional-film-content-list_item">
@@ -153,7 +173,7 @@ const additionalFilmContent = (data) => {
                   Release date
                 </h3>
                 <p class="additional-film-content-list_item-desc">
-                  ${release_date ? format(release_date, "LLLL 	dd, yyyy") : ""}
+                  ${release_date ? format(release_date, "LLLL 	dd, yyyy") : "No information"}
                 </p>
               </li>
             </ul>
@@ -163,13 +183,16 @@ const fullCardGallery = (data) => {
   const similar = data.similar.results;
 
   const similarFilmsList = similar.map((film) => sliderGalleryItem(film));
+  // <a href="#" class="section-expand-link">
+  //   View all...
+  // </a>;
+
+  if (similarFilmsList.length < 1) return "";
 
   return `<section class="full-card-gallery">
             <div class="section-heading">
               <h2 class="section-title">You May Also Like</h2>
-              <a href="#" class="section-expand-link">View all...</a>
             </div>
-
             <ul class="gallery-list-slider snaps-inline">
               ${similarFilmsList.join("")}
             </ul>
@@ -178,6 +201,8 @@ const fullCardGallery = (data) => {
 
 const comments = (data) => {
   const reviews = data.reviews.results;
+
+  if (reviews.length < 1) return "";
 
   const item = (comment) => {
     const { author, author_details, content, created_at, id, updated_at, url } =
@@ -216,9 +241,6 @@ const comments = (data) => {
         ? `created: ${formatedCreatedDate} `
         : `created: ${formatedCreatedDate}. edited: ${formatedUpdatedDate}`;
       return resStr;
-      // if (wasUpdated)
-      //   return `created: ${format(created_at, "LLLL dd, yyyy 	kk : mm : ss")}. edited: ${format(updated_at, "LLLL dd, yyyy")}`;
-      // return `created: ${format(created_at)}`;
     };
 
     const raitingValue = rating
@@ -260,6 +282,43 @@ const comments = (data) => {
           </ul>`;
 };
 
+/* <ul class="videos-content_list">
+  ${videosData
+    .map(
+      (i) =>
+        `<li class="videos-content_list-item"><a rel="noopener noreferrer" target="_blank" href='https://www.youtube.com/watch?v=${i.key}'>${i.name}</a></li>`,
+    )
+    .join("")}
+</ul>; */
+
+export function videosWindowMarkup(videosData, needsArrowButtons) {
+  return `<div class="videos-content">
+             <iframe src="https://www.youtube.com/embed/${videosData.key}" class="film-item"></iframe>
+
+               <div class="controls">
+                 <button data-control="close" class="closeBtn">
+                   <svg class="icon close-icon">
+                     <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
+                   </svg>
+                 </button>
+  ${
+    needsArrowButtons
+      ? ` <button data-control="left" class="leftBtn">
+                   <svg class="icon left-arrow">
+                     <use xlink:href="./src/svgSprite.svg#main-left-arrow"></use>
+                   </svg>
+                 </button>
+
+                 <button data-control="right" class="rightBtn">
+                   <svg class="icon right-arrow">
+                     <use xlink:href="./src/svgSprite.svg#main-right-arrow"></use>
+                   </svg>
+                 </button>`
+      : ""
+  }
+               </div>`;
+}
+
 export const fullCardMarkup = (filmData) => {
   ({
     adult,
@@ -290,6 +349,8 @@ export const fullCardMarkup = (filmData) => {
     vote_average,
     vote_count,
   } = filmData.mainData);
+
+  console.log(filmData);
 
   isFilmInQueque = getFromLS("quequeFilmsList")?.includes(id);
 

@@ -21,8 +21,8 @@
   height: 36px;
 
   border-radius: 10px;
-  background-color: var(--grey-color);
-  color: var(--white-color);
+  background-color: var(--secondary-color);
+  color: var(--text-color);
   font-size: var(--font-size-xs);
   border-color: transparent;
   padding: 0.4rem;
@@ -48,7 +48,7 @@
 }
 
 .genres-chips-list_item-btn.active {
-  background-color: var(--purple-color);
+  background-color: var(--accent-color);
   padding-right: calc(22px + 1.5rem);
 }
 
@@ -83,7 +83,7 @@
 .genres-chips-list_item .icon {
   /* height: 100%;
   width: 100%; */
-  color: var(--obsidian-color);
+  color: var(--base-color);
 }
 
 @media screen and (min-width: 744px) {

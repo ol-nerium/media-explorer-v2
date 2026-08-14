@@ -1,4 +1,4 @@
-// import { pathObject } from "../services/routing";
+import { pathObject } from "../services/routing";
 import { navListIcons } from "../../main";
 import { libraryLinks, mainLinks, settingsLinks } from "../data";
 

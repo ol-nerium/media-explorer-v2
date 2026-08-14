@@ -1,12 +1,15 @@
 import { openFilmCard } from "../interfaces/openFullFilmCard";
+import { getSimilarMoviesById } from "../services/apiService";
 import {
   activeGenresArr,
   handleLocation,
   openGalleryByGenres,
 } from "../services/routing";
+import { hideLoader, showLoader } from "./notificationInterface";
 
 export const clickOnGalleryCardInterface = (evt) => {
   evt.preventDefault();
+
   const target = evt.target;
   let listItem;
   let navLink;
@@ -23,14 +26,20 @@ export const clickOnGalleryCardInterface = (evt) => {
   const genreId = listItem?.dataset?.genreid;
 
   if (filmId) {
+    showLoader();
     openFilmCard(filmId);
+    hideLoader();
   }
   if (genreId) {
     if (activeGenresArr.includes(genreId)) return;
     activeGenresArr.push(genreId);
+    showLoader();
     openGalleryByGenres(1, activeGenresArr);
+    hideLoader();
   }
   if (navLink) {
+    showLoader();
     handleLocation(navLink.href);
+    hideLoader();
   }
 };

@@ -26,17 +26,6 @@ const mobileLayout = `<div class="container mobile-header-layout">
       </div>`;
 
 const createHeaderMenu = () => {
-  // const mainLinks = [
-  //   pathsObj.home,
-  //   pathsObj.movies,
-  //   pathsObj.genres,
-  //   pathsObj.popular,
-  //   pathsObj.toprated,
-  //   pathsObj.upcoming,
-  // ].filter((i) => !!i);
-  // const libraryLinks = [pathsObj.favorites, pathsObj.queue].filter((i) => !!i);
-  // const settingsLinks = [pathsObj.settings, pathsObj.logout].filter((i) => !!i);
-
   return `<div class="header-menu-layout">
         <a href="/" title="logo" class="logo">
           ${navListIcons.logo}
@@ -125,8 +114,11 @@ export const headerMarkup = () => {
               title="themeBtn"
               data-control="changeColorTheme"
             >
-              <svg class="icon">
+              <svg class="icon darkmode">
                 <use xlink:href="./src/svgSprite.svg#main-moon"></use>
+              </svg>
+              <svg class="icon lightmode">
+                <use xlink:href="./src/svgSprite.svg#main-sun"></use>
               </svg>
             </button>
           </div>

@@ -7,11 +7,6 @@ html {
   /* scrollbar-gutter: stable; */
 }
 
-body {
-  margin: 0;
-  background-color: var(--carbon-color);
-}
-
 li,
 ul,
 p,
@@ -41,8 +36,9 @@ a {
 }
 
 body {
-  background-color: var(--carbon-color);
-  color: var(--white-color);
+  background-color: var(--base-variant);
+  color: var(--text-color);
+  margin: 0;
 
   font-family: "Poppins", sans-serif;
   font-weight: 400;
@@ -56,7 +52,7 @@ button {
   font-weight: 400;
   font-style: normal;
 
-  color: var(--white-color);
+  color: var(--text-color);
 }
 
 .container {
@@ -111,9 +107,14 @@ button {
 
 .section-expand-link {
   float: right;
-  color: var(--purple-color);
+  color: var(--accent-color);
   font-size: var(--font-size-xs);
 }
+
+.section-expand-link.hidden {
+  display: none;
+}
+
 @media screen and (min-width: 1024px) {
   .section-expand-link {
     font-size: var(--font-size-md);
@@ -122,6 +123,8 @@ button {
 
 .gallery-list_item-img-wrap {
   position: relative;
+
+  height: 470px;
 }
 
 .img-wrap {
@@ -199,5 +202,54 @@ h2.sr-only {
 }
 
 li.active a {
-  color: var(--purple-color);
+  color: var(--accent-color);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 10px;
+  border: 2px solid var(--secondary-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5935e6;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color) var(--secondary-color);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary-color) transparent;
 }

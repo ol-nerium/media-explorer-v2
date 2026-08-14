@@ -1,11 +1,11 @@
 import { mobileModalMenuMarkup } from "../components/mobileModalMenu";
 import { clickOnNavLink } from "../interfaces";
-import {
-  backdropRef,
-  mobileModalMenuRef,
-  modalCloseBtnRef,
-} from "../services/refs";
+import { mobileModalMenuRef, modalCloseBtnRef } from "../services/refs";
+import { toggleTheme } from "./headerInterface";
 import { closeModal, openModal } from "./modalInterface";
+
+let modalCloseBtn = null;
+let mobileModalMenu = null;
 
 export function onMobHeaderBtnClick(evt) {
   const target = evt.target.closest("button");
@@ -13,10 +13,8 @@ export function onMobHeaderBtnClick(evt) {
   if (!target) return;
   const btnControl = target.dataset?.control;
   if (btnControl === "openMobileMenu") openModal(mobileModalMenuMarkup());
+  if (btnControl === "changeColorTheme") toggleTheme();
 }
-
-let modalCloseBtn = null;
-let mobileModalMenu = null;
 
 export function addMobileModalMenuListeners() {
   modalCloseBtn = modalCloseBtnRef();

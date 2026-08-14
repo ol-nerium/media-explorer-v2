@@ -4,22 +4,30 @@ import { handleLocation, pathObject } from "../services/routing";
 import { closeModal } from "./modalInterface";
 import { getUrlInfo } from "../services/urlInfoService";
 
+import { openVideosWindow } from "./videosInterface";
+import { hideLoader, showLoader } from "./notificationInterface";
+
 const CONTROLS = {
   SHOWTRAILER: "showTrailer",
   ADDTOWATCHLIST: "addToWatchlist",
 };
-export function fullCardInterface(evt) {
+export function fullCardBtnInterface(evt) {
   if (evt.currentTarget.nodeName !== "BUTTON") return;
 
   const dataControl = evt.currentTarget.dataset.control;
-  if (dataControl === CONTROLS.SHOWTRAILER) console.log("show trailed modal");
+  const section = evt.currentTarget.closest("section");
+  const filmid = Number(section?.children[0]?.dataset?.filmid);
+  if (!filmid) return;
+  showLoader();
+  if (dataControl === CONTROLS.SHOWTRAILER) {
+    openVideosWindow(filmid);
+  }
   if (dataControl === CONTROLS.ADDTOWATCHLIST) {
-    const section = evt.currentTarget.closest("section");
-    const filmid = Number(section?.children[0]?.dataset?.filmid);
-
     toggleValueFromLSKey(filmid, "quequeFilmsList");
     changeQuequeBtnTextByFilmId(filmid);
   }
+
+  hideLoader();
 }
 
 export function fullCardNavInterface(evt) {
@@ -33,9 +41,9 @@ export function fullCardNavInterface(evt) {
       closeModal();
       return;
     }
-
+    showLoader();
     handleLocation(link.href);
-    // return link;
+    hideLoader();
   }
 
   const linkIsClicked = !!link;

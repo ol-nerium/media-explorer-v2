@@ -4,6 +4,7 @@ import { listenersReload, refs } from "../services/refs";
 import { openFilmCard } from "../interfaces/openFullFilmCard";
 import { toggleValueFromLSKey } from "../utils/localStorage";
 import { changeQuequeBtnTextByFilmId } from "../utils";
+import { hideLoader, showLoader } from "./notificationInterface";
 
 export const heroInterface = (evt) => {
   const hero = refs.hero.elem();
@@ -23,34 +24,32 @@ export const heroInterface = (evt) => {
     listenersReload();
   }
 
-  const heroInputs = document.querySelectorAll("input");
+  const heroInputs = Array.from(document.querySelectorAll("input"));
   let currentIndex = 0;
 
   if (btnData?.control === "arrow-left") {
-    currentIndex = Number(Array.from(heroInputs).find((i) => i.checked).value);
+    currentIndex = Number(heroInputs).find((i) => i.checked).value;
 
     hero.innerHTML = heroSectionMarkup(heroSliderData, currentIndex - 1);
     listenersReload();
   }
   if (btnData?.control === "arrow-right") {
-    currentIndex = Number(Array.from(heroInputs).find((i) => i.checked).value);
+    currentIndex = Number(heroInputs.find((i) => i.checked).value);
 
     hero.innerHTML = heroSectionMarkup(heroSliderData, currentIndex + 1);
     listenersReload();
   }
   if (btnData?.control === "addToQueque") {
-    // alert("LS func should be here + maybe a toast");
     const value = btn.closest("section").dataset.filmid;
     const filmId = Number(hero.dataset.filmid);
 
     toggleValueFromLSKey(value, "quequeFilmsList");
     changeQuequeBtnTextByFilmId(filmId);
-
-    // listenersReload();
   }
   if (btnData?.control === "showMore") {
     const filmId = hero.dataset.filmid;
-
+    showLoader();
     openFilmCard(filmId);
+    hideLoader();
   }
 };

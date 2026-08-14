@@ -1,6 +1,9 @@
+import { getUrlInfo } from "../services/urlInfoService";
+
+export let total_pages = 500;
 const paginationButtonsList = (data) => {
   let page = Number(data.page);
-  let total_pages = Number(data.total_pages);
+  total_pages = Number(data.total_pages);
   // total_pages are limited as 500 but backend has bug with big numbers, so fix:
   if (total_pages > 500) total_pages = 500;
 
@@ -18,7 +21,6 @@ const paginationButtonsList = (data) => {
   return [1, "...", ...mainBtnList];
 };
 export const paginationSectionMarkup = (data) => {
-  console.log(data);
   const buttonsList = paginationButtonsList(data);
   if (buttonsList.length < 2) {
     // paginationRoot.innerHTML = "";
@@ -34,7 +36,11 @@ export const paginationSectionMarkup = (data) => {
           </svg>
         </div>`;
       } else {
-        return `<button class="pagBtn" data-page="${i}">
+        const { page } = getUrlInfo();
+        let isActive = i === Number(page);
+        if (!page && i === 1) isActive = true;
+
+        return `<button class="pagBtn ${isActive ? "active" : ""}" data-page="${i}">
           ${i}
         </button>`;
       }

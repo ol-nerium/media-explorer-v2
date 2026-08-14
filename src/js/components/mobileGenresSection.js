@@ -6,7 +6,7 @@ export const mobileGenresSectionMarkup = () => {
         <div class="container">
           <div class="section-heading">
             <h2 class="section-title">Genres</h2>
-            <a href="#" class="section-expand-link">View all...</a>
+            <a href="#" class="section-expand-link ${activeGenresArr.length < 1 ? "hidden" : ""}">Show movies list</a>
           </div>
           <ul class="mobile-genres-list snaps-inline">
             ${genresArr

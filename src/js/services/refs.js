@@ -8,15 +8,14 @@ import {
   mobileGenresInterface,
 } from "../interfaces/genresInterface";
 import { clickOnGalleryCardInterface } from "../interfaces/clickOnGalleryCardInterface";
-import { mainGalleryInterface } from "../interfaces/mainGalleryInterface";
 import { paginationInterface } from "../interfaces/paginationInterface";
 import { genresSectionInterface } from "../interfaces/genresInterface";
 import { savedGalleryInterface } from "../interfaces/savedGalleryInterface";
 import {
-  fullCardInterface,
+  fullCardBtnInterface,
   fullCardNavInterface,
 } from "../interfaces/fullCardIterface";
-import { mainPageInfoInterface } from "../interfaces/mainPageInfoInterface";
+import { themeChangeInterface } from "../interfaces/headerInterface";
 
 const appRootRef = () => document.getElementById("app");
 const mainRef = () => document.querySelector("main");
@@ -125,34 +124,34 @@ export const refs = {
     func: clickOnGalleryCardInterface,
     eventType: "click",
   },
-  //
-  // fullCard: {
-  //   elem: fullCardRef,
-  //   func: fullCardInterface,
-  //   eventType: "click",
-  // },
+
   fullCardTrailerBtn: {
     elem: fullCardtrailerBtn,
-    func: fullCardInterface,
+    func: fullCardBtnInterface,
     eventType: "click",
   },
   fullCardAddToQuequeBtn: {
     elem: fullCardaddToQuequeBtn,
-    func: fullCardInterface,
+    func: fullCardBtnInterface,
     eventType: "click",
   },
 
   // you are here
 
+  mainHeadingButtons: {
+    elem: mainHeadingRef,
+    func: themeChangeInterface,
+    eventType: "click",
+  },
   // mainHeadingButtons: {
-  //   elem: mainHeadingButtonsRef,
-  //   func: mainHeadingButtonsInterface,
+  //   elem: mobileHeader,
+  //   func: themeChangeInterface,
   //   eventType: "click",
   // },
 
   mainPageInfo: {
     elem: mainPageInfoRef,
-    func: mainPageInfoInterface,
+    func: clickOnNavLink,
     eventType: "click",
   },
   fullCardNav: {
@@ -162,7 +161,7 @@ export const refs = {
   },
   mainGallery: {
     elem: mainGalleryRef,
-    func: mainGalleryInterface,
+    func: clickOnGalleryCardInterface,
     eventType: "click",
   },
   pagination: {

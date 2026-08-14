@@ -1,5 +1,8 @@
-import { openGalleryByGenres } from "../services/routing";
+import { handleLocation, openGalleryByGenres } from "../services/routing";
 import { activeGenresArr } from "../services/routing";
+import { setUrlInfo } from "../services/urlInfoService";
+import { genresListData } from "../utils";
+import { hideLoader, showLoader } from "./notificationInterface";
 
 export const genresSectionInterface = (evt) => {
   evt.preventDefault();
@@ -10,17 +13,25 @@ export const genresSectionInterface = (evt) => {
   if (!targetItem) return;
 
   const chipGenreId = targetItem?.dataset?.genreid;
-  if (chipGenreId) {
-    if (!activeGenresArr.includes(chipGenreId))
-      activeGenresArr.push(chipGenreId);
+
+  if (!chipGenreId) return;
+
+  if (!activeGenresArr.includes(chipGenreId)) activeGenresArr.push(chipGenreId);
+  //
+  if (
+    genresListData.genres.filter((i) => i.id === Number(chipGenreId)).length > 0
+  ) {
+    showLoader();
     openGalleryByGenres(1, [chipGenreId]);
+    hideLoader();
   }
+
+  // console.log(genresListData);
 };
 
 export const mobileGenresInterface = (evt) => {
   evt.preventDefault();
   const target = evt.target;
-  console.log(target);
   let genreBtn;
   let link;
   if (target.nodeName === "A") link = target;
@@ -36,6 +47,13 @@ export const mobileGenresInterface = (evt) => {
 
   if (genreBtn) clickOnMobGenresBtn(genreBtn);
   if (link) clickOnMobGenresLink(link);
+
+  const genresLink = evt.currentTarget.querySelector(".section-expand-link");
+  if (activeGenresArr.length > 0) {
+    genresLink.classList.remove("hidden");
+  } else {
+    genresLink.classList.add("hidden");
+  }
 };
 
 function clickOnMobGenresBtn(genreBtn) {
@@ -52,8 +70,11 @@ function clickOnMobGenresLink(link) {
   if (
     link?.classList?.contains("section-expand-link") &&
     activeGenresArr.length > 0
-  )
+  ) {
+    showLoader();
     openGalleryByGenres(1, activeGenresArr);
+    hideLoader();
+  }
 }
 
 function mobileGenresClasswork() {
@@ -127,6 +148,14 @@ function onGenreChipClick(genreId) {
     activeGenresArr.splice(genreIndex, 1);
     clickedElement.classList.remove("active");
 
+    if (activeGenresArr.length < 1) {
+      showLoader();
+      setUrlInfo({ pathName: "genres" });
+      handleLocation();
+      hideLoader();
+      return;
+    }
+
     const prevPositionInRoot = currentPosition - startPosition;
     genresList.scroll({
       top: 0,
@@ -136,6 +165,8 @@ function onGenreChipClick(genreId) {
   }
 
   // fetch films from activeGenresArrData
-
+  // console.log(getUrlInfo());
+  showLoader();
   openGalleryByGenres(1, activeGenresArr);
+  hideLoader();
 }

@@ -34,7 +34,7 @@ export const sliderGalleryItem = (data) => {
               </div>
 
               <div class="gallery-list_item-desc">
-                <h3 class="gallery-list_item-title">${data.original_title} <span class="gallery-list_item-year">(${data.release_date.slice(0, 4)})</span></h3>
+                <h3 class="gallery-list_item-title">${data.title || data.original_title} ${data.release_date ? `<span class="gallery-list_item-year">(${data.release_date.slice(0, 4)})</span>` : ""}</h3>
                 
                 <ul class="gallery-list_item-genres">
                   ${sliderGalleryItemGenres(data.genre_ids)}

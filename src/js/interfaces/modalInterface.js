@@ -13,12 +13,6 @@ export function openModal(markup) {
   backdrop.classList.remove("is-hidden");
   backdrop.insertAdjacentHTML("afterbegin", markup);
 
-  // refresing listeners if multiple cards open in the row
-  // removeMobileModalMenuListeners();
-  // backdrop.removeEventListener("click", onBackdropClick);
-  // window.removeEventListener("keydown", onKeyClose);
-  // check if it necessary at all
-
   addMobileModalMenuListeners();
   backdrop.addEventListener("click", onBackdropClick);
   window.addEventListener("keydown", onKeyClose);

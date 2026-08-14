@@ -21,7 +21,6 @@ export function removeFromLS(newValue, key) {
       ? currentStorage.filter((item) => item !== newValue)
       : currentStorage;
     // can here be a bug, if !!currentStorage is falsy value?
-    // console.log(resArr);
 
     const sterializedValue = JSON.stringify(resArr);
     localStorage.setItem(key, sterializedValue);
@@ -67,12 +66,9 @@ export function toggleValueFromLSKey(value, key) {
   if (isRecordStoredInLS(newValue, key)) {
     removeFromLS(newValue, key);
     console.log(newValue, " removed from LS");
-    // showErrorNotification("Ви видалили фільм " + "..." + "готуйте попку");
   }
   if (!storedInLS[key]) {
     localStorage.setItem(key, sterializedValue);
-
-    // showNotification("Ви додали фільм " + "..." + "до бібліотеки");
   }
 }
 

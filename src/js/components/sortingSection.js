@@ -1,4 +1,6 @@
 import { SORTBY } from "../../main";
+import { activeGenresArr } from "../services/routing";
+import { getUrlInfo } from "../services/urlInfoService";
 import { genresListData } from "../utils";
 
 const sortingSectionGenresList = (activeGenresIdsArr) => {
@@ -43,12 +45,25 @@ export const createGenreChipsListMarkup = (activeGenresIdsArr) => {
 };
 
 export const createDropdownMarkup = () => {
+  if (activeGenresArr?.length < 1 || !activeGenresArr) return "";
+
   const sortByKeys = Object.keys(SORTBY);
   let optionsMarkup = "";
-  sortByKeys.forEach((sortOption) => {
-    SORTBY[sortOption];
+  const { sortBy } = getUrlInfo();
+  console.log(sortBy);
 
-    optionsMarkup += `<option value="${SORTBY[sortOption]}">
+  sortByKeys.forEach((sortOption) => {
+    let selected =
+      SORTBY[sortOption] === sortBy ||
+      (sortBy === "" && SORTBY[sortOption] === SORTBY.POPULARITY)
+        ? "selected"
+        : "";
+    // selected =
+    //   sortBy === "" && SORTBY[sortOption] === SORTBY.POPULARITY
+    //     ? "selected"
+    //     : "";
+
+    optionsMarkup += `<option value="${SORTBY[sortOption]}" ${selected}>
                 <span>${sortOption.split("_").join(" ").toLowerCase()}</span>
               </option>`;
   });
@@ -61,9 +76,12 @@ export const createDropdownMarkup = () => {
                 <span class="picker">👇</span>
               </button>
 
-              <option value="">
+              <option value="choose_option" disabled>
                 <span>Choose option!</span>
-              </option>  
+              </option>
+              <option value="" disabled class="empty_option">
+                <span> </span>
+              </option>
               ${optionsMarkup}
             </select>
           </label>`;

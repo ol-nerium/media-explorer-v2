@@ -22,7 +22,7 @@
 
 @media screen and (min-width: 1080px) {
   .pagination-layout {
-    background-color: var(--grey-color);
+    background-color: var(--secondary-color);
     border-radius: 15px;
     /* gap: 60px; */
     /* justify-content: center; */
@@ -54,8 +54,8 @@
   /* height: 100%; */
   /* font-size: var(--font-size-sm); */
   background-color: var(--accentColor);
-  color: var(--white-color);
-  background-color: var(--obsidian-color);
+  color: var(--text-color);
+  background-color: var(--base-color);
 
   border: none;
 
@@ -74,13 +74,13 @@
 }
 
 .pagBtn.active {
-  background-color: var(--purple-color);
+  background-color: var(--accent-color);
 
-  color: var(--white-color);
+  color: var(--text-color);
 }
 
 .inactive {
-  background-color: rgb(110, 110, 110);
+  background-color: var(--secondary-color);
   /* remove possibility of click event here */
   pointer-events: none;
 }

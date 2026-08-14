@@ -24,6 +24,8 @@
 @import "./css/full-card.css";
 @import "./css/mobile-menu.css";
 
-#app {
+@import "./css/loader.css";
+
+/* #app {
   position: relative;
-}
+} */
