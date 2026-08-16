@@ -1,10 +1,10 @@
 import { heroSliderData } from "../data";
 import { heroSectionMarkup } from "../components/hero";
 import { listenersReload, refs } from "../services/refs";
-import { openFilmCard } from "../interfaces/openFullFilmCard";
+import { openFilmCard } from "../interfaces";
 import { toggleValueFromLSKey } from "../utils/localStorage";
 import { changeQuequeBtnTextByFilmId } from "../utils";
-import { hideLoader, showLoader } from "./notificationInterface";
+import { hideLoader, showLoader } from "../interfaces";
 import { errorToaster, successToaster } from "./toaster";
 
 export const heroInterface = (evt) => {

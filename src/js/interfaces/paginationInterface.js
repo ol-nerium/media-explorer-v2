@@ -1,7 +1,7 @@
 import { total_pages } from "../components/pagination";
 import { handleLocation, pathObject } from "../services/routing";
 import { getUrlInfo, setUrlInfo } from "../services/urlInfoService";
-import { hideLoader, showLoader } from "./notificationInterface";
+import { hideLoader, showLoader } from "../interfaces";
 
 export const paginationInterface = (evt) => {
   let { page, pathName } = getUrlInfo();

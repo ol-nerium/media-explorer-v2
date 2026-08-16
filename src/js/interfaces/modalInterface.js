@@ -1,10 +1,10 @@
-import { appRootRef, backdropRef, mainRef } from "../services/refs";
+import { appRootRef, backdropRef } from "../services/refs";
 import { getUrlInfo, setUrlInfo } from "../services/urlInfoService";
 import { changeActiveNavLinkColor } from "../utils";
 import {
   addMobileModalMenuListeners,
   removeMobileModalMenuListeners,
-} from "./mobileModalMenuInterface";
+} from "../interfaces";
 
 let backdrop = null;
 export function openModal(markup) {

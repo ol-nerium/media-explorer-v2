@@ -1,12 +1,10 @@
-import { openFilmCard } from "../interfaces/openFullFilmCard";
-import { getSimilarMoviesById } from "../services/apiService";
+import { openFilmCard } from "../interfaces";
 import {
   activeGenresArr,
   handleLocation,
   openGalleryByGenres,
 } from "../services/routing";
-import { hideLoader, showLoader } from "./notificationInterface";
-import { successToaster } from "./toaster";
+import { hideLoader, showLoader } from "../interfaces";
 
 export const clickOnGalleryCardInterface = (evt) => {
   evt.preventDefault();

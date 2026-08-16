@@ -2,8 +2,8 @@ import { lsKeys } from "../data";
 import { handleLocation } from "../services/routing";
 import { getUrlInfo } from "../services/urlInfoService";
 import { removeFromLS } from "../utils/localStorage";
-import { hideLoader, showLoader } from "./notificationInterface";
-import { openFilmCard } from "./openFullFilmCard";
+import { errorToaster, hideLoader, showLoader } from "../interfaces";
+import { openFilmCard } from "../interfaces";
 
 export const savedGalleryInterface = (evt) => {
   evt.preventDefault();
@@ -31,6 +31,7 @@ export const savedGalleryInterface = (evt) => {
 
   if (filmId && removeBtnClicked) {
     removeFromLS(Number(filmId), lsKeys[pathName]);
+    errorToaster({ message: "Film successfully removed from queue list" });
   }
 
   if (filmId && !removeBtnClicked) openFilmCard(filmId);

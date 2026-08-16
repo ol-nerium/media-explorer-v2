@@ -1,8 +1,8 @@
 import { mobileModalMenuMarkup } from "../components/mobileModalMenu";
 import { clickOnNavLink } from "../interfaces";
 import { mobileModalMenuRef, modalCloseBtnRef } from "../services/refs";
-import { toggleTheme } from "./headerInterface";
-import { closeModal, openModal } from "./modalInterface";
+import { toggleTheme } from "../interfaces";
+import { closeModal, openModal } from "../interfaces";
 
 let modalCloseBtn = null;
 let mobileModalMenu = null;

@@ -9,7 +9,7 @@ import { closeModal } from "./modalInterface";
 import { getUrlInfo } from "../services/urlInfoService";
 
 import { openVideosWindow } from "./videosInterface";
-import { hideLoader, showLoader } from "./notificationInterface";
+import { hideLoader, showLoader } from "./loaderInterface";
 import { errorToaster, successToaster } from "./toaster";
 
 const CONTROLS = {
@@ -34,7 +34,6 @@ export function fullCardBtnInterface(evt) {
     if (removed) {
       const { pathName } = getUrlInfo();
       if (pathName === pathObject.queue.name) {
-        console.log("need queue reload");
         openSavedGallery(1, pathName);
       }
       errorToaster({ message: "Film removed from queque" });

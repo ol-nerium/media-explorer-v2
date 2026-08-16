@@ -2,8 +2,8 @@ import { handleLocation, openGalleryByGenres } from "../services/routing";
 import { activeGenresArr } from "../services/routing";
 import { setUrlInfo } from "../services/urlInfoService";
 import { genresListData } from "../utils";
-import { hideLoader, showLoader } from "./notificationInterface";
-import { errorToaster, infoToaster } from "./toaster";
+import { hideLoader, showLoader } from "../interfaces";
+import { errorToaster, infoToaster } from "../interfaces";
 
 export const genresSectionInterface = (evt) => {
   evt.preventDefault();

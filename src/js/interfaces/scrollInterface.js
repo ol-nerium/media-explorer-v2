@@ -9,6 +9,6 @@ export function createToTopBtn() {
           <svg class="icon">
             <use xlink:href="./src/svgSprite.svg#main-top-arrow"></use>
           </svg>
-        </button>;`,
+        </button>`,
   );
 }

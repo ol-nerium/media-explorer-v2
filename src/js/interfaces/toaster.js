@@ -18,9 +18,6 @@ function generateToast({ message, bgc = "#00214d", color = "#fff", duration }) {
   return toast;
 }
 
-// --info-color;
-// --error-color;
-
 export function successToaster({ message = "success!", duration = 3000 }) {
   const newToast = generateToast({
     message,

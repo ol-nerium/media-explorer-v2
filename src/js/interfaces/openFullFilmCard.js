@@ -7,9 +7,9 @@ import {
 } from "../services/apiService";
 import { listenersReload } from "../services/refs";
 import { setFilmCardUrlInfo } from "../services/routing";
-import { openModal } from "./modalInterface";
-import { hideLoader, showLoader } from "./notificationInterface";
-import { errorToaster, infoToaster, successToaster } from "./toaster";
+import { openModal } from "../interfaces";
+import { hideLoader, showLoader } from "../interfaces";
+import { errorToaster, infoToaster, successToaster } from "../interfaces";
 
 // let prevScrollPostion = 0;
 export function openFilmCard(filmId) {
@@ -20,7 +20,6 @@ export function openFilmCard(filmId) {
     getCreditsByFilmId(filmId),
     getReviewsByFilmId(filmId),
     getSimilarMoviesById(1, filmId),
-    // getExternalFilmVideosById(filmId),
   ])
     .then(([mainData, credits, reviews, similar]) => {
       const filmData = { mainData, credits, reviews, similar };
@@ -38,7 +37,6 @@ export function openFilmCard(filmId) {
     })
     .catch((err) => {
       if (err.status === 404) {
-        // console.log("no such film by id");
         errorToaster({ message: "No such film in the base" });
         return;
       }

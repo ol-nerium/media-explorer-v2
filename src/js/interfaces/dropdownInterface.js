@@ -1,7 +1,7 @@
 import { ORDER, SORTBY } from "../../main";
-import { handleLocation, pathObject } from "../services/routing";
+import { handleLocation } from "../services/routing";
 import { getUrlInfo, setUrlInfo } from "../services/urlInfoService";
-import { hideLoader, showLoader } from "./notificationInterface";
+import { hideLoader, showLoader } from "../interfaces";
 import { infoToaster } from "./toaster";
 
 export function onSelectChange(evt) {
@@ -27,7 +27,6 @@ export function onSelectChange(evt) {
     });
     handleLocation();
     hideLoader();
-    // evt.target.value = selectValue;
   } else {
     newQuery = { ...newQuery, sortBy: null, order: null, pathName: "genres" };
     setUrlInfo(newQuery);

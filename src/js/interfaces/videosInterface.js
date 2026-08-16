@@ -1,7 +1,7 @@
 import { videosWindowMarkup } from "../components/fullCard";
 import { getExternalFilmVideosById } from "../services/apiService";
 import { backdropRef } from "../services/refs";
-import { hideLoader, showLoader } from "./notificationInterface";
+import { hideLoader, showLoader } from "../interfaces";
 
 let videoContentElem = null;
 let backdrop = null;

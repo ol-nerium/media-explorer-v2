@@ -1,5 +1,5 @@
 import { handleLocation } from "../services/routing";
-import { hideLoader, showLoader } from "./notificationInterface";
+import { hideLoader, showLoader } from "../interfaces";
 
 export function clickOnNavLink(evt) {
   evt.preventDefault();

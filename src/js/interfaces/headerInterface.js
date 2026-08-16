@@ -1,11 +1,7 @@
 import { openFetchedGalleryPage } from "../services/routing";
-import {
-  getFromLS,
-  rewriteKeyCompletelyInLS,
-  saveToLS,
-} from "../utils/localStorage";
-import { hideLoader, showLoader } from "./notificationInterface";
-import { errorToaster, infoToaster } from "./toaster.js";
+import { getFromLS, rewriteKeyCompletelyInLS } from "../utils/localStorage";
+import { hideLoader, showLoader } from "../interfaces";
+import { errorToaster, infoToaster } from "../interfaces";
 
 export function onSearchFormSubmit(evt) {
   evt.preventDefault();

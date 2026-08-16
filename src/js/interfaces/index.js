@@ -1,31 +1,76 @@
 import { clickOnGalleryCardInterface } from "./clickOnGalleryCardInterface";
-import { fullCardBtnInterface } from "./fullCardIterface";
+import { onSelectChange } from "./dropdownInterface";
+import { fullCardBtnInterface, fullCardNavInterface } from "./fullCardIterface";
 import {
   genreChipsInterface,
   genresSectionInterface,
   mobileGenresInterface,
 } from "./genresInterface";
-import { clickOnNavLink } from "./navLinkClickInterface";
-import { onSearchFormSubmit } from "./headerInterface";
+import {
+  onSearchFormSubmit,
+  setThemeFromLS,
+  themeChangeInterface,
+  toggleTheme,
+} from "./headerInterface";
 import { heroInterface } from "./heroInterface";
-
-import { onMobHeaderBtnClick } from "./mobileModalMenuInterface";
+import { hideLoader, initLoader, showLoader } from "./loaderInterface";
+import {
+  addMobileModalMenuListeners,
+  onMobHeaderBtnClick,
+  removeMobileModalMenuListeners,
+} from "./mobileModalMenuInterface";
+import { closeModal, openModal } from "./modalInterface";
+import { clickOnNavLink } from "./navLinkClickInterface";
+import { openFilmCard } from "./openFullFilmCard";
 import { paginationInterface } from "./paginationInterface";
 import { savedGalleryInterface } from "./savedGalleryInterface";
-import { onSelectChange } from "./dropdownInterface";
+import { createToTopBtn, toTop } from "./scrollInterface";
+import {
+  errorToaster,
+  infoToaster,
+  initToast,
+  successToaster,
+} from "./toaster";
+import {
+  changeFilmItem,
+  closeVideosWindow,
+  openVideosWindow,
+  videosWindowInterace,
+} from "./videosInterface";
 
 export {
   clickOnGalleryCardInterface,
+  onSelectChange,
   fullCardBtnInterface,
+  fullCardNavInterface,
   genresSectionInterface,
-  clickOnNavLink,
-  onSearchFormSubmit,
-  heroInterface,
   mobileGenresInterface,
+  genreChipsInterface,
+  onSearchFormSubmit,
+  themeChangeInterface,
+  toggleTheme,
+  setThemeFromLS,
+  heroInterface,
+  initLoader,
+  showLoader,
+  hideLoader,
   onMobHeaderBtnClick,
+  addMobileModalMenuListeners,
+  removeMobileModalMenuListeners,
+  openModal,
+  closeModal,
+  clickOnNavLink,
+  openFilmCard,
   paginationInterface,
   savedGalleryInterface,
-  // searchbarFormInterface,
-  genreChipsInterface,
-  onSelectChange,
+  toTop,
+  createToTopBtn,
+  initToast,
+  successToaster,
+  infoToaster,
+  errorToaster,
+  videosWindowInterace,
+  openVideosWindow,
+  changeFilmItem,
+  closeVideosWindow,
 };
