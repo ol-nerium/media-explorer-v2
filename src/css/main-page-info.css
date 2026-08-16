@@ -15,7 +15,13 @@
 .nav-list_item {
   font-size: var(--font-size-md);
   text-transform: capitalize;
+
+  transition: color 1s;
 }
+.nav-list_item:hover {
+  color: var(--hover-accent-color);
+}
+
 .nav-list_item:not(:last-of-type)::after {
   content: ">";
 }

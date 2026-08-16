@@ -131,7 +131,6 @@ export function setUrlInfo({
       if (item.obj) stateObj = { ...stateObj, ...item.obj };
     });
     window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
-    console.log(newURL);
   }
 
   if (
@@ -159,11 +158,6 @@ export function setUrlInfo({
 
     window.history.pushState({ ...stateObj }, "", newURL);
   }
-
-  console.log("PUSH:", {
-    url: location.href,
-    length: history.length,
-  });
 }
 
 function createPageQueryObj(page) {

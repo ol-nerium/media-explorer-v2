@@ -1,3 +1,9 @@
+export function initLoader() {
+  document
+    .getElementById("app")
+    .insertAdjacentHTML("beforeend", '<div class="loader"></div>');
+}
+
 export function showLoader() {
   const loaderRoot = document.querySelector(".loader");
   loaderRoot.classList.remove("hidden");

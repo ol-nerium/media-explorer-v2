@@ -65,10 +65,11 @@ export function toggleValueFromLSKey(value, key) {
   // decide if remove or add to/from LS
   if (isRecordStoredInLS(newValue, key)) {
     removeFromLS(newValue, key);
-    console.log(newValue, " removed from LS");
+    return { removed: true, saved: false };
   }
   if (!storedInLS[key]) {
     localStorage.setItem(key, sterializedValue);
+    return { saved: true, removed: false };
   }
 }
 

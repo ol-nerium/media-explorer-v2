@@ -5,6 +5,7 @@ import { openFilmCard } from "../interfaces/openFullFilmCard";
 import { toggleValueFromLSKey } from "../utils/localStorage";
 import { changeQuequeBtnTextByFilmId } from "../utils";
 import { hideLoader, showLoader } from "./notificationInterface";
+import { errorToaster, successToaster } from "./toaster";
 
 export const heroInterface = (evt) => {
   const hero = refs.hero.elem();
@@ -28,7 +29,7 @@ export const heroInterface = (evt) => {
   let currentIndex = 0;
 
   if (btnData?.control === "arrow-left") {
-    currentIndex = Number(heroInputs).find((i) => i.checked).value;
+    currentIndex = Number(heroInputs.find((i) => i.checked).value);
 
     hero.innerHTML = heroSectionMarkup(heroSliderData, currentIndex - 1);
     listenersReload();
@@ -42,8 +43,12 @@ export const heroInterface = (evt) => {
   if (btnData?.control === "addToQueque") {
     const value = btn.closest("section").dataset.filmid;
     const filmId = Number(hero.dataset.filmid);
+    const { saved, removed } = toggleValueFromLSKey(value, "quequeFilmsList");
+    if (saved) successToaster({ message: "Film added to queque" });
+    if (removed) {
+      errorToaster({ message: "Film removed from queque" });
+    }
 
-    toggleValueFromLSKey(value, "quequeFilmsList");
     changeQuequeBtnTextByFilmId(filmId);
   }
   if (btnData?.control === "showMore") {

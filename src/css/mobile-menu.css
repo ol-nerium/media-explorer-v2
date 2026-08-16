@@ -146,4 +146,20 @@
 
   background-color: transparent;
   border-color: transparent;
+
+  scale: 0.95;
+  transition:
+    scale 1s,
+    color 500ms;
+}
+
+.modal-closeBtn .close-icon {
+  color: currentColor;
+}
+
+.modal-closeBtn:hover,
+.modal-closeBtn:focus,
+.modal-closeBtn:active {
+  scale: 1.05;
+  color: var(--hover-accent-color);
 }

@@ -9,14 +9,10 @@ import { listenersReload } from "../services/refs";
 import { setFilmCardUrlInfo } from "../services/routing";
 import { openModal } from "./modalInterface";
 import { hideLoader, showLoader } from "./notificationInterface";
+import { errorToaster, infoToaster, successToaster } from "./toaster";
 
 // let prevScrollPostion = 0;
 export function openFilmCard(filmId) {
-  if (!filmId) {
-    console.log("no film id");
-    return;
-  }
-
   showLoader();
 
   Promise.all([
@@ -35,17 +31,18 @@ export function openFilmCard(filmId) {
       openModal(`<section class="full-card">${filmCardMarkup}</section>`);
 
       listenersReload();
+      successToaster({ message: "Opened film:" });
+      infoToaster({
+        message: mainData.title || mainData.original_title,
+      });
     })
     .catch((err) => {
-      console.log("get error fetching full card of film:", err);
       if (err.status === 404) {
-        console.log("no such film by id");
-        //  :
-        // const currentUrlInfo = getUrlInfo();
-        // currentUrlInfo.filmId = null;
-        // setUrlInfo(currentUrlInfo);
-        // handleLocation();
+        // console.log("no such film by id");
+        errorToaster({ message: "No such film in the base" });
+        return;
       }
+      errorToaster({ message: "Something went wrong, try later" });
     })
     .finally(() => hideLoader());
 }

@@ -10,15 +10,27 @@ const sortingSectionGenresList = (activeGenresIdsArr) => {
         JSON.stringify(genre.id),
       );
 
+      //   return `<li class="genres-chips-list_item">
+      //             <button class="genres-chips-list_item-btn ${isGenreActive ? "active" : ""}" data-genreId=${genre.id}>
+      //               <span>${genre.name}</span>
+      //             </button>
+      //             <div title="closeBtn" class="closeBtn">
+      //               <svg class="icon">
+      //                 <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+      //               </svg>
+      //             </div>
+      //           </li>`;
+      // })
+      // .join("");
+
       return `<li class="genres-chips-list_item">
                 <button class="genres-chips-list_item-btn ${isGenreActive ? "active" : ""}" data-genreId=${genre.id}>
                   <span>${genre.name}</span>
-                </button>
-                <div title="closeBtn" class="closeBtn">
-                  <svg class="icon">
+                  <svg class="close-icon icon">
                     <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
                   </svg>
-                </div>
+                </button>
+                 
               </li>`;
     })
     .join("");
@@ -50,7 +62,6 @@ export const createDropdownMarkup = () => {
   const sortByKeys = Object.keys(SORTBY);
   let optionsMarkup = "";
   const { sortBy } = getUrlInfo();
-  console.log(sortBy);
 
   sortByKeys.forEach((sortOption) => {
     let selected =

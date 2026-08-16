@@ -4,7 +4,7 @@
   --accent-color: #6c47ff;
   --text-color: #ffffff;
   --secondary-color: #aaaaaa;
-  --raiting-icon-color: #f5c518; */
+  --icon-color: #f5c518; */
 
   --font-size-xxxl: 64px;
   --font-size-xxl: 48px;
@@ -47,15 +47,38 @@
   --mobile-width: 390px;
   --tablet-width: 744px;
   --desktop-width: 1024px;
+
+  --default-color-transition: color 500ms;
+  --default-opacity-transition: opacity 500ms;
+
+  --toast-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+  --card-shadow:
+    rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+    rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+    rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+
+  --filmCardBtn-left-shadow:
+    rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px,
+    rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px,
+    rgba(240, 46, 170, 0.05) 25px 25px;
+
+  --filmCardBtn-right-shadow:
+    rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px,
+    rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px,
+    rgba(240, 46, 170, 0.05) -25px 25px;
 }
 
 .darkmode {
   --base-color: #0d0d0f;
   --base-variant: #1a1a1e;
   --accent-color: #6c47ff;
+  --hover-accent-color: #f5c518;
   --text-color: #ffffff;
   --secondary-color: #aaaaaa;
-  --raiting-icon-color: #f5c518;
+  --icon-color: #f5c518;
 
   .darkmode {
     display: none;
@@ -68,9 +91,10 @@
   --base-color: #f3f4f8;
   --base-variant: #ffffff;
   --accent-color: #7c5cff;
+  --hover-accent-color: #f5c518;
   --text-color: #171827;
   --secondary-color: #74778a;
-  --raiting-icon-color: #f5c518;
+  --icon-color: #f5c518;
 }
 
 .lightmode {
@@ -99,5 +123,9 @@
   }
   .lightmode {
     display: none;
+  }
+
+  .genres-list_item.active {
+    color: var(--hover-accent-color);
   }
 }

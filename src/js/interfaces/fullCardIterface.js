@@ -1,11 +1,16 @@
 import { changeQuequeBtnTextByFilmId } from "../utils";
 import { toggleValueFromLSKey } from "../utils/localStorage";
-import { handleLocation, pathObject } from "../services/routing";
+import {
+  handleLocation,
+  openSavedGallery,
+  pathObject,
+} from "../services/routing";
 import { closeModal } from "./modalInterface";
 import { getUrlInfo } from "../services/urlInfoService";
 
 import { openVideosWindow } from "./videosInterface";
 import { hideLoader, showLoader } from "./notificationInterface";
+import { errorToaster, successToaster } from "./toaster";
 
 const CONTROLS = {
   SHOWTRAILER: "showTrailer",
@@ -23,8 +28,17 @@ export function fullCardBtnInterface(evt) {
     openVideosWindow(filmid);
   }
   if (dataControl === CONTROLS.ADDTOWATCHLIST) {
-    toggleValueFromLSKey(filmid, "quequeFilmsList");
+    const { saved, removed } = toggleValueFromLSKey(filmid, "quequeFilmsList");
     changeQuequeBtnTextByFilmId(filmid);
+    if (saved) successToaster({ message: "Film added to queque" });
+    if (removed) {
+      const { pathName } = getUrlInfo();
+      if (pathName === pathObject.queue.name) {
+        console.log("need queue reload");
+        openSavedGallery(1, pathName);
+      }
+      errorToaster({ message: "Film removed from queque" });
+    }
   }
 
   hideLoader();

@@ -30,6 +30,17 @@
   height: 54px;
   background-color: transparent;
   border: none;
+
+  position: relative;
+  transition:
+    var(--default-color-transition),
+    scale 1s;
+}
+
+.back-btn:hover,
+.back-btn:focus {
+  color: var(--hover-accent-color);
+  scale: 1.05;
 }
 
 .full-card-nav-list {
@@ -40,6 +51,17 @@
 .full-card-nav-list_item {
   font-size: var(--font-size-xs);
   text-transform: capitalize;
+
+  cursor: pointer;
+  position: relative;
+  transition:
+    var(--default-color-transition),
+    scale 1s;
+}
+
+.full-card-nav-list_item:hover {
+  color: var(--hover-accent-color);
+  scale: 1.05;
 }
 
 .full-card-nav-list_item:not(:last-of-type)::after {
@@ -94,7 +116,7 @@
   width: 240px;
   align-self: center;
 
-  border: 2px solid var(--raiting-icon-color);
+  border: 2px solid var(--icon-color);
   border-radius: 12px;
   padding: 6px 12px;
 
@@ -131,15 +153,66 @@
   font-size: var(--font-size-lg);
   border-radius: 10px;
 }
+.full-card-controls button:hover::after {
+  opacity: 1;
+}
 
 .full-card-controls_trailerBtn {
   background-color: var(--accent-color);
   color: var(--text-color);
+
+  position: relative;
+  scale: 0.95;
+  transition:
+    var(--default-color-transition),
+    background-color 500ms,
+    scale 1s;
+}
+
+.full-card-controls_trailerBtn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  display: block;
+  box-shadow: var(--filmCardBtn-left-shadow);
+  opacity: 0;
+
+  transition: opacity 1s;
+}
+
+.full-card-controls_trailerBtn:hover,
+.full-card-controls_trailerBtn:focus {
+  color: var(--accent-color);
+  background-color: var(--text-color);
+  scale: 1;
 }
 
 .full-card-controls_AddToWatchlist {
   background-color: var(--base-color);
   color: var(--text-color);
+
+  position: relative;
+  transition:
+    var(--default-color-transition),
+    background-color 500ms,
+    scale 1s;
+}
+.full-card-controls_AddToWatchlist::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  display: block;
+  box-shadow: var(--filmCardBtn-right-shadow);
+  opacity: 0;
+
+  transition: opacity 1s;
+}
+
+.full-card-controls_AddToWatchlist:hover,
+.full-card-controls_AddToWatchlist:focus {
+  color: var(--base-color);
+  background-color: var(--text-color);
+  scale: 1;
 }
 
 .short-desc {
@@ -360,6 +433,34 @@
   display: flex;
   flex-grow: 1;
   width: 220px;
+
+  position: relative;
+  scale: 0.95;
+
+  transition: scale 1s;
+
+  overflow: visible;
+}
+
+.full-card-gallery .gallery-list_item:hover,
+.full-card-gallery .gallery-list_item:focus {
+  scale: 1;
+}
+
+.full-card-gallery .gallery-list_item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  /* box-shadow: var(--card-shadow); */
+  box-shadow: var(--filmCardBtn-left-shadow);
+
+  transition: opacity 1s;
+  z-index: 9;
+}
+
+.full-card-gallery .gallery-list_item:hover::after {
+  opacity: 1;
 }
 
 .full-card-gallery .gallery-list_item-desc {
@@ -516,7 +617,7 @@
 
   position: relative;
   height: 500px;
-  border: 2px solid var(--raiting-icon-color);
+  border: 2px solid var(--icon-color);
 }
 
 .videos-content iframe {

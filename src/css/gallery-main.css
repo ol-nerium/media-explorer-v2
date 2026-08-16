@@ -35,7 +35,23 @@
 
   display: flex;
   flex-direction: column;
+
+  scale: 0.95;
+
+  transition: scale 1s;
 }
+
+.main-gallery .gallery-list_item:hover,
+.main-gallery .gallery-list_item:focus {
+  scale: 1;
+}
+
+/* .main-gallery .gallery-list_item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+} */
+
 @media screen and (min-width: 744px) {
   .main-gallery .gallery-list {
     --item-width: calc((100% - var(--item-gap)) / 2);

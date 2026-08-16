@@ -350,8 +350,6 @@ export const fullCardMarkup = (filmData) => {
     vote_count,
   } = filmData.mainData);
 
-  console.log(filmData);
-
   isFilmInQueque = getFromLS("quequeFilmsList")?.includes(id);
 
   return `

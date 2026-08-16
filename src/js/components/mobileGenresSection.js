@@ -10,7 +10,7 @@ export const mobileGenresSectionMarkup = () => {
           </div>
           <ul class="mobile-genres-list snaps-inline">
             ${genresArr
-              .map((genre) => {
+              .map((genre, index) => {
                 return `<li class="mobile-genres-list_item">
               <button href="#" class="mobile-genres-btn ${activeGenresArr.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">
                 <div class="mobile-genres-icon-wrap">

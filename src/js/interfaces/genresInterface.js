@@ -3,6 +3,7 @@ import { activeGenresArr } from "../services/routing";
 import { setUrlInfo } from "../services/urlInfoService";
 import { genresListData } from "../utils";
 import { hideLoader, showLoader } from "./notificationInterface";
+import { errorToaster, infoToaster } from "./toaster";
 
 export const genresSectionInterface = (evt) => {
   evt.preventDefault();
@@ -25,8 +26,6 @@ export const genresSectionInterface = (evt) => {
     openGalleryByGenres(1, [chipGenreId]);
     hideLoader();
   }
-
-  // console.log(genresListData);
 };
 
 export const mobileGenresInterface = (evt) => {
@@ -133,7 +132,8 @@ function onGenreChipClick(genreId) {
   if (genreIndex < 0) {
     activeGenresArr.push(genreId);
     clickedElement.classList.add("active");
-
+    const chipName = clickedElement.textContent.trim();
+    infoToaster({ message: `${chipName} added to search for genres` });
     const nextPosition = clickedElement.getBoundingClientRect().left;
 
     const positionInRoot = nextPosition - startPosition;
@@ -147,6 +147,8 @@ function onGenreChipClick(genreId) {
 
     activeGenresArr.splice(genreIndex, 1);
     clickedElement.classList.remove("active");
+    const chipName = clickedElement.textContent.trim();
+    errorToaster({ message: `${chipName} removed from genres search` });
 
     if (activeGenresArr.length < 1) {
       showLoader();
@@ -165,7 +167,7 @@ function onGenreChipClick(genreId) {
   }
 
   // fetch films from activeGenresArrData
-  // console.log(getUrlInfo());
+
   showLoader();
   openGalleryByGenres(1, activeGenresArr);
   hideLoader();

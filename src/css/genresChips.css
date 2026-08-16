@@ -18,6 +18,8 @@
 }
 .genres-chips-list_item-btn {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   height: 36px;
 
   border-radius: 10px;
@@ -37,6 +39,20 @@
   position: relative;
 }
 
+.genres-chips-list_item button {
+  transition:
+    scale 1s,
+    background-color 500ms,
+    color 500ms;
+}
+
+.genres-chips-list_item:hover button,
+.genres-chips-list_item:focus button {
+  background-color: var(--hover-accent-color);
+  color: var(--accent-color);
+  scale: 1.05;
+}
+
 .genres-chips-btn-right {
   margin-left: auto;
 }
@@ -49,40 +65,41 @@
 
 .genres-chips-list_item-btn.active {
   background-color: var(--accent-color);
-  padding-right: calc(22px + 1.5rem);
+  /* padding-right: calc(22px + 1.5rem); */
+  gap: 0.5rem;
 }
 
 .genres-chips-list_item-btn span {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  text-align: center;
+  text-align: center; */
 }
 
-.genres-chips-list_item-btn + .closeBtn {
+.genres-chips-list_item-btn .close-icon {
   display: none;
 }
 
-.genres-chips-list_item-btn.active + .closeBtn {
+.genres-chips-list_item-btn.active .close-icon {
   display: block;
+  padding: 0.3rem;
+  width: 36px;
+  height: 36px;
 
-  position: absolute;
+  /* position: absolute;
   top: 50%;
-  right: calc((2rem - 22px) / 2);
+  right: 0.5rem;
   transform: translate(0, -50%);
   z-index: 2;
 
   background-color: transparent;
-  border: none;
+  border: none; */
 
-  width: calc(22px + 1rem);
-  height: calc(100% - 0.8rem);
-
-  padding: 0 0.5rem;
+  /* width: calc(22px + 1rem);
+  height: calc(100% - 0.8rem); */
+  /* padding: 0 0.5rem; */
 }
 
 .genres-chips-list_item .icon {
-  /* height: 100%;
-  width: 100%; */
   color: var(--base-color);
 }
 
@@ -108,7 +125,18 @@
 
     background-color: transparent;
     border: none;
+
+    transition: color 500ms;
   }
+
+  .genres-chips-btn-left:hover,
+  .genres-chips-btn-right:hover,
+  .genres-chips-btn-left:focus,
+  .genres-chips-btn-right:focus {
+    color: var(--hover-accent-color);
+    /* color: var(--accent-color); */
+  }
+
   .genres-chips-list_item-btn {
     font-size: var(--font-size-md);
   }

@@ -13,8 +13,6 @@ export const paginationInterface = (evt) => {
 
   const control = buttonElem?.dataset?.control;
   if (control) {
-    // TODO
-    // fetchFilmDataFromPagination(page, pathName);
     let newPageValue = page ? page : 1;
     if (control === "left") {
       newPageValue -= 1;

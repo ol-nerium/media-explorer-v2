@@ -5,7 +5,18 @@ import { handleLocation } from "./js/services/routing";
 
 import { appRootRef, mainRef } from "./js/services/refs";
 import { setThemeFromLS } from "./js/interfaces/headerInterface";
-import { hideLoader, showLoader } from "./js/interfaces/notificationInterface";
+import {
+  hideLoader,
+  initLoader,
+  showLoader,
+} from "./js/interfaces/notificationInterface";
+import {
+  errorToaster,
+  infoToaster,
+  initToast,
+  successToaster,
+} from "./js/interfaces/toaster";
+import { createToTopBtn, toTop } from "./js/interfaces/scrollInterface";
 
 export const navListIcons = {
   logo: `<svg class="icon">
@@ -61,6 +72,9 @@ let root;
 let main;
 
 function appInit() {
+  initLoader();
+  showLoader();
+
   root = appRootRef("app");
   if (!mainRef())
     root.insertAdjacentElement("afterbegin", document.createElement("main"));
@@ -68,6 +82,14 @@ function appInit() {
   main = mainRef();
 
   setThemeFromLS();
+  createToTopBtn();
+  const topBtn = document.querySelector(".toTopBtn");
+  topBtn.addEventListener("click", toTop);
+
+  initToast();
+  // successToaster({ message: "text test" });
+  // errorToaster({ message: "text test" });
+  // infoToaster({ message: "text test" });
 
   window.addEventListener("popstate", (e) => {
     showLoader();
@@ -82,7 +104,26 @@ function appInit() {
     return;
   });
 
-  showLoader();
+  window.addEventListener("scroll", (e) => {
+    // console.log(e.currentTarget.scrollY);
+    // const { height } = document.body.getBoundingClientRect();
+    // // console.log(height, top);
+
+    // if (e.currentTarget.scrollY > height / 2 && height > 1000) {
+    //   console.log("show scroll btn");
+    //   document.querySelector(".toTopBtn").classList.remove("hidden");
+    // } else {
+    //   console.log("hide scroll btn");
+    //   document.querySelector(".toTopBtn").classList.add("hidden");
+    // }
+
+    if (e.currentTarget.scrollY > 600) {
+      document.querySelector(".toTopBtn").classList.remove("hidden");
+    } else {
+      document.querySelector(".toTopBtn").classList.add("hidden");
+    }
+  });
+
   handleLocation();
   hideLoader();
 }

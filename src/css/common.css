@@ -36,7 +36,7 @@ a {
 }
 
 body {
-  background-color: var(--base-variant);
+  background-color: var(--base-color);
   color: var(--text-color);
   margin: 0;
 
@@ -107,8 +107,13 @@ button {
 
 .section-expand-link {
   float: right;
-  color: var(--accent-color);
   font-size: var(--font-size-xs);
+  transition: color 500ms;
+}
+
+.section-expand-link:hover,
+.section-expand-link:focus {
+  color: var(--accent-color);
 }
 
 .section-expand-link.hidden {
@@ -201,9 +206,13 @@ h2.sr-only {
   white-space: nowrap;
 }
 
-li.active a {
+.active {
   color: var(--accent-color);
 }
+
+/* li a {
+  color: currentColor;
+} */
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -223,7 +232,7 @@ li.active a {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #5935e6;
+  background: var(--accent-color);
 }
 
 /* Firefox */
@@ -252,4 +261,38 @@ li.active a {
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--secondary-color) transparent;
+}
+
+.toTopBtn {
+  color: var(--text-color);
+  background-color: transparent;
+  border: none;
+  width: 64px;
+  height: 64px;
+
+  padding: 0.5rem;
+
+  /* outline: 1px solid red; */
+  position: fixed;
+
+  z-index: 6;
+  bottom: 7rem;
+  right: 2rem;
+  opacity: 0.5;
+
+  transition:
+    var(--default-color-transition),
+    var(--default-opacity-transition),
+    scale 1s;
+}
+
+.toTopBtn:hover,
+.toTopBtn:focus {
+  color: var(--hover-accent-color);
+  opacity: 1;
+  scale: 1.5;
+}
+
+.toTopBtn.hidden {
+  display: none;
 }

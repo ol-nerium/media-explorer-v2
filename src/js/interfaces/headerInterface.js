@@ -5,6 +5,7 @@ import {
   saveToLS,
 } from "../utils/localStorage";
 import { hideLoader, showLoader } from "./notificationInterface";
+import { errorToaster, infoToaster } from "./toaster.js";
 
 export function onSearchFormSubmit(evt) {
   evt.preventDefault();
@@ -13,7 +14,7 @@ export function onSearchFormSubmit(evt) {
   const searchQuery = formData.get("search-field");
 
   if (searchQuery.trim() === "") {
-    alert("search query should not be empty");
+    errorToaster({ message: "search field should not be empty" });
     // TODO
     return;
   }
@@ -39,7 +40,7 @@ export function toggleTheme() {
     body.classList.remove("darkmode");
     body.classList.add("lightmode");
     rewriteKeyCompletelyInLS("theme", "lightmode");
-
+    infoToaster({ message: "Light theme enabled" });
     return;
   }
 
@@ -47,6 +48,7 @@ export function toggleTheme() {
     body.classList.add("darkmode");
     body.classList.remove("lightmode");
     rewriteKeyCompletelyInLS("theme", "darkmode");
+    infoToaster({ message: "Dark theme enabled" });
 
     return;
   }

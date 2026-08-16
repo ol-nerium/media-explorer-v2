@@ -5,30 +5,49 @@
   /* overflow-x: auto; */
 }
 
-@media screen and (min-width: 744px) {
-  .leftArrow,
-  .rightArrow,
-  .dots-icon {
-    background-color: transparent;
-    width: 54px;
-    height: 54px;
-  }
-
-  .pagBtn {
-    min-width: 54px;
-    height: 54px;
-  }
+.leftArrow,
+.rightArrow {
+  background-color: transparent;
+  width: 32px;
+  height: 32px;
 }
 
-@media screen and (min-width: 1080px) {
-  .pagination-layout {
-    background-color: var(--secondary-color);
-    border-radius: 15px;
-    /* gap: 60px; */
-    /* justify-content: center; */
-    justify-content: space-between;
-    /* width: fit-content; */
-  }
+.leftArrow,
+.rightArrow,
+.pagBtn {
+  scale: 0.95;
+  position: relative;
+  overflow: visible;
+}
+
+.pagBtn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  border: 2px solid var(--hover-accent-color);
+  z-index: 111;
+
+  transition: opacity 500ms;
+}
+
+.pagBtn:hover::after {
+  opacity: 1;
+}
+
+.leftArrow:hover,
+.leftArrow:focus,
+.rightArrow:hover,
+.rightArrow:focus,
+.pagBtn:hover,
+.pagBtn:focus {
+  color: var(--hover-accent-color);
+  scale: 1.05;
+}
+
+.pagBtn {
+  min-width: 32px;
+  height: 32px;
 }
 
 .pagination-layout {
@@ -51,15 +70,13 @@
 }
 
 .pagBtn {
-  /* height: 100%; */
-  /* font-size: var(--font-size-sm); */
   background-color: var(--accentColor);
   color: var(--text-color);
   background-color: var(--base-color);
 
-  border: none;
+  border: 1px solid var(--secondary-color);
 
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xxs);
 }
 
 .pageEllipsis {
@@ -69,8 +86,8 @@
 }
 
 .pagination svg {
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
 }
 
 .pagBtn.active {
@@ -83,4 +100,29 @@
   background-color: var(--secondary-color);
   /* remove possibility of click event here */
   pointer-events: none;
+}
+
+@media screen and (min-width: 1080px) {
+  .leftArrow,
+  .rightArrow {
+    background-color: transparent;
+    width: 48px;
+    height: 48px;
+  }
+
+  .pagination svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .pagBtn {
+    min-width: 48px;
+    height: 48px;
+  }
+  .pagination-layout {
+    background-color: var(--secondary-color);
+    border-radius: 15px;
+
+    justify-content: space-between;
+  }
 }

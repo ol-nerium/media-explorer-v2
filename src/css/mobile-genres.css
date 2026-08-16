@@ -16,10 +16,18 @@
   overflow-x: auto;
   overscroll-behavior-inline: contain;
 
-  gap: 1.5rem;
+  gap: 2rem;
 }
 .mobile-genres-list_item {
-  width: 33%;
+  /* width: 40%; */
+}
+
+.mobile-genres-list_item .mobile-genres-btn {
+  transition: color 500ms;
+}
+.mobile-genres-list_item .mobile-genres-btn:hover,
+.mobile-genres-list_item .mobile-genres-btn:focus {
+  color: var(--hover-accent-color);
 }
 
 .mobile-genres-btn {
@@ -28,7 +36,7 @@
   color: currentColor;
   background-color: transparent;
 
-  width: 72px;
+  width: 110px;
   border: none;
 }
 
@@ -56,8 +64,3 @@
 .mobile-genres-btn p {
   font-size: var(--font-size-xxs);
 }
-
-/* .mobile-genres .icon {
-  color: var(--accent-color);
-  padding: 20%;
-} */

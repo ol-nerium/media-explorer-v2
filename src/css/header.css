@@ -66,6 +66,13 @@ main {
   width: 34px;
   height: 34px;
   padding: 3px;
+
+  transition: color 500ms;
+}
+
+.main-heading-buttons button:hover,
+.main-heading-buttons button:active {
+  color: var(--hover-accent-color);
 }
 
 .header-menu-layout .main-links-list,
@@ -79,16 +86,40 @@ main {
 .library-links-list_item,
 .settings-links-list_item {
   text-transform: capitalize;
+
+  transition: color 500ms;
+}
+
+.main-links-list_item:hover,
+.library-links-list_item:hover,
+.settings-links-list_item:hover,
+.main-links-list_item:focus,
+.library-links-list_item:focus,
+.settings-links-list_item:focus {
+  color: var(--hover-accent-color);
 }
 
 .header-menu-layout .logo {
   margin-bottom: 2rem;
+  position: relative;
+
+  transition:
+    scale 700ms,
+    translate 700ms;
+  /* scale: 1.1;
+  translate: 12px 0; */
 }
+
+.header-menu-layout .logo:hover {
+  scale: 1.05;
+  translate: 10px 0;
+}
+
 .header-menu-layout .logo .icon {
   width: 200px;
   height: 85px;
   padding: 0;
-  border: 2px solid var(--raiting-icon-color);
+  border: 2px solid var(--icon-color);
   border-radius: 12px;
 }
 .header-menu-layout .icon {
@@ -136,6 +167,11 @@ main {
   border-color: transparent;
 
   height: 32px;
+
+  transition: color 500ms;
+}
+.searchbar-button:hover {
+  color: var(--hover-accent-color);
 }
 
 .searchbar-button .icon {
@@ -158,6 +194,10 @@ main {
   height: 26px;
 }
 
+.search-field input:focus ~ .icon {
+  color: var(--accent-color);
+}
+
 .search-field .icon {
   position: absolute;
   top: 0;
@@ -165,6 +205,8 @@ main {
   height: 26px;
   width: 26px;
   padding: 5px;
+
+  transition: color 500ms;
 }
 
 .searchbar-button .icon {

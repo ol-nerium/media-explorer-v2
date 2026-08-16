@@ -87,12 +87,13 @@ export const headerMarkup = () => {
           <div class="searchbar">
             <form class="searchbar-form">
               <label for="search-field" class="search-field">
+                <input id="search-field" name="search-field" placeholder="Search for movies..." />
+
                 <svg class="icon">
                   <use
                     xlink:href="./src/svgSprite.svg#main-magnify-glass-1"
                   ></use>
                 </svg>
-                <input id="search-field" name="search-field" placeholder="Search for movies..." />
               </label>
               <button
                 type="submit"

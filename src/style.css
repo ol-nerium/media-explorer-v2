@@ -25,7 +25,4 @@
 @import "./css/mobile-menu.css";
 
 @import "./css/loader.css";
-
-/* #app {
-  position: relative;
-} */
+@import "./css/toast.css";

@@ -24,6 +24,8 @@
   margin-top: 0.5rem;
 
   font-size: var(--font-size-xs);
+
+  cursor: pointer;
 }
 
 @media screen and (min-width: 744px) {
@@ -51,6 +53,22 @@
 
   font-size: var(--font-size-md);
   text-align: center;
+
+  cursor: pointer;
+}
+
+.dropdown select,
+.dropdown select option {
+  transition: color 500ms;
+}
+.dropdown select:hover,
+.dropdown select option:hover {
+  color: var(--hover-accent-color);
+}
+
+option:disabled {
+  pointer-events: none;
+  cursor: default;
 }
 
 .dropdown select,

@@ -19,6 +19,16 @@
 
   /* --img-wrap-height: 62%; */
   --img-wrap-height: 460px;
+  scale: 0.95;
+  opacity: 0.95;
+  transition:
+    scale 1s,
+    opacity 500ms;
+}
+.gallery-list-slider .gallery-list_item:hover,
+.gallery-list-slider .gallery-list_item:focus {
+  scale: 1;
+  opacity: 1;
 }
 
 .gallery-list-slider .gallery-list_item-desc {

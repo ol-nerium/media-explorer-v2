@@ -6,6 +6,7 @@ import {
   openGalleryByGenres,
 } from "../services/routing";
 import { hideLoader, showLoader } from "./notificationInterface";
+import { successToaster } from "./toaster";
 
 export const clickOnGalleryCardInterface = (evt) => {
   evt.preventDefault();
@@ -35,6 +36,7 @@ export const clickOnGalleryCardInterface = (evt) => {
     activeGenresArr.push(genreId);
     showLoader();
     openGalleryByGenres(1, activeGenresArr);
+
     hideLoader();
   }
   if (navLink) {
