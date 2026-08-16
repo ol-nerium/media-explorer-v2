@@ -1,8 +1,8 @@
-import { heroSliderData } from "../data";
+import { heroSliderData } from "../utils/data";
 import { heroSectionMarkup } from "../components/hero";
 import { listenersReload, refs } from "../services/refs";
 import { openFilmCard } from "../interfaces";
-import { toggleValueFromLSKey } from "../utils/localStorage";
+import { toggleValueFromLSKey } from "../services/localStorageService";
 import { changeQuequeBtnTextByFilmId } from "../utils";
 import { hideLoader, showLoader } from "../interfaces";
 import { errorToaster, successToaster } from "./toaster";

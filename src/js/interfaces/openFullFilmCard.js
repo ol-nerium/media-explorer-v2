@@ -13,8 +13,6 @@ import { errorToaster, infoToaster, successToaster } from "../interfaces";
 
 // let prevScrollPostion = 0;
 export function openFilmCard(filmId) {
-  showLoader();
-
   Promise.all([
     getMovieById(filmId),
     getCreditsByFilmId(filmId),
@@ -38,9 +36,11 @@ export function openFilmCard(filmId) {
     .catch((err) => {
       if (err.status === 404) {
         errorToaster({ message: "No such film in the base" });
+        console.log(err);
+
         return;
       }
       errorToaster({ message: "Something went wrong, try later" });
-    })
-    .finally(() => hideLoader());
+      console.log(err);
+    });
 }

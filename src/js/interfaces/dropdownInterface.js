@@ -10,7 +10,6 @@ export function onSelectChange(evt) {
 
   const currentQuery = getUrlInfo();
   let newQuery = currentQuery;
-  showLoader();
 
   if (Object.values(SORTBY).includes(selectValue)) {
     newQuery = {
@@ -37,6 +36,4 @@ export function onSelectChange(evt) {
 
     hideLoader();
   }
-
-  hideLoader();
 }

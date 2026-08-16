@@ -1,5 +1,5 @@
 import { changeQuequeBtnTextByFilmId } from "../utils";
-import { toggleValueFromLSKey } from "../utils/localStorage";
+import { toggleValueFromLSKey } from "../services/localStorageService";
 import {
   handleLocation,
   openSavedGallery,
@@ -23,11 +23,12 @@ export function fullCardBtnInterface(evt) {
   const section = evt.currentTarget.closest("section");
   const filmid = Number(section?.children[0]?.dataset?.filmid);
   if (!filmid) return;
-  showLoader();
+  // showLoader();
   if (dataControl === CONTROLS.SHOWTRAILER) {
     openVideosWindow(filmid);
   }
   if (dataControl === CONTROLS.ADDTOWATCHLIST) {
+    showLoader();
     const { saved, removed } = toggleValueFromLSKey(filmid, "quequeFilmsList");
     changeQuequeBtnTextByFilmId(filmid);
     if (saved) successToaster({ message: "Film added to queque" });
@@ -38,9 +39,10 @@ export function fullCardBtnInterface(evt) {
       }
       errorToaster({ message: "Film removed from queque" });
     }
+    hideLoader();
   }
 
-  hideLoader();
+  // hideLoader();
 }
 
 export function fullCardNavInterface(evt) {

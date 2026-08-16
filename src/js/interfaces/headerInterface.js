@@ -1,5 +1,8 @@
 import { openFetchedGalleryPage } from "../services/routing";
-import { getFromLS, rewriteKeyCompletelyInLS } from "../utils/localStorage";
+import {
+  getFromLS,
+  rewriteKeyCompletelyInLS,
+} from "../services/localStorageService";
 import { hideLoader, showLoader } from "../interfaces";
 import { errorToaster, infoToaster } from "../interfaces";
 

@@ -27,9 +27,10 @@ export function videosWindowInterace(evt) {
 }
 
 export function openVideosWindow(filmid) {
-  videoContentElem = null;
   videosData = [];
   if (videoContentElem) return;
+  videoContentElem = null;
+
   closeVideosWindow(); // clears potential opened videos window
 
   showLoader();

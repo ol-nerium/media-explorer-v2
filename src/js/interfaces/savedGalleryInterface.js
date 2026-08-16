@@ -1,7 +1,7 @@
-import { lsKeys } from "../data";
+import { lsKeys } from "../utils/data";
 import { handleLocation } from "../services/routing";
 import { getUrlInfo } from "../services/urlInfoService";
-import { removeFromLS } from "../utils/localStorage";
+import { removeFromLS } from "../services/localStorageService";
 import { errorToaster, hideLoader, showLoader } from "../interfaces";
 import { openFilmCard } from "../interfaces";
 
