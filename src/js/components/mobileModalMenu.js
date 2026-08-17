@@ -1,8 +1,8 @@
 import { pathObject } from "../services/routing";
 import { navListIcons } from "../../main";
-import { libraryLinks, mainLinks, settingsLinks } from "../data";
+import { libraryLinks, mainLinks, settingsLinks } from "../utils/data";
 
-// navListIcons
+import spriteUrl from "../../assets/svgSprite.svg";
 
 const createMobileMenuLinks = () => {
   return `
@@ -53,7 +53,7 @@ export const mobileModalMenuMarkup = () => {
   return `<div class="mobile-modal-menu isOpen">
         <button class="modal-closeBtn">
           <svg class="icon close-icon">
-            <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
+            <use xlink:href="${spriteUrl}#main-cross-1"></use>
           </svg>
         </button>
         ${createMobileMenuLinks(pathObject)}

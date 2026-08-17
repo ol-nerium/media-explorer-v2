@@ -1,7 +1,9 @@
 import { refs } from "../services/refs";
 import { activeGenresArr } from "../services/routing";
 import { createPoster, genresListData } from "../utils";
-import { getFromLS } from "../utils/localStorage";
+import { getFromLS } from "../services/localStorageService";
+
+import spriteUrl from "../../assets/svgSprite.svg";
 
 const heroSectionGenres = (genre_ids) => {
   const genresList = [];
@@ -82,12 +84,12 @@ export const heroSectionMarkup = (data, i = 0) => {
           <div class="hero-controls">
             <button class="hero-controls-arrows_left" title="left-arrow" data-control="arrow-left">
               <svg class="icon left-arrow">
-                <use xlink:href="./src/svgSprite.svg#main-left-arrow"></use>
+                <use xlink:href="${spriteUrl}#main-left-arrow"></use>
               </svg>
             </button>
             <button class="hero-controls-arrows_right" title="right-arrow" data-control="arrow-right">
               <svg class="icon right-arrow">
-                <use xlink:href="./src/svgSprite.svg#main-right-arrow"></use>
+                <use xlink:href="${spriteUrl}#main-right-arrow"></use>
               </svg>
             </button>
 

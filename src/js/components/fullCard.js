@@ -2,13 +2,10 @@ import { format } from "date-fns";
 
 import { createAvatar, createBackdropBackgound, createPoster } from "../utils";
 import { sliderGalleryItem } from "./sliderGallery";
-import {
-  activeGenresArr,
-  pathObject,
-  setFilmCardUrlInfo,
-} from "../services/routing";
+import { pathObject } from "../services/routing";
 import { getUrlInfo } from "../services/urlInfoService";
-import { getFromLS } from "../utils/localStorage";
+import { getFromLS } from "../services/localStorageService";
+import spriteUrl from "../../assets/svgSprite.svg";
 
 let adult,
   backdrop_path,
@@ -46,7 +43,7 @@ const fullCardNav = ({ title, id }) => {
   return `<div class="full-card-nav">
           <button href="#" title="back" class="back-btn">
             <svg class="icon">
-              <use xlink:href="./src/svgSprite.svg#main-left-arrow"></use>
+              <use xlink:href="${spriteUrl}#main-left-arrow"></use>
             </svg>
           </button>
           <ul class="full-card-nav-list">
@@ -81,13 +78,13 @@ const baseFilmContent = () => {
                   ? `<div class="raiting">
                 <div class="raiting-value">
                   <svg class="icon star-icon">
-                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
+                    <use xlink:href="${spriteUrl}#main-star"></use>
                   </svg>
                   <span>${vote_average}</span>
                 </div>
                 <div class="imdbIcon">
                   <svg class="icon">
-                    <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
+                    <use xlink:href="${spriteUrl}#main-imdb"></use>
                   </svg>
                 </div>
               </div>`
@@ -216,13 +213,13 @@ const comments = (data) => {
       let resArrStr = "";
       for (let i = 0; i < count; i += 1) {
         resArrStr += `<svg class="icon star-icon">
-        <use xlink:href="./src/svgSprite.svg#main-star"></use>
+        <use xlink:href="${spriteUrl}#main-star"></use>
       </svg>`;
       }
 
       for (let i = 0; i < missingStars; i += 1) {
         resArrStr += `<svg class="icon star-icon inactive-star">
-        <use xlink:href="./src/svgSprite.svg#main-star"></use>
+        <use xlink:href="${spriteUrl}#main-star"></use>
       </svg>`;
       }
       return `<div class="stars">${resArrStr} </div>`;
@@ -248,7 +245,7 @@ const comments = (data) => {
       : "";
     // <button>
     //   <svg class="icon">
-    //     <use xlink:href="./src/svgSprite.svg#main-thumbs-up"></use>
+    //     <use xlink:href="${spriteUrl}#main-thumbs-up"></use>
     //   </svg>
     //   Helpful <span>(128)</span>
     // </button>;
@@ -298,20 +295,20 @@ export function videosWindowMarkup(videosData, needsArrowButtons) {
                <div class="controls">
                  <button data-control="close" class="closeBtn">
                    <svg class="icon close-icon">
-                     <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
+                     <use xlink:href="${spriteUrl}#main-cross-1"></use>
                    </svg>
                  </button>
   ${
     needsArrowButtons
       ? ` <button data-control="left" class="leftBtn">
                    <svg class="icon left-arrow">
-                     <use xlink:href="./src/svgSprite.svg#main-left-arrow"></use>
+                     <use xlink:href="${spriteUrl}#main-left-arrow"></use>
                    </svg>
                  </button>
 
                  <button data-control="right" class="rightBtn">
                    <svg class="icon right-arrow">
-                     <use xlink:href="./src/svgSprite.svg#main-right-arrow"></use>
+                     <use xlink:href="${spriteUrl}#main-right-arrow"></use>
                    </svg>
                  </button>`
       : ""

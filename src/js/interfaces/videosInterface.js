@@ -1,7 +1,9 @@
 import { videosWindowMarkup } from "../components/fullCard";
 import { getExternalFilmVideosById } from "../services/apiService";
-import { backdropRef } from "../services/refs";
+import { backdropRef, videoContentRef } from "../services/refs";
 import { hideLoader, showLoader } from "../interfaces";
+
+import spriteUrl from "../../assets/svgSprite.svg";
 
 let videoContentElem = null;
 let backdrop = null;
@@ -46,26 +48,22 @@ export function openVideosWindow(filmid) {
         "beforeend",
         videosWindowMarkup(videosData[index], needArrowBtn),
       );
-      videoContentElem = document.querySelector(".videos-content");
-      videoContentElem.addEventListener("click", videosWindowInterace);
-      hideLoader();
-      return;
-    }
-
-    backdrop.insertAdjacentHTML(
-      "beforeend",
-      `<div class="videos-content">
+    } else {
+      backdrop.insertAdjacentHTML(
+        "beforeend",
+        `<div class="videos-content">
       <div class="controls"><button data-control="close" class="closeBtn">
                    <svg class="icon close-icon">
-                     <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
+                     <use xlink:href="${spriteUrl}#main-cross-1"></use>
                    </svg>
                  </button></div>
         <h3>No available video links</h3>
        <div>`,
-    );
-    videoContentElem = document.querySelector(".videos-content");
-    videoContentElem.addEventListener("click", videosWindowInterace);
+      );
+    }
 
+    videoContentElem = videoContentRef();
+    videoContentElem.addEventListener("click", videosWindowInterace);
     hideLoader();
   });
 }
@@ -82,7 +80,7 @@ export function changeFilmItem(control) {
     if (index > length - 1) index = 0;
   }
 
-  const currentElement = document.querySelector(`.film-item`);
+  const currentElement = document.querySelector(".film-item");
   currentElement.remove();
 
   videoContentElem.insertAdjacentHTML(

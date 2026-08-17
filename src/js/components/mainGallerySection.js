@@ -2,6 +2,8 @@ import { activeGenresArr } from "../services/routing";
 import { genresListData } from "../utils";
 import { createPoster } from "../utils";
 
+import spriteUrl from "../../assets/svgSprite.svg";
+
 const genresList = (genreIds) => {
   const genresList = [];
   genresListData.genres.forEach((i) => {
@@ -41,13 +43,13 @@ const mainGallerySectionItem = (data) => {
               <div class="raiting">
                 <div class="raiting-value">
                   <svg class="icon star-icon">
-                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
+                    <use xlink:href="${spriteUrl}#main-star"></use>
                   </svg>
                   <span>${vote_average.toFixed(2)}</span>
                 </div>
                 <div class="imdbIcon">
                   <svg class="icon">
-                    <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
+                    <use xlink:href="${spriteUrl}#main-imdb"></use>
                   </svg>
                 </div>
               </div>

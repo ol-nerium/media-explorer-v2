@@ -1,5 +1,7 @@
 import { navListIcons } from "../../main";
-import { libraryLinks, mainLinks, settingsLinks } from "../data";
+import { libraryLinks, mainLinks, settingsLinks } from "../utils/data";
+
+import spriteUrl from "../../assets/svgSprite.svg";
 
 const mobileLayout = `<div class="container mobile-header-layout">
         <button
@@ -9,7 +11,7 @@ const mobileLayout = `<div class="container mobile-header-layout">
           data-control="openMobileMenu"
         >
           <svg class="icon">
-            <use xlink:href="./src/svgSprite.svg#main-burger"></use>
+            <use xlink:href="${spriteUrl}#main-burger"></use>
           </svg>
         </button>
         <h1 class="poppins-semibold headerTitle">Home</h1>
@@ -20,7 +22,7 @@ const mobileLayout = `<div class="container mobile-header-layout">
           data-control="changeColorTheme"
         >
           <svg class="icon">
-            <use xlink:href="./src/svgSprite.svg#main-moon"></use>
+            <use xlink:href="${spriteUrl}#main-moon"></use>
           </svg>
         </button>
       </div>`;
@@ -91,7 +93,7 @@ export const headerMarkup = () => {
 
                 <svg class="icon">
                   <use
-                    xlink:href="./src/svgSprite.svg#main-magnify-glass-1"
+                    xlink:href="${spriteUrl}#main-magnify-glass-1"
                   ></use>
                 </svg>
               </label>
@@ -102,7 +104,7 @@ export const headerMarkup = () => {
               >
                 <svg class="icon">
                   <use
-                    xlink:href="./src/svgSprite.svg#main-magnify-glass-2"
+                    xlink:href="${spriteUrl}#main-magnify-glass-2"
                   ></use>
                 </svg>
               </button>
@@ -116,10 +118,10 @@ export const headerMarkup = () => {
               data-control="changeColorTheme"
             >
               <svg class="icon darkmode">
-                <use xlink:href="./src/svgSprite.svg#main-moon"></use>
+                <use xlink:href="${spriteUrl}#main-moon"></use>
               </svg>
               <svg class="icon lightmode">
-                <use xlink:href="./src/svgSprite.svg#main-sun"></use>
+                <use xlink:href="${spriteUrl}#main-sun"></use>
               </svg>
             </button>
           </div>

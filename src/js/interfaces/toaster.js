@@ -1,10 +1,14 @@
+import { appRootRef, toastContainerRef } from "../services/refs";
+
 let toastContainer;
 
 export function initToast() {
-  document
-    .getElementById("app")
-    .insertAdjacentHTML("afterbegin", '<div class="toast-container"> </div>');
-  toastContainer = document.querySelector(".toast-container");
+  appRootRef().insertAdjacentHTML(
+    "afterbegin",
+    '<div class="toast-container"> </div>',
+  );
+
+  toastContainer = toastContainerRef();
 }
 
 function generateToast({ message, bgc = "#00214d", color = "#fff", duration }) {

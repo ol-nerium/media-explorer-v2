@@ -1,48 +1,32 @@
-import { heroInterface } from "../interfaces/heroInterface";
-import { onMobHeaderBtnClick } from "../interfaces/mobileModalMenuInterface";
-import { clickOnNavLink, onSearchFormSubmit } from "../interfaces";
-import { onSelectChange } from "../interfaces/dropdownInterface";
-
 import {
+  heroInterface,
+  onMobHeaderBtnClick,
+  clickOnNavLink,
+  onSearchFormSubmit,
+  onSelectChange,
   genreChipsInterface,
   mobileGenresInterface,
-} from "../interfaces/genresInterface";
-import { clickOnGalleryCardInterface } from "../interfaces/clickOnGalleryCardInterface";
-import { paginationInterface } from "../interfaces/paginationInterface";
-import { genresSectionInterface } from "../interfaces/genresInterface";
-import { savedGalleryInterface } from "../interfaces/savedGalleryInterface";
-import {
+  clickOnGalleryCardInterface,
+  paginationInterface,
+  genresSectionInterface,
+  savedGalleryInterface,
   fullCardBtnInterface,
   fullCardNavInterface,
-} from "../interfaces/fullCardIterface";
-import { themeChangeInterface } from "../interfaces/headerInterface";
+  themeChangeInterface,
+  toTop,
+} from "../interfaces";
 
-const appRootRef = () => document.getElementById("app");
-const mainRef = () => document.querySelector("main");
+export const appRootRef = () => document.getElementById("app");
+export const mainRef = () => document.querySelector("main");
 
-let headerRootRef = () => document.querySelector(".header");
+export const headerRootRef = () => document.querySelector(".header");
 export let headerMenuRef = () => document.querySelector(".header-menu-layout");
 
-let mobileLayoutRef = () => document.querySelector(".mobile-header-layout");
-// sorting:
-let genresChipsRootRef = () => document.querySelector(".genres-chips");
-let sortingDropdownRef = () => document.getElementById("sortingDropdown");
-//
-let heroRef = () => document.querySelector(".hero");
-
-let mainHeadingRef = () => document.querySelector(".main-heading");
-let mainHeadingButtonsRef = () =>
-  document.querySelector(".main-heading-buttons");
-let mobileGenresRef = () => document.querySelector(".mobile-genres");
-
-let sliderGallerySectionPopularRef = () =>
-  document.querySelector(".slider-gallery.popular");
-let sliderGallerySectionTopRatedRef = () =>
-  document.querySelector(".slider-gallery.top-rated");
-let sliderGallerySectionUpComingRef = () =>
-  document.querySelector(".slider-gallery.upcoming");
-let sliderGallerySectionFullCardRef = () =>
-  document.querySelector(".full-card-gallery");
+export const mobileLayoutRef = () =>
+  document.querySelector(".mobile-header-layout");
+export const genresChipsRootRef = () => document.querySelector(".genres-chips");
+export const sortingDropdownRef = () =>
+  document.getElementById("sortingDropdown");
 
 export const mainPageInfoRef = () => document.querySelector(".main-page-info");
 export const mainPageInfoTitleRef = () =>
@@ -57,20 +41,44 @@ export const modalCloseBtnRef = () => document.querySelector(".modal-closeBtn");
 export const mobileModalMenuRef = () =>
   document.querySelector(".mobile-modal-menu");
 
-let mainGalleryRef = () => document.querySelector(".main-gallery");
-let paginationRef = () => document.querySelector(".pagination");
-let genresSectionRef = () => document.querySelector(".genresSection");
-let savedGalleryRef = () => document.querySelector(".saved-gallery");
+export const topBtnRef = () => document.querySelector(".toTopBtn");
+export const loaderRef = () => document.querySelector(".loader");
+export const toastContainerRef = () =>
+  document.querySelector(".toast-container");
 
-let searchbarFormRef = () => document.querySelector(".searchbar-form");
-let fullCardRef = () => document.querySelector(".full-card");
-let fullCardtrailerBtn = () =>
+export const videoContentRef = () => document.querySelector(".videos-content");
+
+const heroRef = () => document.querySelector(".hero");
+const mainHeadingRef = () => document.querySelector(".main-heading");
+const mobileGenresRef = () => document.querySelector(".mobile-genres");
+const sliderGallerySectionPopularRef = () =>
+  document.querySelector(".slider-gallery.popular");
+const sliderGallerySectionTopRatedRef = () =>
+  document.querySelector(".slider-gallery.top-rated");
+const sliderGallerySectionUpComingRef = () =>
+  document.querySelector(".slider-gallery.upcoming");
+const sliderGallerySectionFullCardRef = () =>
+  document.querySelector(".full-card-gallery");
+
+const mainGalleryRef = () => document.querySelector(".main-gallery");
+const paginationRef = () => document.querySelector(".pagination");
+const genresSectionRef = () => document.querySelector(".genresSection");
+const savedGalleryRef = () => document.querySelector(".saved-gallery");
+
+const searchbarFormRef = () => document.querySelector(".searchbar-form");
+const fullCardRef = () => document.querySelector(".full-card");
+const fullCardtrailerBtn = () =>
   fullCardRef()?.querySelector('[data-control="showTrailer"]');
-let fullCardaddToQuequeBtn = () =>
+const fullCardaddToQuequeBtn = () =>
   fullCardRef()?.querySelector('[data-control="addToWatchlist"]');
-let fullCardNavRef = () => document.querySelector(".full-card-nav");
+const fullCardNavRef = () => document.querySelector(".full-card-nav");
 
 export const refs = {
+  topBtn: {
+    elem: topBtnRef,
+    func: toTop,
+    eventType: "click",
+  },
   header: { elem: headerRootRef, func: null, eventType: "click" },
   headerMenu: { elem: headerMenuRef, func: clickOnNavLink, eventType: "click" },
   mobileLayout: {
@@ -136,18 +144,11 @@ export const refs = {
     eventType: "click",
   },
 
-  // you are here
-
   mainHeadingButtons: {
     elem: mainHeadingRef,
     func: themeChangeInterface,
     eventType: "click",
   },
-  // mainHeadingButtons: {
-  //   elem: mobileHeader,
-  //   func: themeChangeInterface,
-  //   eventType: "click",
-  // },
 
   mainPageInfo: {
     elem: mainPageInfoRef,
@@ -182,7 +183,6 @@ export const refs = {
 };
 
 const refsKeys = Object.keys(refs);
-
 export const listenersReload = () => {
   for (let i = 0; i < refsKeys.length; i += 1) {
     const element = refs[refsKeys[i]].elem();
@@ -193,13 +193,4 @@ export const listenersReload = () => {
     element.removeEventListener(eventType, elemFunc);
     element.addEventListener(eventType, elemFunc);
   }
-};
-
-export {
-  mainRef,
-  appRootRef,
-  headerRootRef,
-  mobileLayoutRef,
-  genresChipsRootRef,
-  sortingDropdownRef,
 };

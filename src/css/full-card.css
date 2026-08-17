@@ -440,6 +440,8 @@
   transition: scale 1s;
 
   overflow: visible;
+
+  cursor: pointer;
 }
 
 .full-card-gallery .gallery-list_item:hover,
@@ -618,6 +620,11 @@
   position: relative;
   height: 500px;
   border: 2px solid var(--icon-color);
+  opacity: 1;
+  transition: opacity 1s;
+  @starting-style {
+    opacity: 0;
+  }
 }
 
 .videos-content iframe {
@@ -643,11 +650,21 @@
 .videos-content .controls .rightBtn {
   width: 64px;
   height: 64px;
-  color: var(--accent-color);
   background-color: transparent;
   border-radius: 50% 50%;
   border: none;
   position: absolute;
+
+  transition: color 500ms;
+}
+
+.videos-content .controls .closeBtn:hover,
+.videos-content .controls .leftBtn:hover,
+.videos-content .controls .rightBtn:hover,
+.videos-content .controls .closeBtn:focus,
+.videos-content .controls .leftBtn:focus,
+.videos-content .controls .rightBtn:focus {
+  color: var(--accent-color);
 }
 
 .videos-content .controls .closeBtn {

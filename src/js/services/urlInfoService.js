@@ -1,4 +1,5 @@
 import { ORDER, SORTBY } from "../../main";
+import { errorToaster } from "../interfaces";
 import { changeActiveNavLinkColor } from "../utils";
 import { pathObject } from "./routing";
 
@@ -53,16 +54,16 @@ export function getUrlInfo() {
   };
 }
 
-const prevValues = {
-  pathName: null,
-  search: null,
-  genres: null,
-  page: null,
-  filmId: null,
-  sortBy: null,
-  order: null,
-};
-const keys = Object.keys(prevValues);
+// const prevValues = {
+//   pathName: null,
+//   search: null,
+//   genres: null,
+//   page: null,
+//   filmId: null,
+//   sortBy: null,
+//   order: null,
+// };
+// const keys = Object.keys(prevValues);
 
 export function setUrlInfo({
   pathName = null,
@@ -83,19 +84,19 @@ export function setUrlInfo({
     filmId,
   };
 
-  keys.forEach((key) => {
-    if (prevValues[key] !== currentValues[key]) {
-      console.log(
-        "changes ",
-        key,
-        "from ",
-        prevValues[key],
-        "to ",
-        currentValues[key],
-      );
-      prevValues[key] = currentValues[key];
-    }
-  });
+  // keys.forEach((key) => {
+  //   if (prevValues[key] !== currentValues[key]) {
+  //     console.log(
+  //       "changes ",
+  //       key,
+  //       "from ",
+  //       prevValues[key],
+  //       "to ",
+  //       currentValues[key],
+  //     );
+  //     prevValues[key] = currentValues[key];
+  //   }
+  // });
 
   if (pathName === "home") {
     newURL = baseUrl + pathObject[pathName].path;
@@ -103,7 +104,10 @@ export function setUrlInfo({
   }
 
   if (pathName !== "" && !pathObject[pathName]) {
-    console.log("404 page should be here, tried to get " + pathName);
+    // console.log("404 page should be here, redirect " + pathName);
+    errorToaster({
+      message: "wrong path, redirected to homepage..",
+    });
   }
 
   if (pathName === "movies") {
@@ -158,6 +162,9 @@ export function setUrlInfo({
 
     window.history.pushState({ ...stateObj }, "", newURL);
   }
+
+  document.title =
+    String(pathName).charAt(0).toUpperCase() + String(pathName).slice(1);
 }
 
 function createPageQueryObj(page) {

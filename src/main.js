@@ -3,54 +3,47 @@ import { headerMarkup } from "./js/components/header";
 
 import { handleLocation } from "./js/services/routing";
 
-import { appRootRef, mainRef } from "./js/services/refs";
+import { appRootRef, mainRef, topBtnRef } from "./js/services/refs";
 import { setThemeFromLS } from "./js/interfaces/headerInterface";
-import {
-  hideLoader,
-  initLoader,
-  showLoader,
-} from "./js/interfaces/notificationInterface";
-import {
-  errorToaster,
-  infoToaster,
-  initToast,
-  successToaster,
-} from "./js/interfaces/toaster";
+import { hideLoader, showLoader } from "./js/interfaces/loaderInterface";
+import { initToast } from "./js/interfaces/toaster";
 import { createToTopBtn, toTop } from "./js/interfaces/scrollInterface";
+
+import spriteUrl from "./assets/svgSprite.svg";
 
 export const navListIcons = {
   logo: `<svg class="icon">
-            <use xlink:href="./src/svgSprite.svg#Logo-icon"></use>
+            <use xlink:href="${spriteUrl}#Logo-icon"></use>
           </svg>`,
   home: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-home"></use>
+                <use xlink:href="${spriteUrl}#main-home"></use>
               </svg>`,
   movies: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-heart"></use>
+                <use xlink:href="${spriteUrl}#main-heart"></use>
               </svg>`,
   genres: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-saved"></use>
+                <use xlink:href="${spriteUrl}#main-saved"></use>
               </svg>`,
   popular: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-films"></use>
+                <use xlink:href="${spriteUrl}#main-films"></use>
               </svg>`,
   "top rated": `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-films"></use>
+                <use xlink:href="${spriteUrl}#main-films"></use>
               </svg>`,
   upcoming: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-films"></use>
+                <use xlink:href="${spriteUrl}#main-films"></use>
               </svg>`,
   favorites: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-heart"></use>
+                <use xlink:href="${spriteUrl}#main-heart"></use>
               </svg>`,
   queue: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-queue"></use>
+                <use xlink:href="${spriteUrl}#main-queue"></use>
               </svg>`,
   settings: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-settings"></use>
+                <use xlink:href="${spriteUrl}#main-settings"></use>
               </svg>`,
   logout: `<svg class="icon">
-                <use xlink:href="./src/svgSprite.svg#main-logout"></use>
+                <use xlink:href="${spriteUrl}#main-logout"></use>
               </svg>`,
 };
 
@@ -71,8 +64,9 @@ export const SORTBY = {
 let root;
 let main;
 
+// initLoader();
+
 function appInit() {
-  initLoader();
   showLoader();
 
   root = appRootRef("app");
@@ -83,44 +77,21 @@ function appInit() {
 
   setThemeFromLS();
   createToTopBtn();
-  const topBtn = document.querySelector(".toTopBtn");
-  topBtn.addEventListener("click", toTop);
-
   initToast();
-  // successToaster({ message: "text test" });
-  // errorToaster({ message: "text test" });
-  // infoToaster({ message: "text test" });
 
   window.addEventListener("popstate", (e) => {
     showLoader();
     handleLocation();
     hideLoader();
 
-    console.log("POPSTATE", {
-      href: location.href,
-      historyLength: history.length,
-    });
-
     return;
   });
 
   window.addEventListener("scroll", (e) => {
-    // console.log(e.currentTarget.scrollY);
-    // const { height } = document.body.getBoundingClientRect();
-    // // console.log(height, top);
-
-    // if (e.currentTarget.scrollY > height / 2 && height > 1000) {
-    //   console.log("show scroll btn");
-    //   document.querySelector(".toTopBtn").classList.remove("hidden");
-    // } else {
-    //   console.log("hide scroll btn");
-    //   document.querySelector(".toTopBtn").classList.add("hidden");
-    // }
-
     if (e.currentTarget.scrollY > 600) {
-      document.querySelector(".toTopBtn").classList.remove("hidden");
+      topBtnRef()?.classList.remove("hidden");
     } else {
-      document.querySelector(".toTopBtn").classList.add("hidden");
+      topBtnRef()?.classList.add("hidden");
     }
   });
 

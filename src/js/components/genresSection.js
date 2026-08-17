@@ -1,6 +1,8 @@
 import { activeGenresArr } from "../services/routing";
 import { genresArr } from "../utils";
 
+import spriteUrl from "../../assets/svgSprite.svg";
+
 export const genresSectionMarkup = () => {
   return `<section class="genresSection">
         <div class="container">
@@ -13,7 +15,7 @@ export const genresSectionMarkup = () => {
               <a href="/">
                 <div class="genresSection-icon-wrap">
                   <svg class="icon">
-                    <use xlink:href="./src/svgSprite.svg#${genre.icon}"></use>
+                    <use xlink:href="${spriteUrl}#${genre.icon}"></use>
                   </svg>
                 </div>
                 <h3 class="genresSection-list_item-title">${genre.name}</h3>

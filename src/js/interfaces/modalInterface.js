@@ -17,7 +17,7 @@ export function openModal(markup) {
   backdrop.addEventListener("click", onBackdropClick);
   window.addEventListener("keydown", onKeyClose);
 
-  document.querySelector("body").style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
   changeActiveNavLinkColor();
 }
 function onBackdropClick(evt) {
@@ -35,7 +35,7 @@ export function closeModal() {
 
   backdrop.classList.add("is-hidden");
   backdrop.innerHTML = "";
-  document.querySelector("body").style.overflow = "";
+  document.body.style.overflow = "";
 
   const currentUrlInfo = getUrlInfo();
   setUrlInfo({ ...currentUrlInfo, filmId: "" });

@@ -3,6 +3,8 @@ import { activeGenresArr } from "../services/routing";
 import { getUrlInfo } from "../services/urlInfoService";
 import { genresListData } from "../utils";
 
+import spriteUrl from "../../assets/svgSprite.svg";
+
 const sortingSectionGenresList = (activeGenresIdsArr) => {
   return genresListData.genres
     .map((genre) => {
@@ -16,7 +18,7 @@ const sortingSectionGenresList = (activeGenresIdsArr) => {
       //             </button>
       //             <div title="closeBtn" class="closeBtn">
       //               <svg class="icon">
-      //                 <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+      //                 <use xlink:href="${spriteUrl}#main-cross-2"></use>
       //               </svg>
       //             </div>
       //           </li>`;
@@ -27,7 +29,7 @@ const sortingSectionGenresList = (activeGenresIdsArr) => {
                 <button class="genres-chips-list_item-btn ${isGenreActive ? "active" : ""}" data-genreId=${genre.id}>
                   <span>${genre.name}</span>
                   <svg class="close-icon icon">
-                    <use xlink:href="./src/svgSprite.svg#main-cross-2"></use>
+                    <use xlink:href="${spriteUrl}#main-cross-2"></use>
                   </svg>
                 </button>
                  
@@ -40,7 +42,7 @@ export const createGenreChipsListMarkup = (activeGenresIdsArr) => {
   return `<div class="genres-chips">
             <button class="genres-chips-btn-left" title="left-arrow" data-control="left">
               <svg class="icon left-arrow">
-                <use xlink:href="./src/svgSprite.svg#main-left-arrow"></use>
+                <use xlink:href="${spriteUrl}#main-left-arrow"></use>
               </svg>
             </button>
 
@@ -50,7 +52,7 @@ export const createGenreChipsListMarkup = (activeGenresIdsArr) => {
 
             <button class="genres-chips-btn-right" title="right-arrow" data-control="right">
               <svg class="icon right-arrow">
-                <use xlink:href="./src/svgSprite.svg#main-right-arrow"></use>
+                <use xlink:href="${spriteUrl}#main-right-arrow"></use>
               </svg>
             </button>
           </div>`;

@@ -1,3 +1,5 @@
+import { loaderRef } from "../services/refs";
+
 export function initLoader() {
   document
     .getElementById("app")
@@ -5,14 +7,24 @@ export function initLoader() {
 }
 
 export function showLoader() {
-  const loaderRoot = document.querySelector(".loader");
-  loaderRoot.classList.remove("hidden");
+  console.log("show loader");
 
-  console.log("showLoader");
+  const loaderRoot = loaderRef();
+  if (!loaderRoot) {
+    initLoader();
+    showLoader();
+    return;
+  }
+  loaderRoot.classList.remove("hidden");
 }
 export function hideLoader() {
-  const loaderRoot = document.querySelector(".loader");
-  loaderRoot.classList.add("hidden");
+  console.log("hide loader");
 
-  console.log("hideLoader");
+  const loaderRoot = loaderRef();
+  if (!loaderRoot) {
+    initLoader();
+    showLoader();
+    return;
+  }
+  loaderRoot.classList.add("hidden");
 }

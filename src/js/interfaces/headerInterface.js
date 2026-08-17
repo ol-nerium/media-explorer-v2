@@ -33,7 +33,7 @@ export function themeChangeInterface(evt) {
 }
 
 export function toggleTheme() {
-  const body = document.querySelector("body");
+  const body = document.body;
 
   if (body.classList.contains("darkmode")) {
     body.classList.remove("darkmode");
@@ -54,7 +54,7 @@ export function toggleTheme() {
 }
 
 export function setThemeFromLS() {
-  const body = document.querySelector("body");
+  const body = document.body;
   const currentTheme = getFromLS("theme") || "darkmode";
 
   if (body.classList.contains(currentTheme)) return;

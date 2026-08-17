@@ -48,7 +48,7 @@ export const mobileGenresInterface = (evt) => {
   if (link) clickOnMobGenresLink(link);
 
   const genresLink = evt.currentTarget.querySelector(".section-expand-link");
-  if (activeGenresArr.length > 0) {
+  if (genresLink && activeGenresArr.length > 0) {
     genresLink.classList.remove("hidden");
   } else {
     genresLink.classList.add("hidden");

@@ -1,4 +1,4 @@
-import { getGenresList, getImageConfiguration } from "../services/apiService";
+import { getGenresList } from "../services/apiService";
 import {
   fullCardWatchlistBtn,
   headerMenuRef,
@@ -9,10 +9,8 @@ import {
   sortingDropdownRef,
 } from "../services/refs";
 import { getUrlInfo } from "../services/urlInfoService";
-import { getFromLS } from "./localStorage";
-
-const configuration = await getImageConfiguration();
-const {
+import { getFromLS } from "../services/localStorageService";
+import {
   base_url,
   secure_base_url,
   backdrop_sizes,
@@ -20,7 +18,8 @@ const {
   poster_sizes,
   profile_sizes,
   still_sizes,
-} = configuration.images;
+} from "./data";
+
 export const fallbackImg = "./src/blank-picture.png";
 
 export const genresListData = await getGenresList();

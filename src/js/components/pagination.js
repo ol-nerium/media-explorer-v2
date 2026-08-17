@@ -1,4 +1,5 @@
 import { getUrlInfo } from "../services/urlInfoService";
+import spriteUrl from "../../assets/svgSprite.svg";
 
 export let total_pages = 500;
 const paginationButtonsList = (data) => {
@@ -32,7 +33,7 @@ export const paginationSectionMarkup = (data) => {
       if (i === "...") {
         return `<div class="pageEllipsis">
           <svg class="icon dots-icon">
-            <use xlink:href="./src/svgSprite.svg#main-dots"></use>
+            <use xlink:href="${spriteUrl}#main-dots"></use>
           </svg>
         </div>`;
       } else {
@@ -50,12 +51,12 @@ export const paginationSectionMarkup = (data) => {
   let arrowsMarkupObj = {
     rightArrow: `<button class="rightArrow" data-control="right" title="right-arrow">
             <svg class="icon right-arrow">
-              <use xlink:href="./src/svgSprite.svg#main-right-arrow"></use>
+              <use xlink:href="${spriteUrl}#main-right-arrow"></use>
             </svg>
           </button>`,
     leftArrow: `<button class="leftArrow" data-control="left" title="left-arrow">
             <svg class="icon left-arrow">
-              <use xlink:href="./src/svgSprite.svg#main-left-arrow"></use>
+              <use xlink:href="${spriteUrl}#main-left-arrow"></use>
             </svg>
           </button>`,
   };

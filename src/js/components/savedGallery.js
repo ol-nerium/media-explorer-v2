@@ -1,6 +1,8 @@
 import { activeGenresArr } from "../services/routing";
 import { createPoster } from "../utils";
 
+import spriteUrl from "../../assets/svgSprite.svg";
+
 // const savedGalleryItemGenres = (genreIds) => {
 //   const genresList = [];
 //   genresListData.genres.forEach((i) => {
@@ -33,7 +35,7 @@ const savedGalleryItem = (data) => {
   return `<li class="saved-gallery-list_item" data-filmid="${id}">
               <button class="closeBtn" type="button" title="removeElement">
                 <svg class="icon cross-icon">
-                  <use xlink:href="./src/svgSprite.svg#main-cross-1"></use>
+                  <use xlink:href="${spriteUrl}#main-cross-1"></use>
                 </svg>
               </button>
               <div class="img-wrap">
@@ -43,13 +45,13 @@ const savedGalleryItem = (data) => {
               <div class="raiting">
                 <div class="raiting-value">
                   <svg class="icon star-icon">
-                    <use xlink:href="./src/svgSprite.svg#main-star"></use>
+                    <use xlink:href="${spriteUrl}#main-star"></use>
                   </svg>
                   <span>${vote_average.toFixed(2)}</span>
                 </div>
                 <div class="imdbIcon">
                   <svg class="icon">
-                    <use xlink:href="./src/svgSprite.svg#main-imdb"></use>
+                    <use xlink:href="${spriteUrl}#main-imdb"></use>
                   </svg>
                 </div>
               </div>

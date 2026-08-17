@@ -1,5 +1,5 @@
 import { ORDER, SORTBY } from "../../main";
-import { processSavedGalleryData } from "../data";
+import { processSavedGalleryData } from "../utils/data";
 import { closeModal } from "../interfaces/modalInterface";
 import { openFilmCard } from "../interfaces/openFullFilmCard";
 import { toTop } from "../interfaces/scrollInterface";
@@ -9,16 +9,16 @@ import {
   successToaster,
 } from "../interfaces/toaster";
 
-import { favoritesPage } from "../routes/favorites";
-import { genresPage, searchedByGenresPage } from "../routes/genres";
-import { homePage } from "../routes/home";
-import { logoutPage } from "../routes/logout";
-import { moviesPage, searchedMoviesPage } from "../routes/movies";
-import { popularPage } from "../routes/popular";
-import { queuePage } from "../routes/queque";
-import { settingsPage } from "../routes/settings";
-import { topRatedPage } from "../routes/toprated";
-import { upcomingPage } from "../routes/upcoming";
+import { favoritesPage } from "../pages/favorites";
+import { genresPage, searchedByGenresPage } from "../pages/genres";
+import { homePage } from "../pages/home";
+import { logoutPage } from "../pages/logout";
+import { moviesPage, searchedMoviesPage } from "../pages/movies";
+import { popularPage } from "../pages/popular";
+import { queuePage } from "../pages/queque";
+import { settingsPage } from "../pages/settings";
+import { topRatedPage } from "../pages/toprated";
+import { upcomingPage } from "../pages/upcoming";
 import {
   changeActiveNavLinkColor,
   changeCheckedSortSelect,
@@ -114,7 +114,6 @@ export const pathObject = {
 };
 
 export function setFilmCardUrlInfo(filmId) {
-  // const { genres, page, pathName, search } = getUrlInfo();
   ({ pathName, search, page, genres } = getUrlInfo());
   const newPath = pathName + "?filmId=" + filmId;
 
@@ -258,14 +257,13 @@ export function openFetchedGalleryPage(page = 1, searchQuery) {
       console.log(err);
     })
     .then((galleryData) => {
-      console.log(galleryData);
       pathName = "movies";
       setUrlInfo({ pathName, search: searchQuery, page });
       pathObject[pathName].fetchFunc = (page) =>
         getMoviesByTitle(page, searchQuery);
 
       const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
-      document.querySelector("main").innerHTML = galleryMarkup;
+      mainRef().innerHTML = galleryMarkup;
       changeActiveNavLinkColor();
       changeTitleText(`Movies search`);
       successToaster({ message: "Successful!" });
@@ -290,7 +288,7 @@ export function openFetchedByPathName(page = 1, pathName) {
 
         // const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
         const galleryMarkup = pathObject[pathName].func(pathName, galleryData);
-        document.querySelector("main").innerHTML = galleryMarkup;
+        mainRef().innerHTML = galleryMarkup;
         changeActiveNavLinkColor();
         changeTitleText(pathName);
         listenersReload();
@@ -299,7 +297,7 @@ export function openFetchedByPathName(page = 1, pathName) {
       });
   } else {
     const galleryMarkup = pathObject[pathName].func();
-    document.querySelector("main").innerHTML = galleryMarkup;
+    mainRef().innerHTML = galleryMarkup;
     changeActiveNavLinkColor();
     changeTitleText(pathName);
 
@@ -347,7 +345,7 @@ export function openGalleryByGenres(
         searchedGenreNames,
         galleryData,
       );
-      document.querySelector("main").innerHTML = galleryMarkup;
+      mainRef().innerHTML = galleryMarkup;
       changeTitleText("genres");
 
       changeActiveNavLinkColor();
