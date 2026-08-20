@@ -14,13 +14,21 @@
 }
 .nav-list_item {
   font-size: var(--font-size-md);
+  text-transform: capitalize;
+
+  transition: color 1s;
 }
+.nav-list_item:hover {
+  color: var(--hover-accent-color);
+}
+
 .nav-list_item:not(:last-of-type)::after {
   content: ">";
 }
 
 .main-page-info-title {
   font-size: var(--font-size-xl);
+  text-transform: capitalize;
 }
 
 @media screen and (min-width: 744px) {
@@ -29,7 +37,7 @@
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .main-page-info {
     padding-top: 42px;
   }

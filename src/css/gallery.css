@@ -10,13 +10,19 @@
   justify-content: space-between;
   gap: 0.5rem;
   align-items: center;
-  background-color: var(--grey-color);
+  background-color: var(--secondary-color);
   flex-grow: 1;
 
   padding: 9px;
+  min-height: 250px;
 }
 .gallery-list_item-title {
   font-size: var(--font-size-sm);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
 }
 .gallery-list_item-year {
   font-size: var(--font-size-xxs);

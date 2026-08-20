@@ -24,6 +24,8 @@
   margin-top: 0.5rem;
 
   font-size: var(--font-size-xs);
+
+  cursor: pointer;
 }
 
 @media screen and (min-width: 744px) {
@@ -31,7 +33,7 @@
     font-size: var(--font-size-sm);
   }
 }
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .dropdown {
     font-size: var(--font-size-md);
   }
@@ -42,10 +44,31 @@
   justify-content: space-between;
 
   /* width: 300px; */
-  color: var(--white-color);
   padding: 0 4px 0 3px;
-  background-color: var(--carbon-color);
-  border: 1px solid var(--white-color);
+  background-color: var(--base-variant);
+  border: 2px solid var(--text-color);
+  border-radius: 1rem;
+  line-height: 1.6;
+  color: var(--text-color);
+
+  font-size: var(--font-size-md);
+  text-align: center;
+
+  cursor: pointer;
+}
+
+.dropdown select,
+.dropdown select option {
+  transition: color 500ms;
+}
+.dropdown select:hover,
+.dropdown select option:hover {
+  color: var(--hover-accent-color);
+}
+
+option:disabled {
+  pointer-events: none;
+  cursor: default;
 }
 
 .dropdown select,
@@ -53,9 +76,9 @@
   appearance: base-select;
 
   border-radius: 1rem;
-  background-color: var(--carbon-color);
+  background-color: var(--base-variant);
   line-height: 1.6;
-  color: #fff;
+  color: var(--text-color);
 }
 
 .dropdown select::picker(select) {
@@ -69,18 +92,18 @@
 }
 
 .picker {
-  rotate: 90deg;
+  rotate: 0deg;
   transition: rotate 0.3s ease;
 }
 
 :open .picker {
-  rotate: 0deg;
+  rotate: 90deg;
 }
 
 .dropdown select button {
   display: flex;
   justify-content: space-between;
-
+  gap: 0.5rem;
   width: 100%;
 
   padding-left: 1rem;
@@ -106,4 +129,10 @@
     opacity: 0;
     translate: 0% 100%;
   }
+}
+
+.empty_option {
+  height: 1px;
+  position: absolute;
+  display: none;
 }

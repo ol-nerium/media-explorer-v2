@@ -1,157 +1,19 @@
-# media-explorer-markup
+    Movie Explorer
 
-genres-action
-genres-comedy
-genres-animation
-genres-crime
-genres-adventure
-genres-documentary
-genres-drama
-genres-family
-genres-history
-genres-fantazy
-genres-music
-genres-horror
-genres-mystery
-genres-romance
-genres-science
-genres-thriller
-genres-tv
-genres-war
-genres-western
-hero-dots
-Logo-icon
-main-add-to-favorites
-main-bookmark
-main-burger
-main-cross-1
-main-cross-2
-main-dots
-main-films
-main-heart
-main-history
-main-home
-main-imdb
-main-left-arrow
-main-right-arrow
-main-Logo
-main-logout
-main-magnify-glass-1
-main-magnify-glass-2
-main-moon
-main-notification
-main-polygon
-main-queue
-main-saved
-main-settings
-main-star
-main-sun
-main-thumbs-up
-main-top
+Display movie lists from TMDB movie and TV database.
 
-We also encourage you to build up activity on other sources (Gmail, Search, YouTube, Photos) naturally, if this is an account you have not used much.!
+    Project Specifications:
+    Display UI with select by popularity, raiting, upcoming filter
+    Search, filtering and sorting by genres
+    Search by movie name
+    Show film card by user choice and provide with related information: video trailer, similar movies, real users reviews
+    Responsive design
 
-.poppins-thin {
-font-family: "Poppins", sans-serif;
-font-weight: 100;
-font-style: normal;
-}
-.poppins-extralight {
-font-family: "Poppins", sans-serif;
-font-weight: 200;
-font-style: normal;
-}
-.poppins-light {
-font-family: "Poppins", sans-serif;
-font-weight: 300;
-font-style: normal;
-}
-.poppins-regular {
-font-family: "Poppins", sans-serif;
-font-weight: 400;
-font-style: normal;
-}
-.poppins-medium {
-font-family: "Poppins", sans-serif;
-font-weight: 500;
-font-style: normal;
-}
-.poppins-semibold {
-font-family: "Poppins", sans-serif;
-font-weight: 600;
-font-style: normal;
-}
-.poppins-bold {
-font-family: "Poppins", sans-serif;
-font-weight: 700;
-font-style: normal;
-}
-.poppins-extrabold {
-font-family: "Poppins", sans-serif;
-font-weight: 800;
-font-style: normal;
-}
-.poppins-black {
-font-family: "Poppins", sans-serif;
-font-weight: 900;
-font-style: normal;
-}
-.poppins-thin-italic {
-font-family: "Poppins", sans-serif;
-font-weight: 100;
-font-style: italic;
-}
-.poppins-extralight-italic {
-font-family: "Poppins", sans-serif;
-font-weight: 200;
-font-style: italic;
-}
-.poppins-light-italic {
-font-family: "Poppins", sans-serif;
-font-weight: 300;
-font-style: italic;
-}
-.poppins-regular-italic {
-font-family: "Poppins", sans-serif;
-font-weight: 400;
-font-style: italic;
-}
-.poppins-medium-italic {
-font-family: "Poppins", sans-serif;
-font-weight: 500;
-font-style: italic;
-}
-.poppins-semibold-italic {
-font-family: "Poppins", sans-serif;
-font-weight: 600;
-font-style: italic;
-}
-.poppins-bold-italic {
-font-family: "Poppins", sans-serif;
-font-weight: 700;
-font-style: italic;
-}
-.poppins-extrabold-italic {
-font-family: "Poppins", sans-serif;
-font-weight: 800;
-font-style: italic;
-}
-.poppins-black-italic {
-font-family: "Poppins", sans-serif;
-font-weight: 900;
-font-style: italic;
-}
+Core Technologies
 
-function stars(num){
-return `<li class="star-division_item" data-starCount="${num}"> 
-    <div class="stars">${function svgIcons(num){
-    let res=' ';
-    for (let i=1; i<=num; i++){
-        res+=`<svg class="icon star-icon">
-<use xlink:href="./src/svgSprite.svg#main-star"></use>
-</svg>`
-    }
-    return res;
-}(num)} </div> 
-    <p class="percent">72%</p> </li>`
-}
+    Frontend: Vanilla JavaScript (ES6+), HTML5, and CSS3.
+    Build Tool: Vite
+    Virtual File System: ZenFS for persistent storage.
+    axios and date-fns npm packages
+
+The application will be available at: media-explorer-v2.onrender.com

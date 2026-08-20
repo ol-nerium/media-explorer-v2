@@ -1,0 +1,22 @@
+.slider-gallery {
+  margin-top: 42px;
+}
+.slider-gallery .gallery-list_item {
+  flex-basis: 54%;
+}
+
+@media screen and (min-width: 744px) {
+  .slider-gallery {
+    /* display: none; */
+    display: block;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .slider-gallery {
+    display: block;
+  }
+  .slider-gallery .gallery-list_item {
+    flex-basis: 27%;
+  }
+}

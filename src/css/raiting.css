@@ -9,6 +9,19 @@
 
   display: flex;
   justify-content: space-between;
+
+  pointer-events: none;
+
+  border-radius: 12px;
+  padding: 0.2rem;
+}
+
+.raiting:after {
+  position: absolute;
+  content: "";
+  inset: 0;
+  background-color: var(--base-variant);
+  opacity: 0.2;
 }
 
 .imdbIcon {
@@ -19,9 +32,9 @@
 .imdbIcon .icon {
   width: 80px;
   /* height: 100%; */
-  background-color: var(--golden-color);
+  background-color: var(--icon-color);
   border-radius: 10px;
-  color: var(--carbon-color);
+  color: var(--base-variant);
 }
 
 .raiting-value {
@@ -37,14 +50,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--golden-color);
+  background-color: var(--icon-color);
   border-radius: 10px;
   width: 48px;
   height: 28px;
 }
 
 .star-icon {
-  color: var(--golden-color);
+  color: var(--icon-color);
   width: 16px;
   height: 16px;
 }

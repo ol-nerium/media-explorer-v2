@@ -12,6 +12,21 @@
   background-color: transparent;
   border-color: transparent;
   height: 100%;
+
+  opacity: 1;
+  position: relative;
+  scale: 0.95;
+  transition:
+    scale 1s,
+    color 500ms,
+    opacity 500ms;
+}
+
+.mobile-header-layout .navBtn:hover,
+.mobile-header-layout .navBtn:focus,
+.mobile-header-layout .navBtn:active {
+  scale: 1.05;
+  color: var(--hover-accent-color);
 }
 
 .mobile-header-layout .icon {
@@ -22,6 +37,8 @@
 .mobile-header-layout .headerTitle {
   display: none;
   font-size: var(--font-size-xl);
+
+  text-transform: capitalize;
 }
 
 .main-heading {
@@ -43,7 +60,7 @@
     padding-right: 0;
   }
 }
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .main-heading-layout {
     padding: 2rem;
   }

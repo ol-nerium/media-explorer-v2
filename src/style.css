@@ -10,7 +10,7 @@
 @import "./css/sortingSection.css";
 
 @import "./css/hero.css";
-@import "./css/tranding.css";
+@import "./css/sliderGallery.css";
 @import "./css/mobile-genres.css";
 @import "./css/raiting.css";
 @import "./css/genresSection.css";
@@ -23,3 +23,6 @@
 
 @import "./css/full-card.css";
 @import "./css/mobile-menu.css";
+
+@import "./css/loader.css";
+@import "./css/toast.css";

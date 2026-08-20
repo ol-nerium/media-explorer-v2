@@ -1,22 +1,10 @@
 * {
-  outline: 1px solid blue;
+  /* outline: 1px solid blue; */
   box-sizing: border-box;
 }
 
 html {
   /* scrollbar-gutter: stable; */
-}
-
-h2,
-p {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-body {
-  margin: 0;
-  background-color: var(--carbon-color);
 }
 
 li,
@@ -48,8 +36,9 @@ a {
 }
 
 body {
-  background-color: var(--carbon-color);
-  color: var(--white-color);
+  background-color: var(--base-color);
+  color: var(--text-color);
+  margin: 0;
 
   font-family: "Poppins", sans-serif;
   font-weight: 400;
@@ -63,7 +52,7 @@ button {
   font-weight: 400;
   font-style: normal;
 
-  color: var(--white-color);
+  color: var(--text-color);
 }
 
 .container {
@@ -78,7 +67,7 @@ button {
     padding: 0 20px;
   }
 }
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .container {
     padding: 0 50px 0 30px;
   }
@@ -103,13 +92,14 @@ button {
 .section-title {
   display: inline-block;
   font-size: var(--font-size-md);
+  text-transform: capitalize;
 }
 @media screen and (min-width: 744px) {
   .section-title {
     font-size: var(--font-size-xl);
   }
 }
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .section-title {
     font-size: var(--font-size-lg);
   }
@@ -117,10 +107,20 @@ button {
 
 .section-expand-link {
   float: right;
-  color: var(--purple-color);
   font-size: var(--font-size-xs);
+  transition: color 500ms;
 }
-@media screen and (min-width: 1280px) {
+
+.section-expand-link:hover,
+.section-expand-link:focus {
+  color: var(--accent-color);
+}
+
+.section-expand-link.hidden {
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
   .section-expand-link {
     font-size: var(--font-size-md);
   }
@@ -128,6 +128,8 @@ button {
 
 .gallery-list_item-img-wrap {
   position: relative;
+
+  height: 470px;
 }
 
 .img-wrap {
@@ -145,7 +147,8 @@ button {
   left: 0;
 }
 
-.sr-only {
+.sr-only,
+h2.sr-only {
   display: none;
 }
 
@@ -174,9 +177,122 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+  width: 100%;
+  justify-content: center;
 }
 .gallery-list_item-genres_item {
 }
 .gallery-list_item-genres_item:not(:last-of-type):after {
   content: ",";
+}
+
+.tablet-home-section {
+  display: none;
+}
+@media screen and (min-width: 744px) {
+  .tablet-home-section {
+    display: block;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .tablet-home-section {
+    display: none;
+  }
+}
+
+.collapsedWithEllipis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.active {
+  color: var(--accent-color);
+}
+
+/* li a {
+  color: currentColor;
+} */
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 10px;
+  border: 2px solid var(--secondary-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color) var(--secondary-color);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary-color) transparent;
+}
+
+.toTopBtn {
+  color: var(--text-color);
+  background-color: transparent;
+  border: none;
+  width: 64px;
+  height: 64px;
+
+  padding: 0.5rem;
+
+  /* outline: 1px solid red; */
+  position: fixed;
+
+  z-index: 6;
+  bottom: 7rem;
+  right: 2rem;
+  opacity: 0.5;
+
+  transition:
+    var(--default-color-transition),
+    var(--default-opacity-transition),
+    scale 1s;
+}
+
+.toTopBtn:hover,
+.toTopBtn:focus {
+  color: var(--hover-accent-color);
+  opacity: 1;
+  scale: 1.5;
+}
+
+.toTopBtn.hidden {
+  display: none;
 }

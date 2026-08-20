@@ -5,45 +5,102 @@
   margin-top: 42px;
   position: relative;
   min-width: 130px;
+
+  overflow-y: hidden;
 }
 
-.hero::after {
+.hero-img-wrap {
   display: block;
   position: absolute;
   inset: 0;
   content: "";
   z-index: 1;
 
-  background-image: url("../blank-picture.png");
+  /* background-image: url(); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-color: var(--grey-color);
+  background-color: var(--secondary-color);
 
   opacity: 0.8;
+
+  /* position: relative; */
+  transition:
+    opacity 500ms,
+    translate 1s;
+  /* translate: 100% 0; */
+
+  @starting-style {
+    opacity: 0;
+    translate: -100% 0;
+  }
 }
 
 .hero-layout {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 345px;
-  gap: 82px;
+  /* min-height: 345px; */
+  /* gap: 82px; */
   padding-top: 16px;
   padding-bottom: 16px;
   z-index: 2;
   width: 100%;
+
+  position: relative;
+  height: 80vh;
 }
 
 .hero-title {
   font-size: var(--font-size-lg);
   white-space: normal;
+  overflow: visible;
+}
+
+.hero-short-desc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+.hero-short-desc-year {
+  position: relative;
+  overflow: visible;
+}
+.hero-short-desc-year::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(1rem, -50%);
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50% 50%;
+  background-color: var(--text-color);
+}
+.hero-genreList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.hero-genreList_item:not(:last-of-type):after {
+  content: ",";
 }
 
 .hero-description {
   font-size: var(--font-size-sm);
 
   white-space: normal;
+  overflow: visible;
+  padding-right: 0.5rem;
+  margin-top: auto;
+}
+
+.hero-content {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .hero-controls {
@@ -56,6 +113,7 @@
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  margin-top: 2rem;
 }
 @media screen and (max-width: 270px) {
   .hero-controls-btns {
@@ -68,14 +126,56 @@
   font-size: var(--font-size-sm);
   border-radius: 10px;
   padding: 12px 6px;
-  color: var(--white-color);
+  color: var(--text-color);
+
+  width: 200px;
+  height: 90px;
+
+  position: relative;
+  scale: 0.95;
+
+  transition:
+    scale 1s,
+    color 500ms,
+    background-color 500ms;
+}
+.hero-controls-showMore:hover,
+.hero-controls-showMore:focus {
+  color: var(--accent-color);
+  background-color: var(--text-color);
+  scale: 1;
+}
+.hero-controls-addToQueque:hover,
+.hero-controls-addToQueque:focus {
+  color: var(--accent-color);
+  background-color: var(--text-color);
+  scale: 1;
+}
+
+.hero-controls-showMore::after,
+.hero-controls-addToQueque::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.hero-controls-showMore::after {
+  box-shadow: var(--filmCardBtn-left-shadow);
+}
+.hero-controls-addToQueque::after {
+  box-shadow: var(--filmCardBtn-right-shadow);
+}
+.hero-controls-showMore:hover::after,
+.hero-controls-addToQueque:hover::after {
+  opacity: 1;
 }
 
 .hero-controls-showMore {
-  background-color: var(--purple-color);
+  background-color: var(--accent-color);
 }
 .hero-controls-addToQueque {
-  background-color: var(--obsidian-color);
+  background-color: var(--base-color);
 }
 
 .hero-radiobuttons {
@@ -92,27 +192,34 @@
   align-items: center;
   gap: 10px;
 }
+.hero-desktop-controls-value:first-of-type {
+  color: var(--accent-color);
+}
 
 .hero-desktop-controls-value:first-of-type:after {
   content: "";
   height: 6px;
   width: 126px;
-  background-color: var(--white-color);
-}
-
-.hero-layout {
-  position: relative;
-}
-
-.hero-controls .icon {
-  /* height: 100%;
-  width: 100%; */
-  color: var(--obsidian-color);
+  background-color: var(--text-color);
 }
 
 .hero-controls-arrows_left,
 .hero-controls-arrows_right {
   display: none;
+  color: var(--text-color);
+  position: relative;
+
+  transition:
+    color 500ms,
+    scale 1s;
+}
+
+.hero-controls-arrows_left:hover,
+.hero-controls-arrows_left:focus,
+.hero-controls-arrows_right:hover,
+.hero-controls-arrows_right:focus {
+  color: var(--accent-color);
+  scale: 1.1;
 }
 
 .hero-controls-arrows_left {
@@ -143,14 +250,24 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: var(--white-color);
+  background-color: var(--text-color);
+
+  position: relative;
+  transition: scale 500ms;
+
+  cursor: pointer;
+}
+
+.hero-radiobuttons .hero-radiobuttons_item:hover,
+.hero-radiobuttons .hero-radiobuttons_item:focus {
+  scale: 1.2;
 }
 
 .hero-radiobuttons .checkmark {
   display: none;
   width: 100%;
   height: 100%;
-  background-color: var(--purple-color);
+  background-color: var(--accent-color);
   border-radius: 50%;
 }
 
@@ -164,17 +281,32 @@
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .hero {
     display: flex;
+  }
+
+  .hero-img-wrap {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /* translate: -100% 0; */
+
+    background-size: contain;
+    background-position: right;
+    background-color: var(--base-variant);
+    /* width: fit-content; */
   }
 
   .hero-layout {
     min-height: 650px;
     align-items: flex-start;
     width: 100%;
+    height: auto;
 
-    padding: 32px;
+    /* padding: 32px; */
+    overflow-y: auto;
   }
 
   .hero-title {
@@ -196,7 +328,10 @@
   .hero-controls-addToQueque {
     /* width: 175px; */
     padding: 20px 24px;
-    font-size: var(--font-size-lg);
+    /* font-size: var(--font-size-lg); */
+
+    width: auto;
+    height: auto;
   }
 
   .hero-radiobuttons {
