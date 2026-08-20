@@ -8,6 +8,7 @@ Display movie lists from TMDB movie and TV database.
     Search by movie name
     Show film card by user choice and provide with related information: video trailer, similar movies, real users reviews
     Responsive design
+    Theme switch
 
 Core Technologies
 
