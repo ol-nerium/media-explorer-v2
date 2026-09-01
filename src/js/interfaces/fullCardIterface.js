@@ -9,14 +9,14 @@ import { closeModal } from "./modalInterface";
 import { getUrlInfo } from "../services/urlInfoService";
 
 import { openVideosWindow } from "./videosInterface";
-import { hideLoader, showLoader } from "./loaderInterface";
+import { runExclusiveUiAction } from "./loaderInterface";
 import { errorToaster, successToaster } from "./toaster";
 
 const CONTROLS = {
   SHOWTRAILER: "showTrailer",
   ADDTOWATCHLIST: "addToWatchlist",
 };
-export function fullCardBtnInterface(evt) {
+export async function fullCardBtnInterface(evt) {
   if (evt.currentTarget.nodeName !== "BUTTON") return;
 
   const dataControl = evt.currentTarget.dataset.control;
@@ -25,27 +25,27 @@ export function fullCardBtnInterface(evt) {
   if (!filmid) return;
   // showLoader();
   if (dataControl === CONTROLS.SHOWTRAILER) {
-    openVideosWindow(filmid);
+    await runExclusiveUiAction(() => openVideosWindow(filmid));
   }
   if (dataControl === CONTROLS.ADDTOWATCHLIST) {
-    showLoader();
-    const { saved, removed } = toggleValueFromLSKey(filmid, "quequeFilmsList");
-    changeQuequeBtnTextByFilmId(filmid);
-    if (saved) successToaster({ message: "Film added to queque" });
-    if (removed) {
-      const { pathName } = getUrlInfo();
-      if (pathName === pathObject.queue.name) {
-        openSavedGallery(1, pathName);
+    await runExclusiveUiAction(async () => {
+      const { saved, removed } = toggleValueFromLSKey(filmid, "quequeFilmsList");
+      changeQuequeBtnTextByFilmId(filmid);
+      if (saved) successToaster({ message: "Film added to queque" });
+      if (removed) {
+        const { pathName } = getUrlInfo();
+        if (pathName === pathObject.queue.name) {
+          await openSavedGallery(1, pathName);
+        }
+        errorToaster({ message: "Film removed from queque" });
       }
-      errorToaster({ message: "Film removed from queque" });
-    }
-    hideLoader();
+    });
   }
 
   // hideLoader();
 }
 
-export function fullCardNavInterface(evt) {
+export async function fullCardNavInterface(evt) {
   evt.preventDefault();
   const link = evt?.target?.closest("a");
 
@@ -56,9 +56,10 @@ export function fullCardNavInterface(evt) {
       closeModal();
       return;
     }
-    showLoader();
-    handleLocation(link.href);
-    hideLoader();
+    await runExclusiveUiAction(async () => {
+      await handleLocation(link.href);
+      closeModal();
+    });
   }
 
   const linkIsClicked = !!link;

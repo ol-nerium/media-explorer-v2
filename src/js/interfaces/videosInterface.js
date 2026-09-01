@@ -1,7 +1,6 @@
 import { videosWindowMarkup } from "../components/fullCard";
 import { getExternalFilmVideosById } from "../services/apiService";
 import { backdropRef, videoContentRef } from "../services/refs";
-import { hideLoader, showLoader } from "../interfaces";
 
 import spriteUrl from "../../assets/svgSprite.svg";
 
@@ -21,37 +20,35 @@ export function videosWindowInterace(evt) {
   if (btn?.dataset?.control) control = btn.dataset.control;
 
   if (control === "left" || control === "right") {
-    showLoader();
     changeFilmItem(control, index);
-    hideLoader();
   }
   if (control === "close") closeVideosWindow();
 }
 
-export function openVideosWindow(filmid) {
+export async function openVideosWindow(filmid) {
   videosData = [];
+  index = 0;
   if (videoContentElem) return;
   videoContentElem = null;
 
   closeVideosWindow(); // clears potential opened videos window
 
-  showLoader();
-  getExternalFilmVideosById(filmid).then((res) => {
-    videosData = res.results.filter(
-      (i) => i.site === "YouTube" && i.name.toLowerCase().includes("trailer"),
-    );
+  const res = await getExternalFilmVideosById(filmid);
+  videosData = res.results.filter(
+    (i) => i.site === "YouTube" && i.name.toLowerCase().includes("trailer"),
+  );
 
-    backdrop = backdropRef();
-    const needArrowBtn = videosData.length > 1;
-    if (videosData.length > 0) {
-      backdrop.insertAdjacentHTML(
-        "beforeend",
-        videosWindowMarkup(videosData[index], needArrowBtn),
-      );
-    } else {
-      backdrop.insertAdjacentHTML(
-        "beforeend",
-        `<div class="videos-content">
+  backdrop = backdropRef();
+  const needArrowBtn = videosData.length > 1;
+  if (videosData.length > 0) {
+    backdrop.insertAdjacentHTML(
+      "beforeend",
+      videosWindowMarkup(videosData[index], needArrowBtn),
+    );
+  } else {
+    backdrop.insertAdjacentHTML(
+      "beforeend",
+      `<div class="videos-content">
       <div class="controls"><button data-control="close" class="closeBtn">
                    <svg class="icon close-icon">
                      <use xlink:href="${spriteUrl}#main-cross-1"></use>
@@ -59,13 +56,11 @@ export function openVideosWindow(filmid) {
                  </button></div>
         <h3>No available video links</h3>
        <div>`,
-      );
-    }
+    );
+  }
 
-    videoContentElem = videoContentRef();
-    videoContentElem.addEventListener("click", videosWindowInterace);
-    hideLoader();
-  });
+  videoContentElem = videoContentRef();
+  videoContentElem.addEventListener("click", videosWindowInterace);
 }
 
 export function changeFilmItem(control) {

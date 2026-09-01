@@ -2,12 +2,10 @@ import { lsKeys } from "../utils/data";
 import { handleLocation } from "../services/routing";
 import { getUrlInfo } from "../services/urlInfoService";
 import { removeFromLS } from "../services/localStorageService";
-import { errorToaster, hideLoader, showLoader } from "../interfaces";
-import { openFilmCard } from "../interfaces";
+import { errorToaster, openFilmCard, runExclusiveUiAction } from "../interfaces";
 
-export const savedGalleryInterface = (evt) => {
+export const savedGalleryInterface = async (evt) => {
   evt.preventDefault();
-  showLoader();
 
   const galleryItem =
     evt.target.nodeName === "LI"
@@ -32,10 +30,11 @@ export const savedGalleryInterface = (evt) => {
   if (filmId && removeBtnClicked) {
     removeFromLS(Number(filmId), lsKeys[pathName]);
     errorToaster({ message: "Film successfully removed from queue list" });
+    await runExclusiveUiAction(() => handleLocation());
+    return;
   }
 
-  if (filmId && !removeBtnClicked) openFilmCard(filmId);
-
-  handleLocation();
-  hideLoader();
+  if (filmId && !removeBtnClicked) {
+    await runExclusiveUiAction(() => openFilmCard(filmId));
+  }
 };

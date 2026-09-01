@@ -1,5 +1,8 @@
 import { loaderRef } from "../services/refs";
 
+let loaderDepth = 0;
+let isUiActionLocked = false;
+
 export function initLoader() {
   document
     .getElementById("app")
@@ -7,24 +10,45 @@ export function initLoader() {
 }
 
 export function showLoader() {
-  console.log("show loader");
-
   const loaderRoot = loaderRef();
   if (!loaderRoot) {
     initLoader();
-    showLoader();
-    return;
+    return showLoader();
   }
+
+  loaderDepth += 1;
+  document.body.classList.add("ui-busy");
   loaderRoot.classList.remove("hidden");
 }
-export function hideLoader() {
-  console.log("hide loader");
 
+export function hideLoader() {
   const loaderRoot = loaderRef();
   if (!loaderRoot) {
     initLoader();
-    showLoader();
-    return;
+    return hideLoader();
   }
+
+  loaderDepth = Math.max(0, loaderDepth - 1);
+  if (loaderDepth > 0) return;
+
+  document.body.classList.remove("ui-busy");
   loaderRoot.classList.add("hidden");
+}
+
+export function uiActionLocked() {
+  return isUiActionLocked;
+}
+
+export async function runExclusiveUiAction(action) {
+  if (isUiActionLocked) return null;
+
+  isUiActionLocked = true;
+  showLoader();
+
+  try {
+    return await action();
+  } finally {
+    isUiActionLocked = false;
+    hideLoader();
+  }
 }

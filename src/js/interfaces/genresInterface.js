@@ -2,10 +2,13 @@ import { handleLocation, openGalleryByGenres } from "../services/routing";
 import { activeGenresArr } from "../services/routing";
 import { setUrlInfo } from "../services/urlInfoService";
 import { genresListData } from "../utils";
-import { hideLoader, showLoader } from "../interfaces";
-import { errorToaster, infoToaster } from "../interfaces";
+import {
+  errorToaster,
+  infoToaster,
+  runExclusiveUiAction,
+} from "../interfaces";
 
-export const genresSectionInterface = (evt) => {
+export const genresSectionInterface = async (evt) => {
   evt.preventDefault();
   if (evt.target === evt.currentTarget) return;
   let targetItem = null;
@@ -22,13 +25,11 @@ export const genresSectionInterface = (evt) => {
   if (
     genresListData.genres.filter((i) => i.id === Number(chipGenreId)).length > 0
   ) {
-    showLoader();
-    openGalleryByGenres(1, [chipGenreId]);
-    hideLoader();
+    await runExclusiveUiAction(() => openGalleryByGenres(1, [chipGenreId]));
   }
 };
 
-export const mobileGenresInterface = (evt) => {
+export const mobileGenresInterface = async (evt) => {
   evt.preventDefault();
   const target = evt.target;
   let genreBtn;
@@ -45,7 +46,7 @@ export const mobileGenresInterface = (evt) => {
   }
 
   if (genreBtn) clickOnMobGenresBtn(genreBtn);
-  if (link) clickOnMobGenresLink(link);
+  if (link) await clickOnMobGenresLink(link);
 
   const genresLink = evt.currentTarget.querySelector(".section-expand-link");
   if (genresLink && activeGenresArr.length > 0) {
@@ -65,14 +66,12 @@ function clickOnMobGenresBtn(genreBtn) {
   }
   mobileGenresClasswork();
 }
-function clickOnMobGenresLink(link) {
+async function clickOnMobGenresLink(link) {
   if (
     link?.classList?.contains("section-expand-link") &&
     activeGenresArr.length > 0
   ) {
-    showLoader();
-    openGalleryByGenres(1, activeGenresArr);
-    hideLoader();
+    await runExclusiveUiAction(() => openGalleryByGenres(1, activeGenresArr));
   }
 }
 
@@ -86,7 +85,7 @@ function mobileGenresClasswork() {
   );
 }
 
-export function genreChipsInterface(evt) {
+export async function genreChipsInterface(evt) {
   // can be bugged here
   let targetedBtn = evt.target.closest("button");
   if (evt.target.nodeName === "button") targetedBtn = evt.target;
@@ -98,7 +97,7 @@ export function genreChipsInterface(evt) {
   if (targetedBtn.dataset.control)
     onControlArrowClick(targetedBtn.dataset.control);
   if (targetedBtn.dataset.genreid)
-    onGenreChipClick(targetedBtn.dataset.genreid);
+    await onGenreChipClick(targetedBtn.dataset.genreid);
 }
 
 function onControlArrowClick(controlDir) {
@@ -119,7 +118,7 @@ function onControlArrowClick(controlDir) {
   });
 }
 
-function onGenreChipClick(genreId) {
+async function onGenreChipClick(genreId) {
   const genresChipsRoot = document.querySelector(".genres-chips");
   const genresList = genresChipsRoot.querySelector(".genres-chips-list");
   const clickedElement = genresChipsRoot.querySelector(
@@ -151,10 +150,8 @@ function onGenreChipClick(genreId) {
     errorToaster({ message: `${chipName} removed from genres search` });
 
     if (activeGenresArr.length < 1) {
-      showLoader();
       setUrlInfo({ pathName: "genres" });
-      handleLocation();
-      hideLoader();
+      await runExclusiveUiAction(() => handleLocation());
       return;
     }
 
@@ -168,7 +165,5 @@ function onGenreChipClick(genreId) {
 
   // fetch films from activeGenresArrData
 
-  showLoader();
-  openGalleryByGenres(1, activeGenresArr);
-  hideLoader();
+  await runExclusiveUiAction(() => openGalleryByGenres(1, activeGenresArr));
 }

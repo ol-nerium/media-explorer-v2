@@ -4,10 +4,13 @@ import { listenersReload, refs } from "../services/refs";
 import { openFilmCard } from "../interfaces";
 import { toggleValueFromLSKey } from "../services/localStorageService";
 import { changeQuequeBtnTextByFilmId } from "../utils";
-import { hideLoader, showLoader } from "../interfaces";
-import { errorToaster, successToaster } from "./toaster";
+import {
+  errorToaster,
+  runExclusiveUiAction,
+  successToaster,
+} from "../interfaces";
 
-export const heroInterface = (evt) => {
+export const heroInterface = async (evt) => {
   const hero = refs.hero.elem();
 
   const target = evt.target;
@@ -53,8 +56,6 @@ export const heroInterface = (evt) => {
   }
   if (btnData?.control === "showMore") {
     const filmId = hero.dataset.filmid;
-    showLoader();
-    openFilmCard(filmId);
-    hideLoader();
+    await runExclusiveUiAction(() => openFilmCard(filmId));
   }
 };

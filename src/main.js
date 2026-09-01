@@ -5,7 +5,11 @@ import { handleLocation } from "./js/services/routing";
 
 import { appRootRef, mainRef, topBtnRef } from "./js/services/refs";
 import { setThemeFromLS } from "./js/interfaces/headerInterface";
-import { hideLoader, showLoader } from "./js/interfaces/loaderInterface";
+import {
+  hideLoader,
+  runExclusiveUiAction,
+  showLoader,
+} from "./js/interfaces/loaderInterface";
 import { initToast } from "./js/interfaces/toaster";
 import { createToTopBtn, toTop } from "./js/interfaces/scrollInterface";
 
@@ -66,7 +70,7 @@ let main;
 
 // initLoader();
 
-function appInit() {
+async function appInit() {
   showLoader();
 
   root = appRootRef("app");
@@ -79,12 +83,8 @@ function appInit() {
   createToTopBtn();
   initToast();
 
-  window.addEventListener("popstate", (e) => {
-    showLoader();
-    handleLocation();
-    hideLoader();
-
-    return;
+  window.addEventListener("popstate", async () => {
+    await runExclusiveUiAction(() => handleLocation());
   });
 
   window.addEventListener("scroll", (e) => {
@@ -95,8 +95,8 @@ function appInit() {
     }
   });
 
-  handleLocation();
+  await handleLocation();
   hideLoader();
 }
 
-appInit();
+void appInit();

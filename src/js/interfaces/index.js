@@ -13,7 +13,13 @@ import {
   toggleTheme,
 } from "./headerInterface";
 import { heroInterface } from "./heroInterface";
-import { hideLoader, initLoader, showLoader } from "./loaderInterface";
+import {
+  hideLoader,
+  initLoader,
+  runExclusiveUiAction,
+  showLoader,
+  uiActionLocked,
+} from "./loaderInterface";
 import {
   addMobileModalMenuListeners,
   onMobHeaderBtnClick,
@@ -54,6 +60,8 @@ export {
   initLoader,
   showLoader,
   hideLoader,
+  runExclusiveUiAction,
+  uiActionLocked,
   onMobHeaderBtnClick,
   addMobileModalMenuListeners,
   removeMobileModalMenuListeners,

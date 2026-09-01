@@ -4,9 +4,9 @@ import {
   handleLocation,
   openGalleryByGenres,
 } from "../services/routing";
-import { hideLoader, showLoader } from "../interfaces";
+import { runExclusiveUiAction } from "../interfaces";
 
-export const clickOnGalleryCardInterface = (evt) => {
+export const clickOnGalleryCardInterface = async (evt) => {
   evt.preventDefault();
 
   const target = evt.target;
@@ -25,21 +25,16 @@ export const clickOnGalleryCardInterface = (evt) => {
   const genreId = listItem?.dataset?.genreid;
 
   if (filmId) {
-    showLoader();
-    openFilmCard(filmId);
-    hideLoader();
+    await runExclusiveUiAction(() => openFilmCard(filmId));
   }
   if (genreId) {
-    if (activeGenresArr.includes(genreId)) return;
-    activeGenresArr.push(genreId);
-    showLoader();
-    openGalleryByGenres(1, activeGenresArr);
-
-    hideLoader();
+    await runExclusiveUiAction(async () => {
+      if (activeGenresArr.includes(genreId)) return;
+      activeGenresArr.push(genreId);
+      await openGalleryByGenres(1, activeGenresArr);
+    });
   }
   if (navLink) {
-    showLoader();
-    handleLocation(navLink.href);
-    hideLoader();
+    await runExclusiveUiAction(() => handleLocation(navLink.href));
   }
 };
