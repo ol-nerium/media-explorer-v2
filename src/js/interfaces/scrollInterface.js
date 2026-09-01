@@ -2,7 +2,8 @@ import spriteUrl from "../../assets/svgSprite.svg";
 import { appRootRef } from "../services/refs";
 
 export function toTop() {
-  document.body.scrollTo({ x: 0, y: 0, behavior: "smooth" });
+  console.log("should scroll");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 export function createToTopBtn() {

@@ -1,12 +1,12 @@
 import { loaderRef } from "../services/refs";
 
-export function initLoader() {
+function initLoader() {
   document
     .getElementById("app")
     .insertAdjacentHTML("beforeend", '<div class="loader"></div>');
 }
 
-export function showLoader() {
+function showLoader() {
   console.log("show loader");
 
   const loaderRoot = loaderRef();
@@ -17,7 +17,7 @@ export function showLoader() {
   }
   loaderRoot.classList.remove("hidden");
 }
-export function hideLoader() {
+function hideLoader() {
   console.log("hide loader");
 
   const loaderRoot = loaderRef();
@@ -28,3 +28,11 @@ export function hideLoader() {
   }
   loaderRoot.classList.add("hidden");
 }
+
+async function loaderInterface(func) {
+  await showLoader();
+  func();
+  await hideLoader();
+}
+
+export { initLoader, showLoader, hideLoader, loaderInterface };
