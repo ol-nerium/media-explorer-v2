@@ -74,15 +74,15 @@ export function setUrlInfo({
   order = ORDER.DESC,
   filmId = null,
 }) {
-  const currentValues = {
-    pathName,
-    page,
-    search,
-    genres,
-    sortBy,
-    order,
-    filmId,
-  };
+  // const currentValues = {
+  //   pathName,
+  //   page,
+  //   search,
+  //   genres,
+  //   sortBy,
+  //   order,
+  //   filmId,
+  // };
 
   // keys.forEach((key) => {
   //   if (prevValues[key] !== currentValues[key]) {
@@ -99,22 +99,30 @@ export function setUrlInfo({
   // });
 
   if (pathName === "home") {
-    newURL = baseUrl + pathObject[pathName].path;
-    window.history.pushState({ path: newURL }, "", newURL);
-  }
+    const path = pathObject[pathName].path;
+    newURL = baseUrl + path + "?";
+    let stateObj = { path };
 
-  if (pathName !== "" && !pathObject[pathName]) {
-    // console.log("404 page should be here, redirect " + pathName);
-    errorToaster({
-      message: "wrong path, redirected to homepage..",
+    [createFilmIdQuery(filmId)].forEach((item) => {
+      if (item.query) newURL += item.query + "&";
+      if (item.obj) stateObj = { ...stateObj, ...item.obj };
     });
+
+    console.log(stateObj, newURL);
+
+    // window.history.pushState({ path: newURL }, "", newURL);
+    window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
   }
 
   if (pathName === "movies") {
     const path = pathObject[pathName].path;
     newURL = baseUrl + path + "?";
     let stateObj = { path };
-    [createSearchQueryObj(search), createPageQueryObj(page)].forEach((item) => {
+    [
+      createSearchQueryObj(search),
+      createPageQueryObj(page),
+      createFilmIdQuery(filmId),
+    ].forEach((item) => {
       if (item.query) newURL += item.query + "&";
       if (item.obj) stateObj = { ...stateObj, ...item.obj };
     });
@@ -130,6 +138,7 @@ export function setUrlInfo({
       createPageQueryObj(page),
       createGenresQueryObj(genres),
       createSortQueryObj(sortBy, order),
+      createFilmIdQuery(filmId),
     ].forEach((item) => {
       if (item.query) newURL += item.query + "&";
       if (item.obj) stateObj = { ...stateObj, ...item.obj };
@@ -147,7 +156,7 @@ export function setUrlInfo({
     const path = pathObject[pathName].path;
     newURL = baseUrl + path + "?";
     let stateObj = { path };
-    [createPageQueryObj(page)].forEach((item) => {
+    [createPageQueryObj(page), createFilmIdQuery(filmId)].forEach((item) => {
       if (item.query) newURL += item.query + "&";
       if (item.obj) stateObj = { ...stateObj, ...item.obj };
     });
@@ -193,6 +202,16 @@ function createSortQueryObj(sortBy, order = ORDER.DESC) {
     return {
       obj: { sortBy: sortBy, order },
       query: `sortBy=${sortBy}.${order}`,
+    };
+  }
+  return { obj: {}, query: "" };
+}
+
+function createFilmIdQuery(filmId) {
+  if (filmId) {
+    return {
+      obj: { filmId: filmId },
+      query: `filmId=${filmId}`,
     };
   }
   return { obj: {}, query: "" };

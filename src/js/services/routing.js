@@ -44,10 +44,19 @@ let page = "";
 let sortBy = "";
 let order = "";
 let genres = [];
-
 let filmId = "";
 
 let main;
+
+// const appState = {
+//   pathName: "",
+//   search: "",
+//   page: "",
+//   sortBy: "",
+//   order: "",
+//   genres: [],
+//   filmId: "",
+// };
 
 export let activeGenresArr = [];
 
@@ -115,73 +124,49 @@ export const pathObject = {
 };
 
 export function setFilmCardUrlInfo(filmId) {
-  ({ pathName, search, page, genres } = getUrlInfo());
-  const newPath = pathName + "?filmId=" + filmId;
+  const currentQuery = getUrlInfo();
 
-  let newURL =
-    window.location.protocol + "//" + window.location.host + "/" + newPath;
+  ({ pathName, search, page, genres } = currentQuery);
+  pathName = pathName === "" ? "home" : pathName;
+  let newQueryObj = {
+    ...currentQuery,
+    pathName: pathName,
+    filmId,
+  };
 
-  window.history.pushState({ path: newURL }, "", newURL);
+  setUrlInfo(newQueryObj);
+
+  // const newPath = pathName + "?filmId=" + filmId;
+
+  // let newURL =
+  //   window.location.protocol + "//" + window.location.host + "/" + newPath;
+
+  // window.history.pushState({ path: newURL }, "", newURL);
 }
 
 export async function handleLocation(targetURL = null) {
   main = mainRef();
-  ({ pathName, search, page, genres, filmId, sortBy, order } =
-    await getUrlInfo());
+  ({ pathName, search, page, genres, filmId, sortBy, order } = getUrlInfo());
   if (genres.length > 0) {
     activeGenresArr = genres;
   } else activeGenresArr = [];
 
-  toTop();
-  console.log(pathName, search, page, genres, filmId, sortBy, order);
+  // toTop();
+  handleFilmId(filmId);
+
   if (targetURL) {
-    // redirecting after navigation actions logic:
-    const targetLocation = new URL(targetURL);
-    const targetPath = targetLocation.pathname;
-    const targetPathName =
-      targetPath === "/" || !pathObject[targetPath.slice(1)]
-        ? "home"
-        : targetPath.slice(1);
-
-    if (targetPathName === "movies") {
-      pathObject[targetPathName].fetchFunc = defaultMoviesFetchFunc;
-    }
-
-    activeGenresArr = [];
-    setUrlInfo({ pathName: targetPathName });
-
-    if (targetPathName === "favorites" || targetPathName === "queue") {
-      const result = await loaderInterface(() =>
-        openSavedGallery(page, targetPathName),
-      );
-      return result;
-    }
-
-    main.innerHTML = "";
-    main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
-    changeTitleText(targetPathName);
-    changeActiveNavLinkColor();
-    listenersReload();
-
-    return;
+    return handleTargetRoute(targetURL);
   }
 
-  if (filmId) {
-    await loaderInterface(() => openFilmCard(filmId));
-  } else closeModal();
+  if (pathName !== "" && !pathObject[pathName]) {
+    // console.log("404 page should be here, redirect " + pathName);
+    errorToaster({
+      message: "wrong path..",
+    });
+  }
 
-  if (!pathObject[pathName]) {
-    const targetPathName = "home";
-
-    setUrlInfo({ pathName: targetPathName });
-    main.innerHTML = "";
-    main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
-    changeTitleText(targetPathName);
-    activeGenresArr = []; //?
-    changeActiveNavLinkColor();
-
-    listenersReload();
-    return;
+  if (pathName === "") {
+    return handleHomeRoute();
   }
 
   await loaderInterface(() =>
@@ -197,6 +182,8 @@ export async function handleLocation(targetURL = null) {
   );
 }
 
+let result = null;
+
 async function drawMarkupFromUrlParams({
   pathName,
   search,
@@ -206,46 +193,14 @@ async function drawMarkupFromUrlParams({
   sortBy,
   order = ORDER.DESC,
 }) {
-  let result = null;
-
   if (pathName === "home" || !pathObject[pathName]) return null;
 
-  if (pathName === "movies" && search) {
-    result = await loaderInterface(() => openFetchedGalleryPage(page, search));
-    return result;
+  if (pathName === "movies") {
+    return handleMoviesRoute(search);
   }
 
-  if (pathName === "movies" && !search) {
-    pathObject[pathName].fetchFunc = defaultMoviesFetchFunc;
-
-    if (page && page > 0) {
-      setUrlInfo({ pathName, page });
-
-      result = await loaderInterface(() =>
-        openFetchedByPathName(page, pathName),
-      );
-    } else {
-      result = await loaderInterface(() => drawDefaultPage());
-    }
-
-    return result;
-  }
-
-  if (pathName === "genres" && genres?.length < 1) {
-    setUrlInfo({ pathName });
-    result = await loaderInterface(() => drawDefaultPage());
-    return result;
-  }
-  if (pathName === "genres" && genres?.length > 0) {
-    page = page ? page : 1;
-
-    result = await loaderInterface(() =>
-      openGalleryByGenres(page, genres, sortBy, order),
-    );
-
-    changeCheckedSortSelect();
-
-    return result;
+  if (pathName === "genres") {
+    return handleGenresRoute();
   }
 
   if (
@@ -253,16 +208,18 @@ async function drawMarkupFromUrlParams({
     pathName === "toprated" ||
     pathName === "upcoming"
   ) {
-    if (page && page > 0) {
-      setUrlInfo({ pathName, page });
-      result = await loaderInterface(() =>
-        openFetchedByPathName(page, pathName),
-      );
-    } else result = await loaderInterface(() => drawDefaultPage());
+    return handleFilteredPage();
+    // if (page && page > 0) {
+    //   setUrlInfo({ pathName, page });
+    //   result = await loaderInterface(() =>
+    //     openFetchedByPathName(page, pathName),
+    //   );
+    // } else result = await loaderInterface(() => drawDefaultPage());
   }
 
   if (pathName === "favorites" || pathName === "queue") {
-    result = await loaderInterface(() => openSavedGallery(page, pathName));
+    console.log("queue");
+    return handleSavedGalleryRoute();
   }
 }
 
@@ -425,6 +382,7 @@ export async function openSavedGallery(page = 1, pathName) {
       total_pages: 1,
       total_results: 0,
     };
+
     const markup = queuePage(filmData);
     main.innerHTML = "";
     main.insertAdjacentHTML("afterbegin", markup);
@@ -446,6 +404,8 @@ export async function openSavedGallery(page = 1, pathName) {
       total_results,
     };
 
+    // console.log(filmData);
+
     const markup = queuePage(filmData);
     main.innerHTML = "";
     main.insertAdjacentHTML("afterbegin", markup);
@@ -464,6 +424,7 @@ export async function openSavedGallery(page = 1, pathName) {
 export async function drawDefaultPage() {
   if (pathName === "queue") {
     const result = await loaderInterface(() => openSavedGallery(1, pathName));
+    console.log(result);
     return result;
   }
 
@@ -475,4 +436,106 @@ export async function drawDefaultPage() {
 
   changeActiveNavLinkColor();
   listenersReload();
+}
+
+async function handleTargetRoute(targetURL) {
+  // redirecting after navigation actions logic:
+  const targetLocation = new URL(targetURL);
+  const targetPath = targetLocation.pathname;
+  const targetPathName =
+    targetPath === "/" || !pathObject[targetPath.slice(1)]
+      ? "home"
+      : targetPath.slice(1);
+
+  if (targetPathName === "movies") {
+    pathObject[targetPathName].fetchFunc = defaultMoviesFetchFunc;
+  }
+
+  activeGenresArr = [];
+  setUrlInfo({ pathName: targetPathName });
+
+  if (targetPathName === "favorites" || targetPathName === "queue") {
+    const result = await loaderInterface(() =>
+      openSavedGallery(page, targetPathName),
+    );
+    console.log("SHOULD OPEN SMTH");
+    return result;
+  }
+
+  main.innerHTML = "";
+  main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
+  changeTitleText(targetPathName);
+  changeActiveNavLinkColor();
+  listenersReload();
+}
+
+async function handleFilmId(filmId) {
+  if (!filmId) return closeModal();
+  await loaderInterface(() => openFilmCard(filmId));
+}
+
+async function handleHomeRoute() {
+  const targetPathName = "home";
+
+  setUrlInfo({ pathName: targetPathName });
+  main.innerHTML = "";
+  main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
+  changeTitleText(targetPathName);
+  activeGenresArr = []; //?
+  changeActiveNavLinkColor();
+
+  listenersReload();
+  return;
+}
+
+async function handleMoviesRoute(search) {
+  if (search) {
+    result = await loaderInterface(() => openFetchedGalleryPage(page, search));
+    return result;
+  }
+
+  pathObject[pathName].fetchFunc = defaultMoviesFetchFunc;
+
+  if (page && page > 0) {
+    setUrlInfo({ pathName, page });
+
+    result = await loaderInterface(() => openFetchedByPathName(page, pathName));
+    return result;
+  }
+
+  result = await loaderInterface(() => drawDefaultPage());
+
+  return result;
+}
+
+async function handleGenresRoute() {
+  if (genres?.length < 1) {
+    setUrlInfo({ pathName });
+    result = await loaderInterface(() => drawDefaultPage());
+    return result;
+  }
+  if (genres?.length > 0) {
+    page = page ? page : 1;
+
+    result = await loaderInterface(() =>
+      openGalleryByGenres(page, genres, sortBy, order),
+    );
+
+    changeCheckedSortSelect();
+
+    return result;
+  }
+}
+
+async function handleSavedGalleryRoute() {
+  console.log(page, pathName);
+  result = await loaderInterface(() => openSavedGallery(page, pathName));
+  return result;
+}
+
+async function handleFilteredPage() {
+  if (page && page > 0) {
+    setUrlInfo({ pathName, page });
+    result = await loaderInterface(() => openFetchedByPathName(page, pathName));
+  } else result = await loaderInterface(() => drawDefaultPage());
 }

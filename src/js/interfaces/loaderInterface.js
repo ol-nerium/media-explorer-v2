@@ -36,7 +36,7 @@ function hideLoader() {
 }
 
 async function loaderInterface(action) {
-  if (isUIActionsLocked) return;
+  // if (isUIActionsLocked) return; // bugged with pagination and routing
 
   console.log("A: loader START");
   showLoader();

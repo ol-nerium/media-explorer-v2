@@ -4,6 +4,7 @@ import {
   handleLocation,
   openSavedGallery,
   pathObject,
+  setFilmCardUrlInfo,
 } from "../services/routing";
 import { closeModal } from "./modalInterface";
 import { getUrlInfo } from "../services/urlInfoService";
@@ -56,10 +57,7 @@ export async function fullCardNavInterface(evt) {
       closeModal();
       return;
     }
-    // showLoader();
-
-    // hideLoader();
-
+    setFilmCardUrlInfo(null);
     await loaderInterface(() => handleLocation(link.href));
   }
 

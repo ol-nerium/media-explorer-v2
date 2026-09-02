@@ -3,6 +3,7 @@ import { loaderInterface } from "./loaderInterface";
 
 export async function clickOnNavLink(evt) {
   evt.preventDefault();
+  console.log("click on nav link");
   const link = evt?.target?.closest("a");
   if (link) {
     await loaderInterface(() => handleLocation(link.href));

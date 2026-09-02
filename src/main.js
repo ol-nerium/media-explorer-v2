@@ -3,7 +3,12 @@ import { headerMarkup } from "./js/components/header";
 
 import { handleLocation } from "./js/services/routing";
 
-import { appRootRef, mainRef, topBtnRef } from "./js/services/refs";
+import {
+  appRootRef,
+  listenersReload,
+  mainRef,
+  topBtnRef,
+} from "./js/services/refs";
 import { setThemeFromLS } from "./js/interfaces/headerInterface";
 import {
   hideLoader,
@@ -102,8 +107,9 @@ async function appInit() {
     }
   });
 
-  await handleLocation();
+  handleLocation();
   // hideLoader();
+  listenersReload();
 }
 
 loaderInterface(() => appInit());
