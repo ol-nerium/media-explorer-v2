@@ -2,8 +2,9 @@ import { total_pages } from "../components/pagination";
 import { handleLocation, pathObject } from "../services/routing";
 import { getUrlInfo, setUrlInfo } from "../services/urlInfoService";
 import { hideLoader, showLoader } from "../interfaces";
+import { loaderInterface } from "./loaderInterface";
 
-export const paginationInterface = (evt) => {
+export const paginationInterface = async (evt) => {
   let { page, pathName } = getUrlInfo();
   page = page && !isNaN(page) ? Number(page) : 1;
 
@@ -17,16 +18,16 @@ export const paginationInterface = (evt) => {
     if (control === "left") {
       newPageValue -= 1;
       if (newPageValue < 1) return;
-      showLoader();
-      fetchFilmDataFromPagination(newPageValue, pathName);
-      hideLoader();
+      await loaderInterface(() =>
+        fetchFilmDataFromPagination(newPageValue, pathName),
+      );
     }
     if (control === "right") {
       newPageValue += 1;
       if (newPageValue > total_pages) return;
-      showLoader();
-      fetchFilmDataFromPagination(newPageValue, pathName);
-      hideLoader();
+      await loaderInterface(() =>
+        fetchFilmDataFromPagination(newPageValue, pathName),
+      );
     }
   }
   if (buttonElem?.dataset?.page) {
@@ -34,9 +35,7 @@ export const paginationInterface = (evt) => {
       buttonElem.dataset.page && !isNaN(buttonElem.dataset.page)
         ? Number(buttonElem.dataset.page)
         : 1;
-    showLoader();
-    fetchFilmDataFromPagination(page, pathName);
-    hideLoader();
+    await loaderInterface(() => fetchFilmDataFromPagination(page, pathName));
   }
 };
 
@@ -45,7 +44,5 @@ async function fetchFilmDataFromPagination(page, pathName) {
   const newUrlParams = { ...currentUrlInfo, page, pathName };
   setUrlInfo(newUrlParams);
 
-  showLoader();
-  handleLocation();
-  hideLoader();
+  await handleLocation();
 }

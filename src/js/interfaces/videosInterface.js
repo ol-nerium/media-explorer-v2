@@ -1,9 +1,11 @@
+import YouTubePlayer from "youtube-player";
+
 import { videosWindowMarkup } from "../components/fullCard";
 import { getExternalFilmVideosById } from "../services/apiService";
 import { backdropRef, videoContentRef } from "../services/refs";
-import { hideLoader, showLoader } from "../interfaces";
 
 import spriteUrl from "../../assets/svgSprite.svg";
+import { hideLoader, loaderInterface, showLoader } from "./loaderInterface";
 
 let videoContentElem = null;
 let backdrop = null;
@@ -11,7 +13,7 @@ let backdrop = null;
 let videosData = [];
 let index = 0;
 
-export function videosWindowInterace(evt) {
+export async function videosWindowInterace(evt) {
   const target = evt.target;
   let btn = null;
   let control = null;
@@ -21,22 +23,20 @@ export function videosWindowInterace(evt) {
   if (btn?.dataset?.control) control = btn.dataset.control;
 
   if (control === "left" || control === "right") {
-    showLoader();
-    changeFilmItem(control, index);
-    hideLoader();
+    await loaderInterface(() => changeFilmItem(control, index));
   }
   if (control === "close") closeVideosWindow();
 }
 
-export function openVideosWindow(filmid) {
+export async function openVideosWindow(filmid) {
   videosData = [];
   if (videoContentElem) return;
   videoContentElem = null;
 
   closeVideosWindow(); // clears potential opened videos window
 
-  showLoader();
-  getExternalFilmVideosById(filmid).then((res) => {
+  try {
+    const res = await getExternalFilmVideosById(filmid);
     videosData = res.results.filter(
       (i) => i.site === "YouTube" && i.name.toLowerCase().includes("trailer"),
     );
@@ -48,6 +48,10 @@ export function openVideosWindow(filmid) {
         "beforeend",
         videosWindowMarkup(videosData[index], needArrowBtn),
       );
+      player = YouTubePlayer("video-player");
+      await new Promise((resolve) => {
+        player.on("ready", resolve);
+      });
     } else {
       backdrop.insertAdjacentHTML(
         "beforeend",
@@ -64,11 +68,19 @@ export function openVideosWindow(filmid) {
 
     videoContentElem = videoContentRef();
     videoContentElem.addEventListener("click", videosWindowInterace);
-    hideLoader();
-  });
+  } catch (error) {
+    console.log(error);
+    // do i need error handler here?
+  }
 }
 
-export function changeFilmItem(control) {
+let player = null;
+export async function changeFilmItem(control) {
+  if (player) {
+    console.log("destroing player");
+    player.destroy();
+  }
+
   const length = videosData.length;
 
   if (control === "left") {
@@ -86,10 +98,16 @@ export function changeFilmItem(control) {
   videoContentElem.insertAdjacentHTML(
     "afterbegin",
     `<iframe
-        src="https://www.youtube.com/embed/${videosData[index].key}"
+        src="https://www.youtube.com/embed/${videosData[index].key}?enablejsapi=1"
         class="film-item"
+        id="video-player"
       ></iframe>`,
   );
+
+  player = YouTubePlayer("video-player");
+  await new Promise((resolve) => {
+    player.on("ready", resolve);
+  });
 }
 
 export function closeVideosWindow() {
@@ -97,6 +115,11 @@ export function closeVideosWindow() {
     videoContentElem.removeEventListener("click", videosWindowInterace);
     videoContentElem.remove();
     videoContentElem = null;
+
+    if (player) {
+      console.log("destroing player");
+      player.destroy();
+    }
     return;
   }
 }

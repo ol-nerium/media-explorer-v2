@@ -2,7 +2,6 @@ import spriteUrl from "../../assets/svgSprite.svg";
 import { appRootRef } from "../services/refs";
 
 export function toTop() {
-  console.log("should scroll");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 

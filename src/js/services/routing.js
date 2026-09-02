@@ -36,6 +36,7 @@ import {
 } from "./apiService";
 import { listenersReload, mainRef } from "./refs";
 import { getUrlInfo, setUrlInfo } from "./urlInfoService";
+import { loaderInterface } from "../interfaces/loaderInterface";
 
 let pathName = "";
 let search = "";
@@ -123,15 +124,16 @@ export function setFilmCardUrlInfo(filmId) {
   window.history.pushState({ path: newURL }, "", newURL);
 }
 
-export function handleLocation(targetURL = null) {
+export async function handleLocation(targetURL = null) {
   main = mainRef();
-  ({ pathName, search, page, genres, filmId, sortBy, order } = getUrlInfo());
+  ({ pathName, search, page, genres, filmId, sortBy, order } =
+    await getUrlInfo());
   if (genres.length > 0) {
     activeGenresArr = genres;
   } else activeGenresArr = [];
 
   toTop();
-
+  console.log(pathName, search, page, genres, filmId, sortBy, order);
   if (targetURL) {
     // redirecting after navigation actions logic:
     const targetLocation = new URL(targetURL);
@@ -149,8 +151,10 @@ export function handleLocation(targetURL = null) {
     setUrlInfo({ pathName: targetPathName });
 
     if (targetPathName === "favorites" || targetPathName === "queue") {
-      openSavedGallery(page, targetPathName);
-      return;
+      const result = await loaderInterface(() =>
+        openSavedGallery(page, targetPathName),
+      );
+      return result;
     }
 
     main.innerHTML = "";
@@ -163,7 +167,7 @@ export function handleLocation(targetURL = null) {
   }
 
   if (filmId) {
-    openFilmCard(filmId);
+    await loaderInterface(() => openFilmCard(filmId));
   } else closeModal();
 
   if (!pathObject[pathName]) {
@@ -179,18 +183,21 @@ export function handleLocation(targetURL = null) {
     listenersReload();
     return;
   }
-  drawMarkupFromUrlParams({
-    pathName,
-    search,
-    page,
-    genres,
-    filmId,
-    sortBy,
-    order,
-  });
+
+  await loaderInterface(() =>
+    drawMarkupFromUrlParams({
+      pathName,
+      search,
+      page,
+      genres,
+      filmId,
+      sortBy,
+      order,
+    }),
+  );
 }
 
-function drawMarkupFromUrlParams({
+async function drawMarkupFromUrlParams({
   pathName,
   search,
   page,
@@ -199,11 +206,13 @@ function drawMarkupFromUrlParams({
   sortBy,
   order = ORDER.DESC,
 }) {
-  if (pathName === "home" || !pathObject[pathName]) return;
+  let result = null;
+
+  if (pathName === "home" || !pathObject[pathName]) return null;
 
   if (pathName === "movies" && search) {
-    openFetchedGalleryPage(page, search);
-    return;
+    result = await loaderInterface(() => openFetchedGalleryPage(page, search));
+    return result;
   }
 
   if (pathName === "movies" && !search) {
@@ -212,24 +221,31 @@ function drawMarkupFromUrlParams({
     if (page && page > 0) {
       setUrlInfo({ pathName, page });
 
-      openFetchedByPathName(page, pathName);
-    } else drawDefaultPage();
+      result = await loaderInterface(() =>
+        openFetchedByPathName(page, pathName),
+      );
+    } else {
+      result = await loaderInterface(() => drawDefaultPage());
+    }
 
-    return;
+    return result;
   }
 
   if (pathName === "genres" && genres?.length < 1) {
     setUrlInfo({ pathName });
-    drawDefaultPage();
-    return;
+    result = await loaderInterface(() => drawDefaultPage());
+    return result;
   }
   if (pathName === "genres" && genres?.length > 0) {
     page = page ? page : 1;
 
-    openGalleryByGenres(page, genres, sortBy, order);
+    result = await loaderInterface(() =>
+      openGalleryByGenres(page, genres, sortBy, order),
+    );
+
     changeCheckedSortSelect();
 
-    return;
+    return result;
   }
 
   if (
@@ -239,127 +255,162 @@ function drawMarkupFromUrlParams({
   ) {
     if (page && page > 0) {
       setUrlInfo({ pathName, page });
-
-      openFetchedByPathName(page, pathName);
-      // changeActiveNavLinkColor();
-    } else drawDefaultPage();
+      result = await loaderInterface(() =>
+        openFetchedByPathName(page, pathName),
+      );
+    } else result = await loaderInterface(() => drawDefaultPage());
   }
 
   if (pathName === "favorites" || pathName === "queue") {
-    openSavedGallery(page, pathName);
+    result = await loaderInterface(() => openSavedGallery(page, pathName));
   }
 }
 
-export function openFetchedGalleryPage(page = 1, searchQuery) {
-  getMoviesByTitle(page, searchQuery)
-    .catch((err) => {
-      errorToaster({ message: `Something's gone wrong` });
-      console.log(err);
-    })
-    .then((galleryData) => {
-      pathName = "movies";
-      setUrlInfo({ pathName, search: searchQuery, page });
-      pathObject[pathName].fetchFunc = (page) =>
-        getMoviesByTitle(page, searchQuery);
+export async function openFetchedGalleryPage(page = 1, searchQuery) {
+  try {
+    console.log(page, searchQuery, "!!!");
+    const galleryData = await getMoviesByTitle(page, searchQuery);
+    pathName = "movies";
+    setUrlInfo({ pathName, search: searchQuery, page });
+    pathObject[pathName].fetchFunc = (page) =>
+      getMoviesByTitle(page, searchQuery);
 
-      const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
-      mainRef().innerHTML = galleryMarkup;
-      changeActiveNavLinkColor();
-      changeTitleText(`Movies search`);
-      successToaster({ message: "Successful!" });
-      infoToaster({ message: `Search for "${searchQuery}", page ${page}` });
-      listenersReload();
-    });
+    const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
+    mainRef().innerHTML = galleryMarkup;
+    changeActiveNavLinkColor();
+    changeTitleText(`Movies search`);
+    successToaster({ message: "Successful!" });
+    infoToaster({ message: `Search for "${searchQuery}", page ${page}` });
+    listenersReload();
+  } catch (err) {
+    errorToaster({ message: `Something's gone wrong` });
+    console.log(err);
+  }
+
+  // getMoviesByTitle(page, searchQuery)
+  // .catch((err) => {
+  // errorToaster({ message: `Something's gone wrong` });
+  // console.log(err);
+  // })
+  // .then((galleryData) => {
+  // pathName = "movies";
+  // setUrlInfo({ pathName, search: searchQuery, page });
+  // pathObject[pathName].fetchFunc = (page) =>
+  //   getMoviesByTitle(page, searchQuery);
+  // const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
+  // mainRef().innerHTML = galleryMarkup;
+  // changeActiveNavLinkColor();
+  // changeTitleText(`Movies search`);
+  // successToaster({ message: "Successful!" });
+  // infoToaster({ message: `Search for "${searchQuery}", page ${page}` });
+  // listenersReload();
+  // });
 }
 
-export function openFetchedByPathName(page = 1, pathName) {
+export async function openFetchedByPathName(page = 1, pathName) {
   const fetchFunc = pathObject[pathName]
     ? pathObject[pathName].fetchFunc
     : null;
-  if (fetchFunc) {
-    fetchFunc(page)
-      .catch((err) => {
-        errorToaster({ message: `Something's gone wrong` });
-        console.log(err);
-      })
-      .then((galleryData) => {
-        pathObject[pathName].fetchFunc = (page) =>
-          fetchFunc(page, `search for ${pathName}`);
 
-        // const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
-        const galleryMarkup = pathObject[pathName].func(pathName, galleryData);
-        mainRef().innerHTML = galleryMarkup;
-        changeActiveNavLinkColor();
-        changeTitleText(pathName);
-        listenersReload();
-
-        // can be doubling code
-      });
-  } else {
+  if (!fetchFunc) {
     const galleryMarkup = pathObject[pathName].func();
     mainRef().innerHTML = galleryMarkup;
     changeActiveNavLinkColor();
     changeTitleText(pathName);
 
     listenersReload();
+
+    return null;
+  }
+
+  try {
+    const galleryData = await fetchFunc(page);
+
+    pathObject[pathName].fetchFunc = (page) =>
+      fetchFunc(page, `search for ${pathName}`);
+
+    const galleryMarkup = pathObject[pathName].func(pathName, galleryData);
+    mainRef().innerHTML = galleryMarkup;
+    changeActiveNavLinkColor();
+    changeTitleText(pathName);
+    listenersReload();
+  } catch (err) {
+    errorToaster({ message: `Something's gone wrong` });
+    console.log(err);
   }
 }
 
-export function openGalleryByGenres(
+export async function openGalleryByGenres(
   page,
   genreIdArr,
   sortBy = null,
   order = null,
 ) {
+  console.log("1: openGallery START");
   const currentUrlInfo = getUrlInfo();
 
   let sortByQuery = currentUrlInfo.sortBy || sortBy ? null : SORTBY.POPULARITY;
   if (!sortByQuery) {
     sortByQuery = sortBy ? sortBy : currentUrlInfo.sortBy;
   }
+
   let orderQuery =
     order && (ORDER.ASC === order || ORDER.DESC === order) ? order : ORDER.DESC;
 
-  getMoviesByGenre(page, genreIdArr, sortByQuery, orderQuery)
-    .then((galleryData) => {
-      setUrlInfo({
-        pathName: "genres",
-        genres: genreIdArr,
-        page,
-        sortBy,
-        order,
-      });
+  try {
+    const galleryData = await getMoviesByGenre(
+      page,
+      genreIdArr,
+      sortByQuery,
+      orderQuery,
+    );
 
-      pathObject["genres"].fetchFunc = (page) =>
-        getMoviesByGenre(page, genreIdArr, sortBy, order);
+    console.log("2: getMoviesByGenre FINISHED");
 
-      let searchedGenreNames = "";
-      const searchedGenreNamesArr = [];
-      genresListData.genres.forEach((genre) => {
-        if (genreIdArr.includes(JSON.stringify(genre.id))) {
-          searchedGenreNames += genre.name + " ";
-          searchedGenreNamesArr.push(genre.name);
-        }
-      });
-      const galleryMarkup = searchedByGenresPage(
-        searchedGenreNames,
-        galleryData,
-      );
-      mainRef().innerHTML = galleryMarkup;
-      changeTitleText("genres");
-
-      changeActiveNavLinkColor();
-      listenersReload();
-
-      // successToaster({ message: "success!" });
-    })
-    .catch((err) => {
-      errorToaster({ message: "Something went wrong" });
-      console.log(err);
+    setUrlInfo({
+      pathName: "genres",
+      genres: genreIdArr,
+      page,
+      sortBy: sortByQuery,
+      order: orderQuery,
     });
+
+    pathObject["genres"].fetchFunc = (page) =>
+      getMoviesByGenre(page, genreIdArr, sortBy, order);
+
+    let searchedGenreNames = "";
+    const searchedGenreNamesArr = [];
+    genresListData.genres.forEach((genre) => {
+      if (genreIdArr.includes(JSON.stringify(genre.id))) {
+        searchedGenreNames += genre.name + " ";
+        searchedGenreNamesArr.push(genre.name);
+      }
+    });
+
+    const galleryMarkup = searchedByGenresPage(searchedGenreNames, galleryData);
+    mainRef().innerHTML = galleryMarkup;
+    console.log("4: DOM updated");
+    changeTitleText("genres");
+
+    changeActiveNavLinkColor();
+    listenersReload();
+
+    return galleryData;
+  } catch (err) {
+    if (err.status === 404) {
+      errorToaster({ message: "No such genre in the base" });
+      console.log(err);
+
+      return null;
+    }
+    errorToaster({ message: "Something went wrong, try later" });
+    console.log(err);
+
+    return null;
+  }
 }
 
-export function openSavedGallery(page = 1, pathName) {
+export async function openSavedGallery(page = 1, pathName) {
   const { idResults, total_pages, total_results } =
     processSavedGalleryData(pathName);
 
@@ -386,7 +437,8 @@ export function openSavedGallery(page = 1, pathName) {
     return filmData;
   }
 
-  fetchResultsByIds(idResults[pageQuery]).then((res) => {
+  try {
+    const res = await fetchResultsByIds(idResults[pageQuery]);
     filmData = {
       page: pageQuery + 1,
       results: res.map((i) => i.value),
@@ -404,14 +456,17 @@ export function openSavedGallery(page = 1, pathName) {
 
     listenersReload();
     return filmData;
-  });
+  } catch (error) {
+    console.log(error, "need smth maybe for indication");
+  }
 }
 
-export function drawDefaultPage() {
+export async function drawDefaultPage() {
   if (pathName === "queue") {
-    openSavedGallery(1, pathName);
-    return;
+    const result = await loaderInterface(() => openSavedGallery(1, pathName));
+    return result;
   }
+
   main.innerHTML = "";
   // here should be handling if there are something in the url that will change behaviour and fetch another page than default
   const markup = pathObject[pathName].func();

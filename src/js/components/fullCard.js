@@ -290,7 +290,7 @@ const comments = (data) => {
 
 export function videosWindowMarkup(videosData, needsArrowButtons) {
   return `<div class="videos-content">
-             <iframe src="https://www.youtube.com/embed/${videosData.key}" class="film-item"></iframe>
+             <iframe src="https://www.youtube.com/embed/${videosData.key}?enablejsapi=1" class="film-item" id="video-player"></iframe>
 
                <div class="controls">
                  <button data-control="close" class="closeBtn">

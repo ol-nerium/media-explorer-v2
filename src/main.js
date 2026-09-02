@@ -5,7 +5,11 @@ import { handleLocation } from "./js/services/routing";
 
 import { appRootRef, mainRef, topBtnRef } from "./js/services/refs";
 import { setThemeFromLS } from "./js/interfaces/headerInterface";
-import { hideLoader, showLoader } from "./js/interfaces/loaderInterface";
+import {
+  hideLoader,
+  loaderInterface,
+  showLoader,
+} from "./js/interfaces/loaderInterface";
 import { initToast } from "./js/interfaces/toaster";
 import { createToTopBtn, toTop } from "./js/interfaces/scrollInterface";
 
@@ -66,12 +70,13 @@ let main;
 
 // initLoader();
 
-function appInit() {
-  showLoader();
+async function appInit() {
+  // showLoader();
 
   root = appRootRef("app");
   if (!mainRef())
     root.insertAdjacentElement("afterbegin", document.createElement("main"));
+
   root.insertAdjacentHTML("afterbegin", headerMarkup());
   main = mainRef();
 
@@ -79,10 +84,12 @@ function appInit() {
   createToTopBtn();
   initToast();
 
-  window.addEventListener("popstate", (e) => {
-    showLoader();
-    handleLocation();
-    hideLoader();
+  window.addEventListener("popstate", async (e) => {
+    // showLoader();
+    // handleLocation();
+    // hideLoader();
+
+    await loaderInterface(() => handleLocation());
 
     return;
   });
@@ -95,8 +102,8 @@ function appInit() {
     }
   });
 
-  handleLocation();
-  hideLoader();
+  await handleLocation();
+  // hideLoader();
 }
 
-appInit();
+loaderInterface(() => appInit());

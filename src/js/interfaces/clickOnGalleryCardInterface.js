@@ -4,7 +4,6 @@ import {
   handleLocation,
   openGalleryByGenres,
 } from "../services/routing";
-import { hideLoader, showLoader } from "../interfaces";
 import { loaderInterface } from "./loaderInterface";
 
 export const clickOnGalleryCardInterface = async (evt) => {
@@ -26,21 +25,15 @@ export const clickOnGalleryCardInterface = async (evt) => {
   const genreId = listItem?.dataset?.genreid;
 
   if (filmId) {
-    // showLoader();
-    openFilmCard(filmId);
-    // hideLoader();
+    await loaderInterface(() => openFilmCard(filmId));
   }
   if (genreId) {
     if (activeGenresArr.includes(genreId)) return;
     activeGenresArr.push(genreId);
-    // showLoader();
-    openGalleryByGenres(1, activeGenresArr);
 
-    // hideLoader();
+    await loaderInterface(() => openGalleryByGenres(1, activeGenresArr));
   }
   if (navLink) {
-    // showLoader();
-    handleLocation(navLink.href);
-    // hideLoader();
+    await loaderInterface(() => handleLocation(navLink.href));
   }
 };

@@ -1,10 +1,10 @@
 import { ORDER, SORTBY } from "../../main";
 import { handleLocation } from "../services/routing";
 import { getUrlInfo, setUrlInfo } from "../services/urlInfoService";
-import { hideLoader, showLoader } from "../interfaces";
 import { infoToaster } from "./toaster";
+import { loaderInterface } from "./loaderInterface";
 
-export function onSelectChange(evt) {
+export async function onSelectChange(evt) {
   const selectValue = evt.target.value;
   evt.target.value = "";
 
@@ -20,20 +20,16 @@ export function onSelectChange(evt) {
     };
 
     setUrlInfo(newQuery);
-    showLoader();
+
     infoToaster({
       message: `Sort by ${selectValue.split("_").join(" ")}`,
     });
-    handleLocation();
-    hideLoader();
+    await loaderInterface(() => handleLocation());
   } else {
     newQuery = { ...newQuery, sortBy: null, order: null, pathName: "genres" };
     setUrlInfo(newQuery);
 
-    showLoader();
-    handleLocation();
+    await loaderInterface(() => handleLocation());
     infoToaster({ message: `Sort by default (popularity)` });
-
-    hideLoader();
   }
 }

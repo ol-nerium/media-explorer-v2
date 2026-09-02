@@ -8,39 +8,41 @@ import {
 import { listenersReload } from "../services/refs";
 import { setFilmCardUrlInfo } from "../services/routing";
 import { openModal } from "../interfaces";
-import { hideLoader, showLoader } from "../interfaces";
 import { errorToaster, infoToaster, successToaster } from "../interfaces";
 
-// let prevScrollPostion = 0;
-export function openFilmCard(filmId) {
-  Promise.all([
-    getMovieById(filmId),
-    getCreditsByFilmId(filmId),
-    getReviewsByFilmId(filmId),
-    getSimilarMoviesById(1, filmId),
-  ])
-    .then(([mainData, credits, reviews, similar]) => {
-      const filmData = { mainData, credits, reviews, similar };
+export async function openFilmCard(filmId) {
+  try {
+    const [mainData, credits, reviews, similar] = await Promise.all([
+      getMovieById(filmId),
+      getCreditsByFilmId(filmId),
+      getReviewsByFilmId(filmId),
+      getSimilarMoviesById(1, filmId),
+    ]);
 
-      setFilmCardUrlInfo(filmData.mainData.id);
-      const filmCardMarkup = fullCardMarkup(filmData);
+    const filmData = { mainData, credits, reviews, similar };
 
-      openModal(`<section class="full-card">${filmCardMarkup}</section>`);
+    setFilmCardUrlInfo(filmData.mainData.id);
+    const filmCardMarkup = fullCardMarkup(filmData);
 
-      listenersReload();
-      successToaster({ message: "Opened film:" });
-      infoToaster({
-        message: mainData.title || mainData.original_title,
-      });
-    })
-    .catch((err) => {
-      if (err.status === 404) {
-        errorToaster({ message: "No such film in the base" });
-        console.log(err);
+    openModal(`<section class="full-card">${filmCardMarkup}</section>`);
 
-        return;
-      }
-      errorToaster({ message: "Something went wrong, try later" });
-      console.log(err);
+    listenersReload();
+    successToaster({ message: "Opened film:" });
+    infoToaster({
+      message: mainData.title || mainData.original_title,
     });
+
+    return filmData;
+  } catch (err) {
+    if (err.status === 404) {
+      errorToaster({ message: "No such film in the base" });
+      console.log(err);
+
+      return null;
+    }
+    errorToaster({ message: "Something went wrong, try later" });
+    console.log(err);
+
+    return null;
+  }
 }

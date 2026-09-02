@@ -3,6 +3,7 @@ import { getUrlInfo, setUrlInfo } from "../services/urlInfoService";
 import { changeActiveNavLinkColor } from "../utils";
 import {
   addMobileModalMenuListeners,
+  closeVideosWindow,
   removeMobileModalMenuListeners,
 } from "../interfaces";
 
@@ -30,6 +31,9 @@ export function closeModal() {
   backdrop = backdropRef();
 
   removeMobileModalMenuListeners();
+
+  closeVideosWindow();
+
   backdrop.removeEventListener("click", onBackdropClick);
   window.removeEventListener("keydown", onKeyClose);
 

@@ -14,6 +14,7 @@ export const moviesPage = (
   // galleryData = { results: [], page: 1 },
   galleryData = popularObj,
 ) => {
+  console.log(galleryData);
   return (
     mainPageInfoSectionMarkup() +
     sortingSectionMarkup(
