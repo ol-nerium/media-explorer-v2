@@ -14,7 +14,6 @@ Core Technologies
 
     Frontend: Vanilla JavaScript (ES6+), HTML5, and CSS3.
     Build Tool: Vite
-    Virtual File System: ZenFS for persistent storage.
     axios and date-fns npm packages
 
 The application will be available at: media-explorer-v2.onrender.com
