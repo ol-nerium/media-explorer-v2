@@ -7,7 +7,6 @@ import { openFilmCard } from "../interfaces";
 
 export const savedGalleryInterface = (evt) => {
   evt.preventDefault();
-  showLoader();
 
   const galleryItem =
     evt.target.nodeName === "LI"
@@ -35,7 +34,4 @@ export const savedGalleryInterface = (evt) => {
   }
 
   if (filmId && !removeBtnClicked) openFilmCard(filmId);
-
-  handleLocation();
-  hideLoader();
 };
