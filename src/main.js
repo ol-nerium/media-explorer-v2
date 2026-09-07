@@ -73,11 +73,7 @@ export const SORTBY = {
 let root;
 let main;
 
-// initLoader();
-
 async function appInit() {
-  // showLoader();
-
   root = appRootRef("app");
   if (!mainRef())
     root.insertAdjacentElement("afterbegin", document.createElement("main"));
@@ -90,10 +86,6 @@ async function appInit() {
   initToast();
 
   window.addEventListener("popstate", async (e) => {
-    // showLoader();
-    // handleLocation();
-    // hideLoader();
-
     await loaderInterface(() => handleLocation());
 
     return;
@@ -108,8 +100,6 @@ async function appInit() {
   });
 
   handleLocation();
-  // hideLoader();
-  listenersReload();
 }
 
-loaderInterface(() => appInit());
+await loaderInterface(() => appInit());

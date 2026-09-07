@@ -38,27 +38,35 @@ import { listenersReload, mainRef } from "./refs";
 import { getUrlInfo, setUrlInfo } from "./urlInfoService";
 import { loaderInterface } from "../interfaces/loaderInterface";
 
-let pathName = "";
-let search = "";
-let page = "";
-let sortBy = "";
-let order = "";
-let genres = [];
-let filmId = "";
+// let pathName = "";
+// let search = "";
+// let page = "";
+// let sortBy = "";
+// let order = "";
+// let genres = [];
+// let filmId = "";
 
 let main;
 
-// const appState = {
-//   pathName: "",
-//   search: "",
-//   page: "",
-//   sortBy: "",
-//   order: "",
-//   genres: [],
-//   filmId: "",
-// };
-
+const appState = {
+  pathName: "",
+  search: "",
+  page: "",
+  sortBy: "",
+  order: "",
+  genres: [],
+  filmId: "",
+};
 export let activeGenresArr = [];
+let result = null;
+
+const setState = (newValuesObj) => {
+  const stateKeys = Object.keys(appState);
+  stateKeys.forEach((key) => {
+    if (!newValuesObj.hasOwnProperty(key)) return;
+    appState[key] = newValuesObj[key];
+  });
+};
 
 const defaultMoviesFetchFunc = getPopularMoviesList;
 
@@ -125,9 +133,9 @@ export const pathObject = {
 
 export function setFilmCardUrlInfo(filmId) {
   const currentQuery = getUrlInfo();
+  const pathName =
+    currentQuery.pathName === "" ? "home" : currentQuery.pathName;
 
-  ({ pathName, search, page, genres } = currentQuery);
-  pathName = pathName === "" ? "home" : pathName;
   let newQueryObj = {
     ...currentQuery,
     pathName: pathName,
@@ -135,23 +143,20 @@ export function setFilmCardUrlInfo(filmId) {
   };
 
   setUrlInfo(newQueryObj);
-
-  // const newPath = pathName + "?filmId=" + filmId;
-
-  // let newURL =
-  //   window.location.protocol + "//" + window.location.host + "/" + newPath;
-
-  // window.history.pushState({ path: newURL }, "", newURL);
+  setState(newQueryObj);
 }
 
 export async function handleLocation(targetURL = null) {
   main = mainRef();
-  ({ pathName, search, page, genres, filmId, sortBy, order } = getUrlInfo());
+  setState(getUrlInfo());
+
+  let { pathName, search, page, genres, filmId, sortBy, order } = appState;
+
   if (genres.length > 0) {
     activeGenresArr = genres;
   } else activeGenresArr = [];
 
-  // toTop();
+  toTop();
   handleFilmId(filmId);
 
   if (targetURL) {
@@ -163,40 +168,24 @@ export async function handleLocation(targetURL = null) {
     errorToaster({
       message: "wrong path..",
     });
-  }
 
-  if (pathName === "") {
+    setState({ pathName: "home" });
     return handleHomeRoute();
   }
 
-  await loaderInterface(() =>
-    drawMarkupFromUrlParams({
-      pathName,
-      search,
-      page,
-      genres,
-      filmId,
-      sortBy,
-      order,
-    }),
-  );
+  if (pathName === "" || pathName === "home") {
+    return handleHomeRoute();
+  }
+
+  await loaderInterface(() => drawMarkupFromUrlParams());
 }
 
-let result = null;
-
-async function drawMarkupFromUrlParams({
-  pathName,
-  search,
-  page,
-  genres,
-  filmId,
-  sortBy,
-  order = ORDER.DESC,
-}) {
+async function drawMarkupFromUrlParams() {
+  const { pathName } = appState;
   if (pathName === "home" || !pathObject[pathName]) return null;
 
   if (pathName === "movies") {
-    return handleMoviesRoute(search);
+    return handleMoviesRoute();
   }
 
   if (pathName === "genres") {
@@ -209,26 +198,20 @@ async function drawMarkupFromUrlParams({
     pathName === "upcoming"
   ) {
     return handleFilteredPage();
-    // if (page && page > 0) {
-    //   setUrlInfo({ pathName, page });
-    //   result = await loaderInterface(() =>
-    //     openFetchedByPathName(page, pathName),
-    //   );
-    // } else result = await loaderInterface(() => drawDefaultPage());
   }
 
   if (pathName === "favorites" || pathName === "queue") {
-    console.log("queue");
     return handleSavedGalleryRoute();
   }
 }
 
 export async function openFetchedGalleryPage(page = 1, searchQuery) {
   try {
-    console.log(page, searchQuery, "!!!");
     const galleryData = await getMoviesByTitle(page, searchQuery);
-    pathName = "movies";
+    let pathName = "movies";
     setUrlInfo({ pathName, search: searchQuery, page });
+    setState({ pathName, search: searchQuery, page });
+
     pathObject[pathName].fetchFunc = (page) =>
       getMoviesByTitle(page, searchQuery);
 
@@ -243,25 +226,6 @@ export async function openFetchedGalleryPage(page = 1, searchQuery) {
     errorToaster({ message: `Something's gone wrong` });
     console.log(err);
   }
-
-  // getMoviesByTitle(page, searchQuery)
-  // .catch((err) => {
-  // errorToaster({ message: `Something's gone wrong` });
-  // console.log(err);
-  // })
-  // .then((galleryData) => {
-  // pathName = "movies";
-  // setUrlInfo({ pathName, search: searchQuery, page });
-  // pathObject[pathName].fetchFunc = (page) =>
-  //   getMoviesByTitle(page, searchQuery);
-  // const galleryMarkup = searchedMoviesPage(searchQuery, galleryData);
-  // mainRef().innerHTML = galleryMarkup;
-  // changeActiveNavLinkColor();
-  // changeTitleText(`Movies search`);
-  // successToaster({ message: "Successful!" });
-  // infoToaster({ message: `Search for "${searchQuery}", page ${page}` });
-  // listenersReload();
-  // });
 }
 
 export async function openFetchedByPathName(page = 1, pathName) {
@@ -325,6 +289,13 @@ export async function openGalleryByGenres(
     console.log("2: getMoviesByGenre FINISHED");
 
     setUrlInfo({
+      pathName: "genres",
+      genres: genreIdArr,
+      page,
+      sortBy: sortByQuery,
+      order: orderQuery,
+    });
+    setState({
       pathName: "genres",
       genres: genreIdArr,
       page,
@@ -422,6 +393,7 @@ export async function openSavedGallery(page = 1, pathName) {
 }
 
 export async function drawDefaultPage() {
+  const { pathName } = appState;
   if (pathName === "queue") {
     const result = await loaderInterface(() => openSavedGallery(1, pathName));
     console.log(result);
@@ -453,10 +425,11 @@ async function handleTargetRoute(targetURL) {
 
   activeGenresArr = [];
   setUrlInfo({ pathName: targetPathName });
+  setState({ pathName: targetPathName });
 
   if (targetPathName === "favorites" || targetPathName === "queue") {
     const result = await loaderInterface(() =>
-      openSavedGallery(page, targetPathName),
+      openSavedGallery(appState.page, targetPathName),
     );
     console.log("SHOULD OPEN SMTH");
     return result;
@@ -478,6 +451,8 @@ async function handleHomeRoute() {
   const targetPathName = "home";
 
   setUrlInfo({ pathName: targetPathName });
+  setState({ pathName: targetPathName });
+
   main.innerHTML = "";
   main.insertAdjacentHTML("afterbegin", pathObject[targetPathName].func());
   changeTitleText(targetPathName);
@@ -488,7 +463,8 @@ async function handleHomeRoute() {
   return;
 }
 
-async function handleMoviesRoute(search) {
+async function handleMoviesRoute() {
+  const { search, page, pathName } = appState;
   if (search) {
     result = await loaderInterface(() => openFetchedGalleryPage(page, search));
     return result;
@@ -498,6 +474,7 @@ async function handleMoviesRoute(search) {
 
   if (page && page > 0) {
     setUrlInfo({ pathName, page });
+    setState({ pathName, page });
 
     result = await loaderInterface(() => openFetchedByPathName(page, pathName));
     return result;
@@ -509,8 +486,10 @@ async function handleMoviesRoute(search) {
 }
 
 async function handleGenresRoute() {
+  let { genres, pathName, page, sortBy, order } = appState;
   if (genres?.length < 1) {
     setUrlInfo({ pathName });
+
     result = await loaderInterface(() => drawDefaultPage());
     return result;
   }
@@ -528,14 +507,17 @@ async function handleGenresRoute() {
 }
 
 async function handleSavedGalleryRoute() {
-  console.log(page, pathName);
+  const { page, pathName } = appState;
+
   result = await loaderInterface(() => openSavedGallery(page, pathName));
   return result;
 }
 
 async function handleFilteredPage() {
+  const { page, pathName } = appState;
   if (page && page > 0) {
     setUrlInfo({ pathName, page });
+    setState({ pathName, page });
     result = await loaderInterface(() => openFetchedByPathName(page, pathName));
   } else result = await loaderInterface(() => drawDefaultPage());
 }
