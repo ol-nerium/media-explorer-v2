@@ -48,7 +48,7 @@ export const toastContainerRef = () =>
 
 export const videoContentRef = () => document.querySelector(".videos-content");
 
-const heroRef = () => document.querySelector(".hero");
+export const heroRef = () => document.querySelector(".hero");
 const mainHeadingRef = () => document.querySelector(".main-heading");
 const mobileGenresRef = () => document.querySelector(".mobile-genres");
 const sliderGallerySectionPopularRef = () =>

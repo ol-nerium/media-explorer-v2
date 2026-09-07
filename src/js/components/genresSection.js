@@ -1,9 +1,10 @@
-import { activeGenresArr } from "../services/routing";
+import { appState } from "../services/routing";
 import { genresArr } from "../utils";
 
 import spriteUrl from "../../assets/svgSprite.svg";
 
 export const genresSectionMarkup = () => {
+  const { genres } = appState;
   return `<section class="genresSection">
         <div class="container">
           <ul class="genresSection-list">
@@ -11,7 +12,7 @@ export const genresSectionMarkup = () => {
               .map(
                 (
                   genre,
-                ) => `<li class="genresSection-list_item ${activeGenresArr.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">
+                ) => `<li class="genresSection-list_item ${genres.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">
               <a href="/">
                 <div class="genresSection-icon-wrap">
                   <svg class="icon">

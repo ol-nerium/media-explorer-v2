@@ -54,10 +54,12 @@ export async function fullCardNavInterface(evt) {
     const { pathName } = getUrlInfo();
     const linkUrl = new URL(link.href);
     if (pathObject[linkUrl.pathname.slice(1) || "home"].name === pathName) {
+      setFilmCardUrlInfo("");
+
       closeModal();
       return;
     }
-    setFilmCardUrlInfo(null);
+    setFilmCardUrlInfo("");
     await loaderInterface(() => handleLocation(link.href));
   }
 

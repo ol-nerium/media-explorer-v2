@@ -1,5 +1,5 @@
 import { handleLocation, openGalleryByGenres } from "../services/routing";
-import { activeGenresArr } from "../services/routing";
+import { appState } from "../services/routing";
 import { setUrlInfo } from "../services/urlInfoService";
 import { genresListData } from "../utils";
 import { hideLoader, showLoader } from "../interfaces";
@@ -17,7 +17,7 @@ export const genresSectionInterface = (evt) => {
 
   if (!chipGenreId) return;
 
-  if (!activeGenresArr.includes(chipGenreId)) activeGenresArr.push(chipGenreId);
+  if (!appState.genres.includes(chipGenreId)) appState.genres.push(chipGenreId);
   //
   if (
     genresListData.genres.filter((i) => i.id === Number(chipGenreId)).length > 0
@@ -48,7 +48,7 @@ export const mobileGenresInterface = (evt) => {
   if (link) clickOnMobGenresLink(link);
 
   const genresLink = evt.currentTarget.querySelector(".section-expand-link");
-  if (genresLink && activeGenresArr.length > 0) {
+  if (genresLink && appState.genres.length > 0) {
     genresLink.classList.remove("hidden");
   } else {
     genresLink.classList.add("hidden");
@@ -57,21 +57,21 @@ export const mobileGenresInterface = (evt) => {
 
 function clickOnMobGenresBtn(genreBtn) {
   const clickedGenreId = genreBtn.dataset.genreid;
-  const activeGenreIdIndex = activeGenresArr.indexOf(clickedGenreId);
+  const activeGenreIdIndex = appState.genres.indexOf(clickedGenreId);
   if (activeGenreIdIndex !== -1) {
-    activeGenresArr.splice(activeGenreIdIndex, 1);
+    appState.genres.splice(activeGenreIdIndex, 1);
   } else {
-    activeGenresArr.push(clickedGenreId);
+    appState.genres.push(clickedGenreId);
   }
   mobileGenresClasswork();
 }
 function clickOnMobGenresLink(link) {
   if (
     link?.classList?.contains("section-expand-link") &&
-    activeGenresArr.length > 0
+    appState.genres.length > 0
   ) {
     showLoader();
-    openGalleryByGenres(1, activeGenresArr);
+    openGalleryByGenres(1, appState.genres);
     hideLoader();
   }
 }
@@ -79,7 +79,7 @@ function clickOnMobGenresLink(link) {
 function mobileGenresClasswork() {
   Array.from(document.querySelectorAll(".mobile-genres-btn")).forEach(
     (chip) => {
-      if (activeGenresArr.includes(chip.dataset.genreid)) {
+      if (appState.genres.includes(chip.dataset.genreid)) {
         chip.classList.add("active");
       } else chip.classList.remove("active");
     },
@@ -126,11 +126,11 @@ function onGenreChipClick(genreId) {
     `[data-genreid="${genreId}"]`,
   );
 
-  const genreIndex = activeGenresArr.indexOf(genreId);
+  const genreIndex = appState.genres.indexOf(genreId);
 
   const startPosition = genresList.getBoundingClientRect().left;
   if (genreIndex < 0) {
-    activeGenresArr.push(genreId);
+    appState.genres.push(genreId);
     clickedElement.classList.add("active");
     const chipName = clickedElement.textContent.trim();
     infoToaster({ message: `${chipName} added to search for genres` });
@@ -145,12 +145,12 @@ function onGenreChipClick(genreId) {
   } else {
     const currentPosition = clickedElement.getBoundingClientRect().left;
 
-    activeGenresArr.splice(genreIndex, 1);
+    appState.genres.splice(genreIndex, 1);
     clickedElement.classList.remove("active");
     const chipName = clickedElement.textContent.trim();
     errorToaster({ message: `${chipName} removed from genres search` });
 
-    if (activeGenresArr.length < 1) {
+    if (appState.genres.length < 1) {
       showLoader();
       setUrlInfo({ pathName: "genres" });
       handleLocation();
@@ -169,6 +169,6 @@ function onGenreChipClick(genreId) {
   // fetch films from activeGenresArrData
 
   showLoader();
-  openGalleryByGenres(1, activeGenresArr);
+  openGalleryByGenres(1, appState.genres);
   hideLoader();
 }

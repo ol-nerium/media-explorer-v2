@@ -1,5 +1,5 @@
-import { refs } from "../services/refs";
-import { activeGenresArr } from "../services/routing";
+import { heroRef, refs } from "../services/refs";
+import { appState } from "../services/routing";
 import { createPoster, genresListData } from "../utils";
 import { getFromLS } from "../services/localStorageService";
 
@@ -10,7 +10,7 @@ const heroSectionGenres = (genre_ids) => {
   genresListData.genres.forEach((i) => {
     if (genre_ids.includes(i.id))
       genresList.push(
-        `<li class="hero-genreList_item ${activeGenresArr.includes(JSON.stringify(i.id)) ? "active" : ""}" data-genreid="${i.id}">${i.name}</li>`,
+        `<li class="hero-genreList_item ${appState.genres.includes(JSON.stringify(i.id)) ? "active" : ""}" data-genreid="${i.id}">${i.name}</li>`,
       );
   });
   return genresList.join("");
@@ -29,19 +29,6 @@ const radioButtons = (index, title, checked) => {
                   class="checkmark"
                 ></span
               ></label>`;
-
-  // return `<label for="hero_option-${id}" class="hero-radiobuttons_item"
-  //               ><input
-  //                 type="radio"
-  //                 id="hero_option-${id}"
-  //                 name="hero-radiobutton"
-  //                 title="${title}"
-  //                 value="${id}"
-  //                 ${checked ? "checked" : ""}
-  //                 /><span
-  //                 class="checkmark"
-  //               ></span
-  //             ></label>`;
 };
 export const heroSectionMarkup = (data, i = 0) => {
   let index = !isNaN(i) && i < data.length ? Number(i) : 0;
@@ -58,13 +45,17 @@ export const heroSectionMarkup = (data, i = 0) => {
   } = data[index];
   const maxLengthArr = data.length;
 
-  const heroRoot = refs.hero.elem();
+  // const heroRoot = heroRef();
 
   const heroWrapper = (markup) => {
-    if (!heroRoot)
-      return `<section class="hero" data-filmid="${id}">${markup}</section>`;
-    heroRoot.dataset.filmid = id;
-    return markup;
+    // if (!heroRef()) {
+    //   return `<section class="hero" data-filmid="${id}">${markup}</section>`;
+    // }
+
+    // heroRef().dataset.filmid = id;
+    // return markup;
+
+    return `<section class="hero" data-filmid="${id}">${markup}</section>`;
   };
   const isFilmInQueque = getFromLS("quequeFilmsList")?.includes(id);
 

@@ -6,7 +6,7 @@ import {
   createGenreChipsListMarkup,
   sortingSectionMarkup,
 } from "../components/sortingSection";
-import { activeGenresArr } from "../services/routing";
+import { appState } from "../services/routing";
 import { popularObj } from "../utils/data";
 
 export const moviesPage = (
@@ -14,11 +14,11 @@ export const moviesPage = (
   // galleryData = { results: [], page: 1 },
   galleryData = popularObj,
 ) => {
-  console.log(galleryData);
+  // console.log(galleryData);
   return (
     mainPageInfoSectionMarkup() +
     sortingSectionMarkup(
-      createGenreChipsListMarkup(activeGenresArr),
+      createGenreChipsListMarkup(appState.genres),
       createDropdownMarkup(),
     ) +
     mainGallerySectionMarkup(title, galleryData.results) +

@@ -1,6 +1,6 @@
 import { openFilmCard } from "../interfaces";
 import {
-  activeGenresArr,
+  appState,
   handleLocation,
   openGalleryByGenres,
 } from "../services/routing";
@@ -28,10 +28,10 @@ export const clickOnGalleryCardInterface = async (evt) => {
     await loaderInterface(() => openFilmCard(filmId));
   }
   if (genreId) {
-    if (activeGenresArr.includes(genreId)) return;
-    activeGenresArr.push(genreId);
+    if (appState.genres.includes(genreId)) return;
+    appState.genres.push(genreId);
 
-    await loaderInterface(() => openGalleryByGenres(1, activeGenresArr));
+    await loaderInterface(() => openGalleryByGenres(1, appState.genres));
   }
   if (navLink) {
     await loaderInterface(() => handleLocation(navLink.href));

@@ -1,4 +1,4 @@
-import { activeGenresArr } from "../services/routing";
+import { appState } from "../services/routing";
 import { createPoster } from "../utils";
 
 import spriteUrl from "../../assets/svgSprite.svg";
@@ -60,7 +60,7 @@ const savedGalleryItem = (data) => {
                 <ul class="gallery-list_item-genres">
                   ${data.genres
                     .map((genre) => {
-                      return `<li class="gallery-list_item-genres_item ${activeGenresArr.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">${genre.name}</li>`;
+                      return `<li class="gallery-list_item-genres_item ${appState.genres.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">${genre.name}</li>`;
                     })
                     .join("")}                  
                 </ul>

@@ -10,7 +10,7 @@ export const topRatedPage = (
 ) => {
   return (
     mainPageInfoSectionMarkup() +
-    mainGallerySectionMarkup(title, galleryData.results) +
+    mainGallerySectionMarkup(null, galleryData.results) +
     paginationSectionMarkup(galleryData)
   );
 };

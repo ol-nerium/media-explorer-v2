@@ -1,6 +1,6 @@
 import { heroSliderData } from "../utils/data";
 import { heroSectionMarkup } from "../components/hero";
-import { listenersReload, refs } from "../services/refs";
+import { listenersReload, mainRef, refs } from "../services/refs";
 import { openFilmCard } from "../interfaces";
 import { toggleValueFromLSKey } from "../services/localStorageService";
 import { changeQuequeBtnTextByFilmId } from "../utils";
@@ -30,14 +30,21 @@ export const heroInterface = (evt) => {
 
   if (btnData?.control === "arrow-left") {
     currentIndex = Number(heroInputs.find((i) => i.checked).value);
-
-    hero.innerHTML = heroSectionMarkup(heroSliderData, currentIndex - 1);
+    hero.remove();
+    mainRef().insertAdjacentHTML(
+      "afterbegin",
+      heroSectionMarkup(heroSliderData, currentIndex - 1),
+    );
+    // hero.innerHTML = heroSectionMarkup(heroSliderData, currentIndex - 1);
     listenersReload();
   }
   if (btnData?.control === "arrow-right") {
     currentIndex = Number(heroInputs.find((i) => i.checked).value);
-
-    hero.innerHTML = heroSectionMarkup(heroSliderData, currentIndex + 1);
+    hero.remove();
+    mainRef().insertAdjacentHTML(
+      "afterbegin",
+      heroSectionMarkup(heroSliderData, currentIndex - 1),
+    );
     listenersReload();
   }
   if (btnData?.control === "addToQueque") {

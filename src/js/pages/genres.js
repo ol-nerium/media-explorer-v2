@@ -7,7 +7,7 @@ import {
   createGenreChipsListMarkup,
   sortingSectionMarkup,
 } from "../components/sortingSection";
-import { activeGenresArr } from "../services/routing";
+import { appState } from "../services/routing";
 
 export const genresPage = () => {
   return mainPageInfoSectionMarkup() + genresSectionMarkup();
@@ -20,7 +20,7 @@ export const searchedByGenresPage = (
   return (
     mainPageInfoSectionMarkup(genresListNames) +
     sortingSectionMarkup(
-      createGenreChipsListMarkup(activeGenresArr) + createDropdownMarkup(),
+      createGenreChipsListMarkup(appState.genres) + createDropdownMarkup(),
     ) +
     mainGallerySectionMarkup(
       "Search for <span>" + genresListNames + "</span>",

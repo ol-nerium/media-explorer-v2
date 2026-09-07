@@ -19,17 +19,15 @@ export async function onSelectChange(evt) {
       pathName: "genres",
     };
 
-    setUrlInfo(newQuery);
-
     infoToaster({
       message: `Sort by ${selectValue.split("_").join(" ")}`,
     });
-    await loaderInterface(() => handleLocation());
   } else {
     newQuery = { ...newQuery, sortBy: null, order: null, pathName: "genres" };
-    setUrlInfo(newQuery);
 
-    await loaderInterface(() => handleLocation());
     infoToaster({ message: `Sort by default (popularity)` });
   }
+
+  setUrlInfo(newQuery);
+  return loaderInterface(() => handleLocation());
 }

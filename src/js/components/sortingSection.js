@@ -1,5 +1,5 @@
 import { SORTBY } from "../../main";
-import { activeGenresArr } from "../services/routing";
+import { appState } from "../services/routing";
 import { getUrlInfo } from "../services/urlInfoService";
 import { genresListData } from "../utils";
 
@@ -11,19 +11,6 @@ const sortingSectionGenresList = (activeGenresIdsArr) => {
       const isGenreActive = activeGenresIdsArr.includes(
         JSON.stringify(genre.id),
       );
-
-      //   return `<li class="genres-chips-list_item">
-      //             <button class="genres-chips-list_item-btn ${isGenreActive ? "active" : ""}" data-genreId=${genre.id}>
-      //               <span>${genre.name}</span>
-      //             </button>
-      //             <div title="closeBtn" class="closeBtn">
-      //               <svg class="icon">
-      //                 <use xlink:href="${spriteUrl}#main-cross-2"></use>
-      //               </svg>
-      //             </div>
-      //           </li>`;
-      // })
-      // .join("");
 
       return `<li class="genres-chips-list_item">
                 <button class="genres-chips-list_item-btn ${isGenreActive ? "active" : ""}" data-genreId=${genre.id}>
@@ -59,7 +46,8 @@ export const createGenreChipsListMarkup = (activeGenresIdsArr) => {
 };
 
 export const createDropdownMarkup = () => {
-  if (activeGenresArr?.length < 1 || !activeGenresArr) return "";
+  const { genres } = appState;
+  if (genres?.length < 1 || !genres) return "";
 
   const sortByKeys = Object.keys(SORTBY);
   let optionsMarkup = "";

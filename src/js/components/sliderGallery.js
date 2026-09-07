@@ -1,4 +1,4 @@
-import { activeGenresArr } from "../services/routing";
+import { appState } from "../services/routing";
 import { genresListData } from "../utils";
 import { createPoster } from "../utils";
 
@@ -8,7 +8,7 @@ const sliderGalleryItemGenres = (genreIds) => {
   let genresMarkup = "";
   genresListData.genres.forEach((genre) => {
     if (genreIds.includes(genre.id))
-      genresMarkup += `<li class="gallery-list_item-genres_item ${activeGenresArr.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">
+      genresMarkup += `<li class="gallery-list_item-genres_item ${appState.genres.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">
         <a href="#">${genre.name}</a>
       </li>`;
   });

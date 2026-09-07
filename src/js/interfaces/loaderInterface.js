@@ -17,7 +17,7 @@ function showLoader() {
   }
 
   loaderDepth += 1;
-  console.log("show loader", loaderDepth);
+  // console.log("show loader", loaderDepth);
 
   loaderRoot.classList.remove("hidden");
 }
@@ -29,7 +29,7 @@ function hideLoader() {
   }
 
   loaderDepth = loaderDepth < 1 ? 0 : loaderDepth - 1;
-  console.log("hide loader", loaderDepth === 0);
+  // console.log("hide loader", loaderDepth === 0);
   if (loaderDepth > 0) return;
 
   loaderRoot.classList.add("hidden");
@@ -38,15 +38,15 @@ function hideLoader() {
 async function loaderInterface(action) {
   // if (isUIActionsLocked) return; // bugged with pagination and routing
 
-  console.log("A: loader START");
+  // console.log("A: loader START");
   showLoader();
   isUIActionsLocked = true;
   try {
     const result = await action();
-    console.log("B: action RESOLVED");
+    // console.log("B: action RESOLVED");
     return result;
   } finally {
-    console.log("C: hideLoader");
+    // console.log("C: hideLoader");
     hideLoader();
     isUIActionsLocked = false;
   }
