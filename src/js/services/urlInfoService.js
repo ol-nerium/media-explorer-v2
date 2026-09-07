@@ -1,7 +1,7 @@
 import { ORDER, SORTBY } from "../../main";
 import { errorToaster } from "../interfaces";
 import { changeActiveNavLinkColor } from "../utils";
-import { pathObject } from "./routing";
+import { pathObject, setState } from "./routing";
 
 const locationProtocol = window.location.protocol;
 const locationHost = window.location.host;
@@ -54,17 +54,6 @@ export function getUrlInfo() {
   };
 }
 
-// const prevValues = {
-//   pathName: null,
-//   search: null,
-//   genres: null,
-//   page: null,
-//   filmId: null,
-//   sortBy: null,
-//   order: null,
-// };
-// const keys = Object.keys(prevValues);
-
 export function setUrlInfo({
   pathName = null,
   page = null,
@@ -74,50 +63,20 @@ export function setUrlInfo({
   order = ORDER.DESC,
   filmId = null,
 }) {
-  // const currentValues = {
-  //   pathName,
-  //   page,
-  //   search,
-  //   genres,
-  //   sortBy,
-  //   order,
-  //   filmId,
-  // };
+  // console.trace();
 
-  // keys.forEach((key) => {
-  //   if (prevValues[key] !== currentValues[key]) {
-  //     console.log(
-  //       "changes ",
-  //       key,
-  //       "from ",
-  //       prevValues[key],
-  //       "to ",
-  //       currentValues[key],
-  //     );
-  //     prevValues[key] = currentValues[key];
-  //   }
-  // });
+  const path = pathObject[pathName || "home"].path;
+  newURL = baseUrl + path + "?";
+  let stateObj = { pathName: path.slice(1) };
 
   if (pathName === "home") {
-    const path = pathObject[pathName].path;
-    newURL = baseUrl + path + "?";
-    let stateObj = { path };
-
     [createFilmIdQuery(filmId)].forEach((item) => {
       if (item.query) newURL += item.query + "&";
       if (item.obj) stateObj = { ...stateObj, ...item.obj };
     });
-
-    console.log(stateObj, newURL);
-
-    // window.history.pushState({ path: newURL }, "", newURL);
-    window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
   }
 
   if (pathName === "movies") {
-    const path = pathObject[pathName].path;
-    newURL = baseUrl + path + "?";
-    let stateObj = { path };
     [
       createSearchQueryObj(search),
       createPageQueryObj(page),
@@ -126,14 +85,9 @@ export function setUrlInfo({
       if (item.query) newURL += item.query + "&";
       if (item.obj) stateObj = { ...stateObj, ...item.obj };
     });
-
-    window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
   }
 
   if (pathName === "genres") {
-    const path = pathObject[pathName].path;
-    newURL = baseUrl + path + "?";
-    let stateObj = { path };
     [
       createPageQueryObj(page),
       createGenresQueryObj(genres),
@@ -143,7 +97,6 @@ export function setUrlInfo({
       if (item.query) newURL += item.query + "&";
       if (item.obj) stateObj = { ...stateObj, ...item.obj };
     });
-    window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
   }
 
   if (
@@ -153,24 +106,24 @@ export function setUrlInfo({
     pathName === "favorites" ||
     pathName === "queue"
   ) {
-    const path = pathObject[pathName].path;
-    newURL = baseUrl + path + "?";
-    let stateObj = { path };
     [createPageQueryObj(page), createFilmIdQuery(filmId)].forEach((item) => {
       if (item.query) newURL += item.query + "&";
       if (item.obj) stateObj = { ...stateObj, ...item.obj };
     });
-
-    window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
   }
 
-  if (pathName === "settings" || pathName === "logout") {
-    const path = pathObject[pathName].path;
-    newURL = baseUrl + path;
-    let stateObj = { path };
+  // if (pathName === "settings" || pathName === "logout") {
+  //   const path = pathObject[pathName].path;
+  //   newURL = baseUrl + path;
+  //   let stateObj = { path };
 
-    window.history.pushState({ ...stateObj }, "", newURL);
-  }
+  //   window.history.pushState({ ...stateObj }, "", newURL);
+  // }
+
+  window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
+  setState(stateObj);
+
+  console.log(genres);
 
   document.title =
     String(pathName).charAt(0).toUpperCase() + String(pathName).slice(1);
@@ -195,7 +148,7 @@ function createGenresQueryObj(genres) {
       query: `with_genres=${genres.join(",")}`,
     };
   }
-  return { obj: {}, query: "" };
+  return { obj: { genres: [] }, query: "" };
 }
 function createSortQueryObj(sortBy, order = ORDER.DESC) {
   if (sortBy) {
