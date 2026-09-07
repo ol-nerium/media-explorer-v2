@@ -123,8 +123,6 @@ export function setUrlInfo({
   window.history.pushState({ ...stateObj }, "", newURL.slice(0, -1));
   setState(stateObj);
 
-  console.log(genres);
-
   document.title =
     String(pathName).charAt(0).toUpperCase() + String(pathName).slice(1);
 }

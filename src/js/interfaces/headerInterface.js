@@ -3,10 +3,10 @@ import {
   getFromLS,
   rewriteKeyCompletelyInLS,
 } from "../services/localStorageService";
-import { hideLoader, showLoader } from "../interfaces";
 import { errorToaster, infoToaster } from "../interfaces";
+import { loaderInterface } from "./loaderInterface";
 
-export function onSearchFormSubmit(evt) {
+export async function onSearchFormSubmit(evt) {
   evt.preventDefault();
 
   const formData = new FormData(evt.currentTarget);
@@ -17,10 +17,9 @@ export function onSearchFormSubmit(evt) {
     // TODO
     return;
   }
-  showLoader();
-  openFetchedGalleryPage(1, searchQuery);
+
+  await loaderInterface(() => openFetchedGalleryPage(1, searchQuery));
   document.getElementById("search-field").value = "";
-  hideLoader();
 }
 
 export function themeChangeInterface(evt) {

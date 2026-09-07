@@ -4,8 +4,8 @@ import { listenersReload, mainRef, refs } from "../services/refs";
 import { openFilmCard } from "../interfaces";
 import { toggleValueFromLSKey } from "../services/localStorageService";
 import { changeQuequeBtnTextByFilmId } from "../utils";
-import { hideLoader, showLoader } from "../interfaces";
 import { errorToaster, successToaster } from "./toaster";
+import { loaderInterface } from "./loaderInterface";
 
 export const heroInterface = (evt) => {
   const hero = refs.hero.elem();
@@ -60,8 +60,7 @@ export const heroInterface = (evt) => {
   }
   if (btnData?.control === "showMore") {
     const filmId = hero.dataset.filmid;
-    showLoader();
-    openFilmCard(filmId);
-    hideLoader();
+
+    loaderInterface(() => openFilmCard(filmId));
   }
 };

@@ -5,7 +5,7 @@ import { getExternalFilmVideosById } from "../services/apiService";
 import { backdropRef, videoContentRef } from "../services/refs";
 
 import spriteUrl from "../../assets/svgSprite.svg";
-import { hideLoader, loaderInterface, showLoader } from "./loaderInterface";
+import { loaderInterface } from "./loaderInterface";
 
 let videoContentElem = null;
 let backdrop = null;
@@ -77,7 +77,7 @@ export async function openVideosWindow(filmid) {
 let player = null;
 export async function changeFilmItem(control) {
   if (player) {
-    console.log("destroing player");
+    // console.log("destroing player");
     player.destroy();
   }
 
@@ -117,7 +117,7 @@ export function closeVideosWindow() {
     videoContentElem = null;
 
     if (player) {
-      console.log("destroing player");
+      // console.log("destroing player");
       player.destroy();
     }
     return;

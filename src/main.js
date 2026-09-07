@@ -10,11 +10,7 @@ import {
   topBtnRef,
 } from "./js/services/refs";
 import { setThemeFromLS } from "./js/interfaces/headerInterface";
-import {
-  hideLoader,
-  loaderInterface,
-  showLoader,
-} from "./js/interfaces/loaderInterface";
+import { loaderInterface } from "./js/interfaces/loaderInterface";
 import { initToast } from "./js/interfaces/toaster";
 import { createToTopBtn, toTop } from "./js/interfaces/scrollInterface";
 

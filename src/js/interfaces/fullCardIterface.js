@@ -10,7 +10,7 @@ import { closeModal } from "./modalInterface";
 import { getUrlInfo } from "../services/urlInfoService";
 
 import { openVideosWindow } from "./videosInterface";
-import { hideLoader, loaderInterface, showLoader } from "./loaderInterface";
+import { loaderInterface } from "./loaderInterface";
 import { errorToaster, successToaster } from "./toaster";
 
 const CONTROLS = {

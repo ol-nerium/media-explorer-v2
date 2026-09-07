@@ -1,8 +1,7 @@
 import { lsKeys } from "../utils/data";
-import { handleLocation } from "../services/routing";
 import { getUrlInfo } from "../services/urlInfoService";
 import { removeFromLS } from "../services/localStorageService";
-import { errorToaster, hideLoader, showLoader } from "../interfaces";
+import { errorToaster } from "../interfaces";
 import { openFilmCard } from "../interfaces";
 
 export const savedGalleryInterface = (evt) => {

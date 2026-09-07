@@ -2,8 +2,8 @@ import { handleLocation, openGalleryByGenres } from "../services/routing";
 import { appState } from "../services/routing";
 import { setUrlInfo } from "../services/urlInfoService";
 import { genresListData } from "../utils";
-import { hideLoader, showLoader } from "../interfaces";
 import { errorToaster, infoToaster } from "../interfaces";
+import { loaderInterface } from "./loaderInterface";
 
 export const genresSectionInterface = (evt) => {
   evt.preventDefault();
@@ -22,9 +22,7 @@ export const genresSectionInterface = (evt) => {
   if (
     genresListData.genres.filter((i) => i.id === Number(chipGenreId)).length > 0
   ) {
-    showLoader();
-    openGalleryByGenres(1, [chipGenreId]);
-    hideLoader();
+    loaderInterface(() => openGalleryByGenres(1, [chipGenreId]));
   }
 };
 
@@ -70,9 +68,7 @@ function clickOnMobGenresLink(link) {
     link?.classList?.contains("section-expand-link") &&
     appState.genres.length > 0
   ) {
-    showLoader();
-    openGalleryByGenres(1, appState.genres);
-    hideLoader();
+    loaderInterface(() => openGalleryByGenres(1, appState.genres));
   }
 }
 
@@ -151,11 +147,8 @@ function onGenreChipClick(genreId) {
     errorToaster({ message: `${chipName} removed from genres search` });
 
     if (appState.genres.length < 1) {
-      showLoader();
       setUrlInfo({ pathName: "genres" });
-      handleLocation();
-      hideLoader();
-      return;
+      return loaderInterface(() => handleLocation());
     }
 
     const prevPositionInRoot = currentPosition - startPosition;
@@ -168,7 +161,5 @@ function onGenreChipClick(genreId) {
 
   // fetch films from activeGenresArrData
 
-  showLoader();
-  openGalleryByGenres(1, appState.genres);
-  hideLoader();
+  loaderInterface(() => openGalleryByGenres(1, appState.genres));
 }
