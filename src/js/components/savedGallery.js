@@ -3,16 +3,6 @@ import { createPoster } from "../utils";
 
 import spriteUrl from "../../assets/svgSprite.svg";
 
-// const savedGalleryItemGenres = (genreIds) => {
-//   const genresList = [];
-//   genresListData.genres.forEach((i) => {
-//     if (genreIds.includes(i.id))
-//       genresList.push(
-//         `<li class="gallery-list_item-genres_item" data-genreid="${i.id}">${i.name}</li>`,
-//       );
-//   });
-//   return genresList.join("");
-// };
 const savedGalleryItem = (data) => {
   const {
     adult,

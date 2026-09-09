@@ -1,11 +1,12 @@
-import { appRootRef, backdropRef } from "../services/refs";
-import { getUrlInfo, setUrlInfo } from "../services/urlInfoService";
+import { backdropRef } from "../services/refs";
+import { getUrlInfo } from "../services/urlInfoService";
 import { changeActiveNavLinkColor } from "../utils";
 import {
   addMobileModalMenuListeners,
   closeVideosWindow,
   removeMobileModalMenuListeners,
 } from "../interfaces";
+import { navigate } from "../services/routing";
 
 let backdrop = null;
 export function openModal(markup) {
@@ -42,5 +43,6 @@ export function closeModal() {
   document.body.style.overflow = "";
 
   const currentUrlInfo = getUrlInfo();
-  setUrlInfo({ ...currentUrlInfo, filmId: "" });
+
+  navigate({ ...currentUrlInfo, filmId: "" });
 }

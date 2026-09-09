@@ -8,9 +8,8 @@ import spriteUrl from "../../assets/svgSprite.svg";
 const sortingSectionGenresList = (activeGenresIdsArr) => {
   return genresListData.genres
     .map((genre) => {
-      const isGenreActive = activeGenresIdsArr.includes(
-        JSON.stringify(genre.id),
-      );
+      const sterializedGenreId = Number(genre.id);
+      const isGenreActive = activeGenresIdsArr.includes(sterializedGenreId);
 
       return `<li class="genres-chips-list_item">
                 <button class="genres-chips-list_item-btn ${isGenreActive ? "active" : ""}" data-genreId=${genre.id}>
@@ -59,10 +58,6 @@ export const createDropdownMarkup = () => {
       (sortBy === "" && SORTBY[sortOption] === SORTBY.POPULARITY)
         ? "selected"
         : "";
-    // selected =
-    //   sortBy === "" && SORTBY[sortOption] === SORTBY.POPULARITY
-    //     ? "selected"
-    //     : "";
 
     optionsMarkup += `<option value="${SORTBY[sortOption]}" ${selected}>
                 <span>${sortOption.split("_").join(" ").toLowerCase()}</span>

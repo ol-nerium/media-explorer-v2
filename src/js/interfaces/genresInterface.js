@@ -1,9 +1,14 @@
-import { handleLocation, openGalleryByGenres } from "../services/routing";
+import {
+  handleLocation,
+  navigate,
+  openGalleryByGenres,
+  setState,
+} from "../services/routing";
 import { appState } from "../services/routing";
-import { setUrlInfo } from "../services/urlInfoService";
 import { genresListData } from "../utils";
 import { errorToaster, infoToaster } from "../interfaces";
 import { loaderInterface } from "./loaderInterface";
+import { ORDER, SORTBY } from "../../main";
 
 export const genresSectionInterface = (evt) => {
   evt.preventDefault();
@@ -17,12 +22,24 @@ export const genresSectionInterface = (evt) => {
 
   if (!chipGenreId) return;
 
-  if (!appState.genres.includes(chipGenreId)) appState.genres.push(chipGenreId);
-  //
+  const sterializedGenreId = Number(chipGenreId);
+  if (!appState.genres.includes(sterializedGenreId)) {
+    navigate({
+      pathName: "genres",
+      genres: [...appState.genres, sterializedGenreId],
+      // sortBy: appState.sortBy || SORTBY.POPULARITY,
+      // order: appState.order || ORDER.DESC,
+    });
+  }
+
   if (
-    genresListData.genres.filter((i) => i.id === Number(chipGenreId)).length > 0
+    genresListData.genres.filter((i) => i.id === sterializedGenreId).length > 0
   ) {
-    loaderInterface(() => openGalleryByGenres(1, [chipGenreId]));
+    const sortBy = appState.sortBy || null;
+    const order = appState.order || null;
+    loaderInterface(() =>
+      openGalleryByGenres(1, [sterializedGenreId], sortBy, order),
+    );
   }
 };
 
@@ -55,11 +72,22 @@ export const mobileGenresInterface = (evt) => {
 
 function clickOnMobGenresBtn(genreBtn) {
   const clickedGenreId = genreBtn.dataset.genreid;
-  const activeGenreIdIndex = appState.genres.indexOf(clickedGenreId);
+  const sterializedGendeId = Number(clickedGenreId);
+  const activeGenreIdIndex = appState.genres.indexOf(sterializedGendeId);
   if (activeGenreIdIndex !== -1) {
-    appState.genres.splice(activeGenreIdIndex, 1);
+    setState({
+      genres: [
+        ...appState.genres.slice(0, activeGenreIdIndex),
+        ...appState.genres.slice(activeGenreIdIndex + 1),
+      ],
+    });
+
+    // navigate() ??
+    // appState.genres.splice(activeGenreIdIndex, 1);
   } else {
-    appState.genres.push(clickedGenreId);
+    setState({
+      genres: [...appState.genres, sterializedGendeId],
+    });
   }
   mobileGenresClasswork();
 }
@@ -75,7 +103,8 @@ function clickOnMobGenresLink(link) {
 function mobileGenresClasswork() {
   Array.from(document.querySelectorAll(".mobile-genres-btn")).forEach(
     (chip) => {
-      if (appState.genres.includes(chip.dataset.genreid)) {
+      const sterializedGenreId = Number(chip.dataset.genreid);
+      if (appState.genres.includes(sterializedGenreId)) {
         chip.classList.add("active");
       } else chip.classList.remove("active");
     },
@@ -116,17 +145,18 @@ function onControlArrowClick(controlDir) {
 }
 
 function onGenreChipClick(genreId) {
+  const sterializedGenreId = Number(genreId);
   const genresChipsRoot = document.querySelector(".genres-chips");
   const genresList = genresChipsRoot.querySelector(".genres-chips-list");
   const clickedElement = genresChipsRoot.querySelector(
-    `[data-genreid="${genreId}"]`,
+    `[data-genreid="${sterializedGenreId}"]`,
   );
 
-  const genreIndex = appState.genres.indexOf(genreId);
+  const genreIndex = appState.genres.indexOf(sterializedGenreId);
 
   const startPosition = genresList.getBoundingClientRect().left;
   if (genreIndex < 0) {
-    appState.genres.push(genreId);
+    appState.genres.push(sterializedGenreId);
     clickedElement.classList.add("active");
     const chipName = clickedElement.textContent.trim();
     infoToaster({ message: `${chipName} added to search for genres` });
@@ -147,7 +177,7 @@ function onGenreChipClick(genreId) {
     errorToaster({ message: `${chipName} removed from genres search` });
 
     if (appState.genres.length < 1) {
-      setUrlInfo({ pathName: "genres" });
+      navigate({ pathName: "genres" });
       return loaderInterface(() => handleLocation());
     }
 
@@ -159,7 +189,13 @@ function onGenreChipClick(genreId) {
     });
   }
 
-  // fetch films from activeGenresArrData
-
-  loaderInterface(() => openGalleryByGenres(1, appState.genres));
+  navigate({
+    pathName: "genres",
+    genres: appState.genres,
+    page: appState.page || 1,
+    sortBy: appState.sortBy || SORTBY.POPULARITY,
+    order: appState.order || ORDER.DESC,
+  });
+  loaderInterface(() => handleLocation());
+  // loaderInterface(() => openGalleryByGenres(1, appState.genres));
 }

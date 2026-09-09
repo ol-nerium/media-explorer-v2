@@ -1,5 +1,5 @@
 import { total_pages } from "../components/pagination";
-import { handleLocation, pathObject } from "../services/routing";
+import { handleLocation, navigate, pathObject } from "../services/routing";
 import { getUrlInfo, setUrlInfo } from "../services/urlInfoService";
 import { loaderInterface } from "./loaderInterface";
 
@@ -41,7 +41,7 @@ export const paginationInterface = async (evt) => {
 async function fetchFilmDataFromPagination(page, pathName) {
   const currentUrlInfo = getUrlInfo();
   const newUrlParams = { ...currentUrlInfo, page, pathName };
-  setUrlInfo(newUrlParams);
 
+  navigate(newUrlParams);
   await handleLocation();
 }

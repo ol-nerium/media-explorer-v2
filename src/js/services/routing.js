@@ -47,18 +47,19 @@ export const appState = {
   genres: [],
   filmId: "",
 };
-export let activeGenresArr = [];
 
 export let currentFetchFunc = null;
 
+// export const setState = (newValuesObj) => {
 export const setState = (newValuesObj) => {
   const stateKeys = Object.keys(appState);
+
   stateKeys.forEach((key) => {
-    if (!newValuesObj.hasOwnProperty(key)) return;
+    if (!newValuesObj.hasOwnProperty(key)) {
+      return;
+    }
     appState[key] = newValuesObj[key];
   });
-
-  // console.log(appState);
 };
 
 const defaultMoviesFetchFunc = getPopularMoviesList;
@@ -150,8 +151,7 @@ export function setFilmCardUrlInfo(filmId) {
     filmId,
   };
 
-  setUrlInfo(newQueryObj);
-  setState(newQueryObj);
+  navigate(newQueryObj);
 }
 
 export async function handleLocation(targetURL = null) {
@@ -165,7 +165,7 @@ export async function handleLocation(targetURL = null) {
 }
 
 async function drawMarkupFromUrlParams() {
-  setState(getUrlInfo());
+  // navigate(getUrlInfo());
   handleFilmId();
 
   const route = routes[appState.pathName];
@@ -189,7 +189,15 @@ async function handleTargetRoute(targetURL) {
     currentFetchFunc = defaultMoviesFetchFunc;
   }
 
-  setUrlInfo({ pathName: targetPathName });
+  // if (targetPathName === "genres") {
+  //   setState({
+  //     sortBy: appState.sortBy || SORTBY.POPULARITY,
+  //     order: appState.order || ORDER.DESC,
+  //   });
+  //   console.log("???", appState);
+  // }
+
+  navigate({ pathName: targetPathName, genres: [] });
 
   if (targetPathName === "favorites" || targetPathName === "queue") {
     return loaderInterface(() =>
@@ -211,9 +219,8 @@ async function handleFilmId() {
 async function handleHomeRoute() {
   const targetPathName = "home";
   const markup = pathObject[targetPathName].render();
-  setUrlInfo({ pathName: targetPathName });
 
-  appState.genres = [];
+  navigate({ pathName: targetPathName, genres: [] });
   return renderPage(markup, targetPathName);
 }
 
@@ -226,7 +233,9 @@ async function handleMoviesRoute() {
   currentFetchFunc = defaultMoviesFetchFunc;
 
   if (page && page > 0) {
-    setUrlInfo({ pathName, page });
+    // setUrlInfo({ pathName, page });
+
+    navigate({ pathName, page });
 
     return loaderInterface(() => openFetchedByPathName(page, pathName));
   }
@@ -235,15 +244,15 @@ async function handleMoviesRoute() {
 }
 
 async function handleGenresRoute() {
-  let { genres, page, sortBy, order, pathName } = appState;
+  let { genres, page, sortBy, order } = appState;
   if (genres?.length < 1) {
     return loaderInterface(() => drawDefaultPage());
   }
   if (genres?.length > 0) {
     page = page ? page : 1;
-
+    order = order ? order : ORDER.DESC;
+    sortBy = sortBy ? sortBy : SORTBY.POPULARITY;
     changeCheckedSortSelect();
-
     return loaderInterface(() =>
       openGalleryByGenres(page, genres, sortBy, order),
     );
@@ -258,7 +267,8 @@ async function handleSavedGalleryRoute() {
 async function handleFilteredPage() {
   const { page, pathName } = appState;
   if (page && page > 0) {
-    setUrlInfo({ pathName, page });
+    // setUrlInfo({ pathName, page });
+    navigate({ pathName, page });
     return loaderInterface(() => openFetchedByPathName(page, pathName));
   }
 
@@ -269,7 +279,9 @@ export async function openFetchedGalleryPage(page = 1, searchQuery) {
   try {
     const galleryData = await getMoviesByTitle(page, searchQuery);
     let pathName = "movies";
-    setUrlInfo({ pathName, search: searchQuery, page });
+    // setUrlInfo({ pathName, search: searchQuery, page });
+
+    navigate({ pathName, search: searchQuery, page });
 
     currentFetchFunc = (page) => getMoviesByTitle(page, searchQuery);
 
@@ -307,8 +319,13 @@ export async function openFetchedByPathName(page = 1, pathName) {
   }
 }
 
-export async function openGalleryByGenres(page, genreIdArr) {
-  const { sortBy, order } = appState;
+export async function openGalleryByGenres(
+  page,
+  genreIdArr,
+  sortBy = SORTBY.POPULARITY,
+  order = ORDER.DESC,
+) {
+  // const { sortBy, order } = appState;
   // let sortByQuery = sortBy ? null : SORTBY.POPULARITY;
   // if (!sortByQuery) {
   //   sortByQuery = sortBy ? sortBy : sortBy;
@@ -319,35 +336,33 @@ export async function openGalleryByGenres(page, genreIdArr) {
 
   const pathName = "genres";
 
-  setUrlInfo({
+  // setUrlInfo({
+  //   pathName,
+  //   genres: genreIdArr,
+  //   page,
+  //   sortBy,
+  //   order,
+  // });
+
+  navigate({
     pathName,
     genres: genreIdArr,
     page,
-    // sortBy: sortByQuery,
-    // order: orderQuery,
     sortBy,
     order,
   });
 
   try {
-    const galleryData = await getMoviesByGenre(
-      page,
-      genreIdArr,
-      // sortByQuery,
-      // orderQuery,
-      sortBy,
-      order,
-    );
+    const galleryData = await getMoviesByGenre(page, genreIdArr, sortBy, order);
 
-    // pathObject["genres"].fetchFunc = (page) =>
-    //   getMoviesByGenre(page, genreIdArr, sortBy, order);
     currentFetchFunc = (page) =>
       pathObject[pathName].fetchFunc(page, genreIdArr, sortBy, order);
 
     let searchedGenreNames = "";
     const searchedGenreNamesArr = [];
     genresListData.genres.forEach((genre) => {
-      if (genreIdArr.includes(JSON.stringify(genre.id))) {
+      const sterializedGenreId = Number(genre.id);
+      if (genreIdArr.includes(JSON.stringify(sterializedGenreId))) {
         searchedGenreNames += genre.name + " ";
         searchedGenreNamesArr.push(genre.name);
       }
@@ -429,4 +444,11 @@ function renderPage(markup, title) {
   changeTitleText(title);
   successToaster({ message: "Successful!" });
   listenersReload();
+}
+
+export function navigate(newValuesObj) {
+  setState(newValuesObj);
+  setUrlInfo(newValuesObj);
+
+  console.log("appState: ", appState);
 }

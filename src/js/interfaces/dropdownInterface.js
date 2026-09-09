@@ -1,5 +1,5 @@
 import { ORDER, SORTBY } from "../../main";
-import { handleLocation } from "../services/routing";
+import { handleLocation, navigate } from "../services/routing";
 import { getUrlInfo, setUrlInfo } from "../services/urlInfoService";
 import { infoToaster } from "./toaster";
 import { loaderInterface } from "./loaderInterface";
@@ -14,9 +14,10 @@ export async function onSelectChange(evt) {
   if (Object.values(SORTBY).includes(selectValue)) {
     newQuery = {
       ...newQuery,
+      pathName: "genres",
       sortBy: selectValue,
       order: ORDER.DESC,
-      pathName: "genres",
+      page: 1,
     };
 
     infoToaster({
@@ -28,6 +29,6 @@ export async function onSelectChange(evt) {
     infoToaster({ message: `Sort by default (popularity)` });
   }
 
-  setUrlInfo(newQuery);
+  navigate(newQuery);
   return loaderInterface(() => handleLocation());
 }

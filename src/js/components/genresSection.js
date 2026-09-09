@@ -12,7 +12,7 @@ export const genresSectionMarkup = () => {
               .map(
                 (
                   genre,
-                ) => `<li class="genresSection-list_item ${genres.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">
+                ) => `<li class="genresSection-list_item ${genres.includes(Number(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">
               <a href="/">
                 <div class="genresSection-icon-wrap">
                   <svg class="icon">
