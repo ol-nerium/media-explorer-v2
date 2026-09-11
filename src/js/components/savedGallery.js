@@ -50,7 +50,8 @@ const savedGalleryItem = (data) => {
                 <ul class="gallery-list_item-genres">
                   ${data.genres
                     .map((genre) => {
-                      return `<li class="gallery-list_item-genres_item ${appState.genres.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">${genre.name}</li>`;
+                      const normalizedGenreId = Number(genre.id);
+                      return `<li class="gallery-list_item-genres_item ${appState.genres.includes(normalizedGenreId) ? "active" : ""}" data-genreid="${genre.id}">${genre.name}</li>`;
                     })
                     .join("")}                  
                 </ul>

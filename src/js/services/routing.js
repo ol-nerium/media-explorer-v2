@@ -166,7 +166,7 @@ export async function handleLocation(targetURL = null) {
 
 async function drawMarkupFromUrlParams() {
   // navigate(getUrlInfo());
-  handleFilmId();
+  await handleFilmId();
 
   const route = routes[appState.pathName];
 
@@ -189,17 +189,16 @@ async function handleTargetRoute(targetURL) {
     currentFetchFunc = defaultMoviesFetchFunc;
   }
 
-  // if (targetPathName === "genres") {
-  //   setState({
-  //     sortBy: appState.sortBy || SORTBY.POPULARITY,
-  //     order: appState.order || ORDER.DESC,
-  //   });
-  //   console.log("???", appState);
-  // }
+  navigate({
+    pathName: targetPathName,
+    genres: [],
+    page: 1,
+    search: "",
+    filmId: "",
+  });
 
-  navigate({ pathName: targetPathName, genres: [] });
-
-  if (targetPathName === "favorites" || targetPathName === "queue") {
+  // if (targetPathName === "favorites" || targetPathName === "queue") {
+  if (targetPathName === "queue") {
     return loaderInterface(() =>
       openSavedGallery(appState.page, targetPathName),
     );
@@ -297,9 +296,13 @@ export async function openFetchedGalleryPage(page = 1, searchQuery) {
 }
 
 export async function openFetchedByPathName(page = 1, pathName) {
-  currentFetchFunc = pathObject[pathName].fetchFunc
-    ? pathObject[pathName].fetchFunc
-    : null;
+  const path = pathObject[pathName];
+
+  if (!path) {
+    throw new Error(`Unknown path ${pathName}`);
+  }
+
+  currentFetchFunc = path.fetchFunc ?? null;
 
   if (!currentFetchFunc) {
     const galleryMarkup = pathObject[pathName].render();
@@ -361,8 +364,8 @@ export async function openGalleryByGenres(
     let searchedGenreNames = "";
     const searchedGenreNamesArr = [];
     genresListData.genres.forEach((genre) => {
-      const sterializedGenreId = Number(genre.id);
-      if (genreIdArr.includes(JSON.stringify(sterializedGenreId))) {
+      const normalizedGenreId = Number(genre.id);
+      if (genreIdArr.includes(normalizedGenreId)) {
         searchedGenreNames += genre.name + " ";
         searchedGenreNamesArr.push(genre.name);
       }
@@ -422,7 +425,8 @@ export async function openSavedGallery(page = 1, pathName) {
     renderPage(markup, pathName);
     return filmData;
   } catch (error) {
-    console.log(error, "need smth maybe for indication");
+    console.error("Failed to open saved gallery:", error);
+    errorToaster({ message: "Something went wrong, try later" });
   }
 }
 

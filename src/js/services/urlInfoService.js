@@ -1,13 +1,5 @@
 import { ORDER, SORTBY } from "../../main";
-import { errorToaster } from "../interfaces";
-import { changeActiveNavLinkColor } from "../utils";
-import { appState, pathObject, setState } from "./routing";
-
-const locationProtocol = window.location.protocol;
-const locationHost = window.location.host;
-let baseUrl = locationProtocol + "//" + locationHost;
-
-let newURL = baseUrl;
+import { pathObject } from "./routing";
 
 export function getUrlInfo() {
   let pathName = window.location.pathname.slice(1);
@@ -28,7 +20,7 @@ export function getUrlInfo() {
 function parsePage(value) {
   if (value === null || value === "") return null;
   const pageValue = Number(value);
-  if (isNaN(pageValue) || Number(pageValue) < 1) return null;
+  if (!Number.isInteger(pageValue) || Number(pageValue) < 1) return null;
   return pageValue;
 }
 function parseSearchQuery(value) {
@@ -47,7 +39,7 @@ function parseGenres(value) {
 function parseFilmId(value) {
   if (value === null || value === "") return null;
   const filmId = Number(value);
-  if (isNaN(filmId) || Number(filmId) < 1) return null;
+  if (!Number.isInteger || Number(filmId) < 1) return null;
 
   return filmId;
 }
@@ -99,9 +91,6 @@ export function setUrlInfo({
     console.log(pathName, "wrong pathname");
     return;
   }
-  // const path = pathObject[pathName || "home"].path;
-  // console.log(pathObject[pathName].path);
-  // const path = "test";
 
   const params = new URLSearchParams();
   if (page) {
@@ -112,27 +101,12 @@ export function setUrlInfo({
   }
   if (genres?.length > 0) {
     params.set("with_genres", genres.join(","));
-
-    // if (!sortBy) {
-    //   params.set("sortBy", SORTBY.RELEASE_DATE);
-    //   params.set("order", ORDER.DESC);
-
-    //   setState({ sortBy: SORTBY.RELEASE_DATE, order: ORDER.DESC });
-    // }
   }
-  // if (order) {
-  //   params.set("order", order);
-  // }
+
   if (sortBy) {
     const orderStr = order ? order : ORDER.DESC;
     params.set("sortBy", sortBy);
     params.set("order", orderStr);
-
-    // if (!order) {
-    //   params.set("order", ORDER.DESC);
-    // } else {
-    //   params.set("order", order);
-    // }
   }
 
   if (filmId) {
@@ -153,44 +127,3 @@ export function setUrlInfo({
   document.title =
     String(pathName).charAt(0).toUpperCase() + String(pathName).slice(1);
 }
-
-// function createPageQueryObj(page) {
-//   if (page) {
-//     return { obj: { page }, query: `page=${page}` };
-//   }
-//   return { obj: {}, query: "" };
-// }
-// function createSearchQueryObj(search) {
-//   if (search) {
-//     return { obj: { query: search }, query: `query=${search}` };
-//   }
-//   return { obj: {}, query: "" };
-// }
-// function createGenresQueryObj(genres) {
-//   if (genres?.length > 0) {
-//     return {
-//       obj: { genres: genres },
-//       query: `with_genres=${genres.join(",")}`,
-//     };
-//   }
-//   return { obj: { genres: [] }, query: "" };
-// }
-// function createSortQueryObj(sortBy, order = ORDER.DESC) {
-//   if (sortBy) {
-//     return {
-//       obj: { sortBy: sortBy, order },
-//       query: `sortBy=${sortBy}.${order}`,
-//     };
-//   }
-//   return { obj: {}, query: "" };
-// }
-
-// function createFilmIdQuery(filmId) {
-//   if (filmId) {
-//     return {
-//       obj: { filmId: filmId },
-//       query: `filmId=${filmId}`,
-//     };
-//   }
-//   return { obj: {}, query: "" };
-// }

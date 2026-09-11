@@ -8,8 +8,8 @@ import spriteUrl from "../../assets/svgSprite.svg";
 const sortingSectionGenresList = (activeGenresIdsArr) => {
   return genresListData.genres
     .map((genre) => {
-      const sterializedGenreId = Number(genre.id);
-      const isGenreActive = activeGenresIdsArr.includes(sterializedGenreId);
+      const normalizedGenreId = Number(genre.id);
+      const isGenreActive = activeGenresIdsArr.includes(normalizedGenreId);
 
       return `<li class="genres-chips-list_item">
                 <button class="genres-chips-list_item-btn ${isGenreActive ? "active" : ""}" data-genreId=${genre.id}>

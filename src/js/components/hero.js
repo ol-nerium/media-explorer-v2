@@ -8,9 +8,10 @@ import spriteUrl from "../../assets/svgSprite.svg";
 const heroSectionGenres = (genre_ids) => {
   const genresList = [];
   genresListData.genres.forEach((i) => {
+    const normalizedGenreId = Number(i.id);
     if (genre_ids.includes(i.id))
       genresList.push(
-        `<li class="hero-genreList_item ${appState.genres.includes(JSON.stringify(i.id)) ? "active" : ""}" data-genreid="${i.id}">${i.name}</li>`,
+        `<li class="hero-genreList_item ${appState.genres.includes(normalizedGenreId) ? "active" : ""}" data-genreid="${i.id}">${i.name}</li>`,
       );
   });
   return genresList.join("");

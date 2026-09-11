@@ -28,9 +28,9 @@ export const clickOnGalleryCardInterface = async (evt) => {
     await loaderInterface(() => openFilmCard(filmId));
   }
   if (genreId) {
-    const sterializedGenreId = Number(genreId);
-    if (appState.genres.includes(sterializedGenreId)) return;
-    appState.genres.push(sterializedGenreId);
+    const normalizedGenreId = Number(genreId);
+    if (appState.genres.includes(normalizedGenreId)) return;
+    appState.genres.push(normalizedGenreId);
 
     await loaderInterface(() => openGalleryByGenres(1, appState.genres));
   }

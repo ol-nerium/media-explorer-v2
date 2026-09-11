@@ -22,23 +22,23 @@ export const genresSectionInterface = (evt) => {
 
   if (!chipGenreId) return;
 
-  const sterializedGenreId = Number(chipGenreId);
-  if (!appState.genres.includes(sterializedGenreId)) {
+  const normalizedGenreId = Number(chipGenreId);
+  if (!appState.genres.includes(normalizedGenreId)) {
     navigate({
       pathName: "genres",
-      genres: [...appState.genres, sterializedGenreId],
+      genres: [...appState.genres, normalizedGenreId],
       // sortBy: appState.sortBy || SORTBY.POPULARITY,
       // order: appState.order || ORDER.DESC,
     });
   }
 
   if (
-    genresListData.genres.filter((i) => i.id === sterializedGenreId).length > 0
+    genresListData.genres.filter((i) => i.id === normalizedGenreId).length > 0
   ) {
     const sortBy = appState.sortBy || null;
     const order = appState.order || null;
     loaderInterface(() =>
-      openGalleryByGenres(1, [sterializedGenreId], sortBy, order),
+      openGalleryByGenres(1, [normalizedGenreId], sortBy, order),
     );
   }
 };
@@ -103,8 +103,8 @@ function clickOnMobGenresLink(link) {
 function mobileGenresClasswork() {
   Array.from(document.querySelectorAll(".mobile-genres-btn")).forEach(
     (chip) => {
-      const sterializedGenreId = Number(chip.dataset.genreid);
-      if (appState.genres.includes(sterializedGenreId)) {
+      const normalizedGenreId = Number(chip.dataset.genreid);
+      if (appState.genres.includes(normalizedGenreId)) {
         chip.classList.add("active");
       } else chip.classList.remove("active");
     },
@@ -145,18 +145,18 @@ function onControlArrowClick(controlDir) {
 }
 
 function onGenreChipClick(genreId) {
-  const sterializedGenreId = Number(genreId);
+  const normalizedGenreId = Number(genreId);
   const genresChipsRoot = document.querySelector(".genres-chips");
   const genresList = genresChipsRoot.querySelector(".genres-chips-list");
   const clickedElement = genresChipsRoot.querySelector(
-    `[data-genreid="${sterializedGenreId}"]`,
+    `[data-genreid="${normalizedGenreId}"]`,
   );
 
-  const genreIndex = appState.genres.indexOf(sterializedGenreId);
+  const genreIndex = appState.genres.indexOf(normalizedGenreId);
 
   const startPosition = genresList.getBoundingClientRect().left;
   if (genreIndex < 0) {
-    appState.genres.push(sterializedGenreId);
+    appState.genres.push(normalizedGenreId);
     clickedElement.classList.add("active");
     const chipName = clickedElement.textContent.trim();
     infoToaster({ message: `${chipName} added to search for genres` });

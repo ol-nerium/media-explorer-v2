@@ -7,8 +7,9 @@ import spriteUrl from "../../assets/svgSprite.svg";
 const sliderGalleryItemGenres = (genreIds) => {
   let genresMarkup = "";
   genresListData.genres.forEach((genre) => {
+    const normalizedGenreId = Number(genre.id);
     if (genreIds.includes(genre.id))
-      genresMarkup += `<li class="gallery-list_item-genres_item ${appState.genres.includes(JSON.stringify(genre.id)) ? "active" : ""}" data-genreid="${genre.id}">
+      genresMarkup += `<li class="gallery-list_item-genres_item ${appState.genres.includes(normalizedGenreId) ? "active" : ""}" data-genreid="${genre.id}">
         <a href="#">${genre.name}</a>
       </li>`;
   });
